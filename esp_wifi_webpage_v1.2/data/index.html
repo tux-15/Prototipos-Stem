@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<head>
+    <title> Servo Controlled through webPage</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'>
+</head>
+
+<body>
+    <center>
+        <header><h1>Test Page for controlling servo with websocket</h1></header>
+        <div>
+            <table>
+                <td>Angle:</td>
+                <td id="angleNumber"> 0</td>
+                <div>
+                    <tr>
+                        <input class="enabled" id="angleValue" type="range" min="0" max="180" step="1" onchange="sendAngle();" value="0"> </input>
+                    </tr>
+                </div>
+            </table>
+        </div>
+    </center>
+
+    <script src="dynamic.js"></script>
+</body>
