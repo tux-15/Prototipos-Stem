@@ -1,89 +1,92 @@
-#include <ESP8266WiFi.h>        // Include the Wi-Fi library
-#include <ESP8266WiFiMulti.h>   // Include the Wi-Fi-Multi library
-#include <ESP8266mDNS.h>        // Include the mDNS library
-#include <WiFiClient.h>
-#include <ESP8266WebServer.h> 
-#include <WebSocketsServer.h>
-#include <FS.h>   // Include the SPIFFS library
+#include <ESP8266WiFi.h>        // WiFi
+#include <ESP8266WiFiMulti.h>   // Armazenar credenciais de múltiplas redes e conectar-se na mais forte
+#include <ESP8266mDNS.h>        // multi DNS 
+#include <WiFiClient.h>         // WiFi softAP
+#include <ESP8266WebServer.h>   // HTTP 
+#include <WebSocketsServer.h>   // WebSocket
+#include <FS.h>                 // Sistema de arquivos SPIFFS 
 
-ESP8266WiFiMulti wifiMulti;     // Create an instance of the ESP8266WiFiMulti class, called 'wifiMulti'
 
-ESP8266WebServer server(80);    // Create a webserver object that listens for HTTP request on port 80
-WebSocketsServer webSocket(81);   // create a websocket server on port 81
+ESP8266WiFiMulti wifiMulti;     // Obejto para gerenciar credenciais de rede
 
-// function prototypes
+ESP8266WebServer server(80);    // Webserver para utilização do protocolo HTTP na porta 80
+WebSocketsServer webSocket(81); // WebSocket na porta 81
+
+// Protótipo das funções  
 
 void startWiFi();
 void startMDNS();
 void startServer();
 
-String getContentType(String filename); // convert the file extension to the MIME type
-bool handleFileRead(String path);       // send the right file to the client (if it exists)
-
-
-void handleRoot();             
-void handleNotFound();
-
-void handleCar();
-void handleServo();
+String getContentType(String filename); 
+bool handleFileRead(String path);       
 
 //---------------------------
 
 void setup() {
 
   
-  Serial.begin(9600);         // Start the Serial communication to send messages to the computer
+  Serial.begin(9600);         
   delay(500);
   Serial.println('\n');
-  SPIFFS.begin(); 
+  SPIFFS.begin(); // Inicializa o SPI file system
+
+  /*
+    Inicializa os serviços:
+      -Conexão WiFi
+      -O gerenciador de multi DNS 
+      -O webSocket
+      -O servidor http
+  */
 
   startWiFi();
   startMDNS("roboSTEM");
-  startWebSocket();            // Start a WebSocket server
+  startWebSocket();            
   startServer();
   
 }
 
 void loop() {
+  //Keep-alive do MDNS, servidor e webSocket
   MDNS.update();
-  server.handleClient();                    // Listen for HTTP requests from clients
+  server.handleClient();              
   webSocket.loop(); 
 
 }
 
 void startWiFi(){
   
-  wifiMulti.addAP("LUDUSKAM-2.4G", "ludusKAMt3ch");   // add Wi-Fi networks you want to connect to
+  wifiMulti.addAP("LUDUSKAM-2.4G", "ludusKAMt3ch");   // adicionar credenciais das redes
   wifiMulti.addAP("Charlie 2.4", "vox populi");
   wifiMulti.addAP("carreta-stem-01", "Stem2021!!");
 
   Serial.println("<Connecting, 1, 2>");
-  while (wifiMulti.run() != WL_CONNECTED) {  // Wait for the Wi-Fi to connect
+  while (wifiMulti.run() != WL_CONNECTED) {  // Esperar WiFi conectar
     delay(250);
     Serial.print("<.>");
   }
   
   Serial.println("\r\n");
   Serial.print("<Connected to >");
-  Serial.println(WiFi.SSID());             // Tell us what network we're connected to
+  Serial.println(WiFi.SSID());             // Nome da rede
   Serial.print("<IP address:\t");
-  Serial.print(WiFi.localIP()); Serial.print(">");            // Send the IP address of the ESP8266 to the computer
+  Serial.print(WiFi.localIP()); Serial.print(">");            // Ip do esp na rede local
   
   
   Serial.println("\r\n");
 
 }
 
-void startWebSocket() { // Start a WebSocket server
-  webSocket.begin();                          // start the websocket server
-  webSocket.onEvent(webSocketEvent);          // if there's an incomming websocket message, go to function 'webSocketEvent'
+void startWebSocket() { // Inicializa o webSocket
+  webSocket.begin();                       
+  webSocket.onEvent(webSocketEvent);          // função de callback para eventos que acontecerem no webSocket
   Serial.println("<WebSocket server started.>");
 }
 
-void startMDNS(String mdnsName){ // Start the mDNS responder
+void startMDNS(String mdnsName){ // Iniciar o mDNS com o nome desejado para a rede .local
   
-  MDNS.begin(mdnsName); // start the multicast domain name server                      
-  if (!MDNS.begin(mdnsName)) {             // Start the mDNS responder for esp8266.local
+  MDNS.begin(mdnsName); // começa a transmissão do nome                    
+  if (!MDNS.begin(mdnsName)) {
     //Serial.println("Error setting up MDNS responder!");
   }
   Serial.print("<mDNS responder started: http://>");
@@ -92,30 +95,30 @@ void startMDNS(String mdnsName){ // Start the mDNS responder
   
 }
 
-void startServer(){ // Start a HTTP server with a file read handler and an upload handler
+void startServer(){ // Inicia o servidor com um File Read Handler e um upload handler
 
-  server.onNotFound([]() {                              // If the client requests any URI
-  if (!handleFileRead(server.uri()))                  // send it if it exists
-    server.send(404, "text/plain", "404: Not Found"); // otherwise, respond with a 404 (Not Found) error
+  server.onNotFound([]() {                              // Caso o client requisiste um arquivo
+  if (!handleFileRead(server.uri()))                    // Mandar se existir
+    server.send(404, "text/plain", "404: Not Found");   // Retornar 404 se não existir
   });
-  server.begin();                           // Actually start the server
+  server.begin();                                       // Inicia o servidor
   Serial.println("<HTTP server started>");
   
 }
 
-void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght) { // When a WebSocket message is received
+void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght) { // Quando alguma mensagem chega pelo webSocket
   switch (type) {
-    case WStype_DISCONNECTED:             // if the websocket is disconnected
+    case WStype_DISCONNECTED:             // Se a conexão for interrompida
       Serial.printf("<[%u] Disconnected!>\n", num);
       Serial.println();
       break;
-    case WStype_CONNECTED: {              // if a new websocket connection is established
+    case WStype_CONNECTED: {              // Quando a conexão é estabelecida
         IPAddress ip = webSocket.remoteIP(num);
         Serial.printf("<[%u] Connected from %d.%d.%d.%d url: %s>\n", num, ip[0], ip[1], ip[2], ip[3], payload);
         Serial.println();
       }
       break;
-    case WStype_TEXT:                     // if new text data is received
+    case WStype_TEXT:                     // Se novos dados forem recebidos
         //Serial.printf("[%u] get Text: %s\n", num, payload);
         Serial.printf("%s\n", payload);
         Serial.println();
@@ -124,7 +127,7 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
   }
 }
 
-String getContentType(String filename) { // convert the file extension to the MIME type
+String getContentType(String filename) { // Converter o arquivo para MIME 
   if (filename.endsWith(".html")) return "text/html";
   else if (filename.endsWith(".css")) return "text/css";
   else if (filename.endsWith(".js")) return "application/javascript";
@@ -133,20 +136,20 @@ String getContentType(String filename) { // convert the file extension to the MI
   return "text/plain";
 }
 
-bool handleFileRead(String path){  // send the right file to the client (if it exists)
+bool handleFileRead(String path){  // Serve o arquivo correto para o client (se existir)
   Serial.println("handleFileRead: " + path);
-  if(path.endsWith("/")) path += "index.html";           // If a folder is requested, send the index file
-  String contentType = getContentType(path);             // Get the MIME type
+  if(path.endsWith("/")) path += "index.html";           // Mandar o index.html para "/"
+  String contentType = getContentType(path);             // achar o arquivo MIME
   String pathWithGz = path + ".gz";
-  if(SPIFFS.exists(pathWithGz) || SPIFFS.exists(path)){  // If the file exists, either as a compressed archive, or normal
-    if(SPIFFS.exists(pathWithGz))                          // If there's a compressed version available
-      path += ".gz";                                         // Use the compressed version
-    File file = SPIFFS.open(path, "r");                    // Open the file
-    size_t sent = server.streamFile(file, contentType);    // Send it to the client
-    file.close();                                          // Close the file again
+  if(SPIFFS.exists(pathWithGz) || SPIFFS.exists(path)){  // Checa se o arquivo existe tanto normal como compressado (.gzip)
+    if(SPIFFS.exists(pathWithGz))                        // Se houver uma versão compressada, usar
+      path += ".gz";                                     // Use the compressed version
+    File file = SPIFFS.open(path, "r");                  // Abrir arquivo
+    size_t sent = server.streamFile(file, contentType);  // mandar para o client
+    file.close();                                        // Fechar arquivo
     Serial.println(String("\tSent file: ") + path);
     return true;
   }
   Serial.println(String("\tFile Not Found: ") + path);
-  return false;                                          // If the file doesn't exist, return false
+  return false;                                          // Se o arquivo não existir retornar false
 } 

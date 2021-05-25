@@ -1,12 +1,18 @@
-const byte numChars = 32;
-char receivedChars[numChars];
-char tempChars[numChars];        // temporary array for use when parsing
+//==========================================================================
 
-      // variables to hold the parsed data
+const byte numChars = 32;       //Número máxim de caracteres por mensagem
+char receivedChars[numChars];   //Armazenar mensagem
+char tempChars[numChars];       // Array temporário para parsing
+
+
+// Armazenar mensagem depois do parsing
+
 char messageFromPC[numChars] = {0};
 int integerFromPC = 0;
 int integerFromPC2 = 0;
-float floatFromPC = 0.0;
+
+//Adicionar mais conforme necessidade
+//float floatFromPC = 0.0;
 
 boolean newData = false;
 
@@ -14,22 +20,30 @@ boolean newData = false;
 
 void setup() {
     Serial.begin(9600);
-    Serial.println("This demo expects 3 pieces of data - text, an integer and a floating point value");
+    Serial.println("O arduino espera uma mensagem do tipo <String, int, int>");
     Serial.println();
 }
 
 //============
 
 void loop() {
+
+    //Comunicação e parsing -----------------------------
     recvWithStartEndMarkers();
     if (newData == true) {
         strcpy(tempChars, receivedChars);
-            // this temporary copy is necessary to protect the original data
-            //   because strtok() used in parseData() replaces the commas with \0
+            // Cópia temporária dos dados
+            //   Para garantir que a eliminação do line terminator não corrompa dos dados
         parseData();
-        showParsedData();
-        newData = false;
+
+    //===================================================
+
+    //Resto do código que depende de haver nova mensagem
+        showParsedData(); //Mandar pela serial os dados recebidos para demo
+
+        newData = false; //Esperar por nova mensagem
     }
+    //Resto do código que não depende de haver nova mensagem
 }
 
 //============
@@ -53,7 +67,7 @@ void recvWithStartEndMarkers() {
                 }
             }
             else {
-                receivedChars[ndx] = '\0'; // terminate the string
+                receivedChars[ndx] = '\0'; // caractere de terminação
                 recvInProgress = false;
                 ndx = 0;
                 newData = true;
@@ -68,31 +82,31 @@ void recvWithStartEndMarkers() {
 
 //============
 
-void parseData() {      // split the data into its parts
+void parseData() {      // Dividir a mensagem em partes
 
-    char * strtokIndx; // this is used by strtok() as an index
+    char * strtokIndx; // Índice de srttok()
 
-    strtokIndx = strtok(tempChars,",");      // get the first part - the string
-    strcpy(messageFromPC, strtokIndx); // copy it to messageFromPC
+    strtokIndx = strtok(tempChars,",");     // Pegar primeira parte (String)
+    strcpy(messageFromPC, strtokIndx);      // Armazenar em messageFromPC 
  
-    strtokIndx = strtok(NULL, ","); // this continues where the previous call left off
-    integerFromPC = atoi(strtokIndx);     // convert this part to an integer
+    strtokIndx = strtok(NULL, ",");         // Continuar a dividir a mensagem
+    integerFromPC = atoi(strtokIndx);       // Converte para interiro e armazena na variável
 
-    strtokIndx = strtok(NULL, ","); // this continues where the previous call left off
-    integerFromPC2 = atoi(strtokIndx);     // convert this part to an integer
+    strtokIndx = strtok(NULL, ",");         // Repete a operação anterior
+    integerFromPC2 = atoi(strtokIndx);      // Repetir para quantas partes forem necessárias
 
     // strtokIndx = strtok(NULL, ",");
-    // floatFromPC = atof(strtokIndx);     // convert this part to a float
+    // floatFromPC = atof(strtokIndx);      // Caso seja necessário receber um float
 
 }
 
 //============
 
 void showParsedData() {
-    Serial.print("Robô: ");
+    Serial.print("Mensagem: ");
     Serial.println(messageFromPC);
-    Serial.print("Velocidade: ");
+    Serial.print("Int 1: ");
     Serial.println(integerFromPC);
-    Serial.print("Ângulo: ");
+    Serial.print("Int 2: ");
     Serial.println(integerFromPC2);
 }
