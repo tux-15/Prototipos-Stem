@@ -194,7 +194,11 @@ void showParsedData() {
   Serial.print("Robô: ");
   Serial.println(messageFromPC);
   Serial.print("Velocidade: ");
-  Serial.println(velocidadeA);
+  Serial.println(velocidade);
   Serial.print("Ângulo: ");
   Serial.println(angulo);
+  Serial.print("VelocidadeA: ");
+  Serial.println(velocidadeA);
+  Serial.print("VelocidadeB: ");
+  Serial.println(velocidadeB);
 }
