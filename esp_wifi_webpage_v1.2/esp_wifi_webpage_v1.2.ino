@@ -1,10 +1,10 @@
 #include <ESP8266WiFi.h>        // WiFi
 #include <ESP8266WiFiMulti.h>   // Armazenar credenciais de múltiplas redes e conectar-se na mais forte
-#include <ESP8266mDNS.h>        // multi DNS 
+#include <ESP8266mDNS.h>        // multi DNS
 #include <WiFiClient.h>         // WiFi softAP
-#include <ESP8266WebServer.h>   // HTTP 
+#include <ESP8266WebServer.h>   // HTTP
 #include <WebSocketsServer.h>   // WebSocket
-#include <FS.h>                 // Sistema de arquivos SPIFFS 
+#include <FS.h>                 // Sistema de arquivos SPIFFS
 
 
 ESP8266WiFiMulti wifiMulti;     // Obejto para gerenciar credenciais de rede
@@ -12,21 +12,23 @@ ESP8266WiFiMulti wifiMulti;     // Obejto para gerenciar credenciais de rede
 ESP8266WebServer server(80);    // Webserver para utilização do protocolo HTTP na porta 80
 WebSocketsServer webSocket(81); // WebSocket na porta 81
 
-// Protótipo das funções  
+// Protótipo das funções
 
 void startWiFi();
 void startMDNS();
 void startServer();
+void webSocketEvent();
+void sendMessageWs();
 
-String getContentType(String filename); 
-bool handleFileRead(String path);       
+String getContentType(String filename);
+bool handleFileRead(String path);
 
 //---------------------------
 
 void setup() {
 
-  
-  Serial.begin(9600);         
+
+  Serial.begin(9600);
   delay(500);
   Serial.println('\n');
   SPIFFS.begin(); // Inicializa o SPI file system
@@ -34,28 +36,28 @@ void setup() {
   /*
     Inicializa os serviços:
       -Conexão WiFi
-      -O gerenciador de multi DNS 
+      -O gerenciador de multi DNS
       -O webSocket
       -O servidor http
   */
 
   startWiFi();
   startMDNS("roboSTEM");
-  startWebSocket();            
+  startWebSocket();
   startServer();
-  
+
 }
 
 void loop() {
   //Keep-alive do MDNS, servidor e webSocket
   MDNS.update();
-  server.handleClient();              
-  webSocket.loop(); 
+  server.handleClient();
+  webSocket.loop();
 
 }
 
 void startWiFi(){
-  
+
   wifiMulti.addAP("LUDUSKAM-2.4G", "ludusKAMt3ch");   // adicionar credenciais das redes
   wifiMulti.addAP("Charlie 2.4", "vox populi");
   wifiMulti.addAP("carreta-stem-01", "Stem2021!!");
@@ -65,34 +67,34 @@ void startWiFi(){
     delay(250);
     Serial.print("<.>");
   }
-  
+
   Serial.println("\r\n");
   Serial.print("<Connected to >");
   Serial.println(WiFi.SSID());             // Nome da rede
   Serial.print("<IP address:\t");
   Serial.print(WiFi.localIP()); Serial.print(">");            // Ip do esp na rede local
-  
-  
+
+
   Serial.println("\r\n");
 
 }
 
 void startWebSocket() { // Inicializa o webSocket
-  webSocket.begin();                       
+  webSocket.begin();
   webSocket.onEvent(webSocketEvent);          // função de callback para eventos que acontecerem no webSocket
   Serial.println("<WebSocket server started.>");
 }
 
 void startMDNS(String mdnsName){ // Iniciar o mDNS com o nome desejado para a rede .local
-  
-  MDNS.begin(mdnsName); // começa a transmissão do nome                    
+
+  MDNS.begin(mdnsName); // começa a transmissão do nome
   if (!MDNS.begin(mdnsName)) {
     //Serial.println("Error setting up MDNS responder!");
   }
   Serial.print("<mDNS responder started: http://>");
   Serial.print(mdnsName);
   Serial.println("<.local>");
-  
+
 }
 
 void startServer(){ // Inicia o servidor com um File Read Handler e um upload handler
@@ -103,7 +105,7 @@ void startServer(){ // Inicia o servidor com um File Read Handler e um upload ha
   });
   server.begin();                                       // Inicia o servidor
   Serial.println("<HTTP server started>");
-  
+
 }
 
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght) { // Quando alguma mensagem chega pelo webSocket
@@ -127,7 +129,11 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
   }
 }
 
-String getContentType(String filename) { // Converter o arquivo para MIME 
+void sendMessageWs(uint8_t num, const char * payload){
+    webSocket.sendTXT(num, payload);
+}
+
+String getContentType(String filename) { // Converter o arquivo para MIME
   if (filename.endsWith(".html")) return "text/html";
   else if (filename.endsWith(".css")) return "text/css";
   else if (filename.endsWith(".js")) return "application/javascript";
@@ -152,4 +158,4 @@ bool handleFileRead(String path){  // Serve o arquivo correto para o client (se 
   }
   Serial.println(String("\tFile Not Found: ") + path);
   return false;                                          // Se o arquivo não existir retornar false
-} 
+}
