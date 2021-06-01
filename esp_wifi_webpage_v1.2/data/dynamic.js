@@ -17,3 +17,5 @@ function sendAngle() {
     var ab = '#' + a;
     connection.send(ab)
   };
+
+  function receiveSpeed(){}

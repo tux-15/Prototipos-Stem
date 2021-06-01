@@ -20,6 +20,9 @@ void startServer();
 void webSocketEvent();
 void sendMessageWs();
 
+// id da conexão atual -> é atualizado no callback do websocket
+int id = 0;
+
 String getContentType(String filename);
 bool handleFileRead(String path);
 
@@ -112,6 +115,8 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
   switch (type) {
     case WStype_DISCONNECTED:             // Se a conexão for interrompida
       Serial.printf("<[%u] Disconnected!>\n", num);
+      //Salva o id da conexão atual
+      id = num;
       Serial.println();
       break;
     case WStype_CONNECTED: {              // Quando a conexão é estabelecida
@@ -129,8 +134,8 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
   }
 }
 
-void sendMessageWs(uint8_t num, const char * payload){
-    webSocket.sendTXT(num, payload);
+void sendMessageWs(uint8_t id, const char * payload){
+    webSocket.sendTXT(id, payload);
 }
 
 String getContentType(String filename) { // Converter o arquivo para MIME
