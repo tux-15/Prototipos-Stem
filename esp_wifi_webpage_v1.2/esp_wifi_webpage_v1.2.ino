@@ -20,7 +20,7 @@ void startServer();
 void webSocketEvent();
 void sendMessageWs();
 
-// id da conexão atual -> é atualizado no callback do websocket
+// id da conexão atual -> é atualizado no callback do websocket (on event)
 int id = 0;
 
 String getContentType(String filename);
