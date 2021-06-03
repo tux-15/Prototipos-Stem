@@ -65,10 +65,12 @@ void setup() {
       -O servidor http
   */
 
+  Serial.print("<");
   startWiFi();
   startMDNS("roboSTEM");
   startWebSocket();
   startServer();
+  Serial.print(">");
 
 }
 
@@ -93,17 +95,17 @@ void startWiFi(){
   wifiMulti.addAP("Charlie 2.4", "vox populi");
   wifiMulti.addAP("carreta-stem-01", "Stem2021!!");
 
-  Serial.println("<Connecting, 1, 2>");
+  Serial.println("Connecting");
   while (wifiMulti.run() != WL_CONNECTED) {  // Esperar WiFi conectar
     delay(250);
-    Serial.print("<.>");
+    Serial.print(".");
   }
 
   Serial.println("\r\n");
-  Serial.print("<Connected to >");
+  Serial.print("Connected to ");
   Serial.println(WiFi.SSID());             // Nome da rede
-  Serial.print("<IP address:\t");
-  Serial.print(WiFi.localIP()); Serial.print(">");            // Ip do esp na rede local
+  Serial.print("IP address:\t");
+  Serial.print(WiFi.localIP());            // Ip do esp na rede local
 
 
   Serial.println("\r\n");
@@ -113,7 +115,7 @@ void startWiFi(){
 void startWebSocket() { // Inicializa o webSocket
   webSocket.begin();
   webSocket.onEvent(webSocketEvent);          // função de callback para eventos que acontecerem no webSocket
-  Serial.println("<WebSocket server started.>");
+  Serial.println("WebSocket server started.");
 }
 
 void startMDNS(String mdnsName){ // Iniciar o mDNS com o nome desejado para a rede .local
@@ -122,9 +124,9 @@ void startMDNS(String mdnsName){ // Iniciar o mDNS com o nome desejado para a re
   if (!MDNS.begin(mdnsName)) {
     //Serial.println("Error setting up MDNS responder!");
   }
-  Serial.print("<mDNS responder started: http://>");
+  Serial.print("mDNS responder started: http://");
   Serial.print(mdnsName);
-  Serial.println("<.local>");
+  Serial.println(".local");
 
 }
 
@@ -135,7 +137,7 @@ void startServer(){ // Inicia o servidor com um File Read Handler e um upload ha
     server.send(404, "text/plain", "404: Not Found");   // Retornar 404 se não existir
   });
   server.begin();                                       // Inicia o servidor
-  Serial.println("<HTTP server started>");
+  Serial.println("HTTP server started");
 
 }
 
