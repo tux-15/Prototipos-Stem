@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-    <title> Servo Controlled through webPage</title>
+    <title> Manipulador Stem</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'>
     <style>
         .slidercontainer{
@@ -10,12 +10,14 @@
         .slider {
             -webkit-appearance: slider-vertical;
             writing-mode: bt-lr;
-            width: 12px;
-            height: 100px;
-            border-radius: 5px;
-            background: #d3d3d3;
+            top: 965px;
+            left: 525px;
+            width: 10px;
+            height: 240px;
+            background: #6A7777 0% 0% no-repeat padding-box;
+            border-radius: 10px;
+            opacity: 1;
             outline: none;
-            opacity: 0.7;
             -webkit-transition: .2s;
             transition: opacity .2s;
         }
@@ -25,17 +27,22 @@
         .slider::-webkit-slider-thumb { /* outros browsers */
             -webkit-appearance: none;
             appearance: none;
-            width: 25px;
-            height: 25px;
-            background: transparent linear-gradient(90deg, #0077DF 0%, #9C00DE 100%) 0% 0% no-repeat padding-box;
+            top: 1125px;
+            left: 514px;
+            width: 32px;
+            height: 32px;
+            border: 0;
+            background: url(slider_thumb.svg);
             cursor: pointer;
         }    
         .slider::-moz-range-thumb { /* firefox */
-            width: 25px;
-            height: 25px;
-            background: transparent linear-gradient(90deg, #0077DF 0%, #9C00DE 100%) 0% 0% no-repeat padding-box;
+            top: 1125px;
+            left: 514px;
+            width: 32px;
+            height: 32px;
+            background: url(slider_thumb.svg);
             cursor: pointer;
-            border-radius: 50%;
+            border: 0;
         }
     </style>
 
@@ -57,6 +64,7 @@
             color: #707070;
             opacity: 1;
         }
+
         /*
         body {
             background-image: url(svgpattern.svg);
@@ -64,24 +72,77 @@
             background-attachment: fixed;  
             background-size: auto, -50%;
         } */
+
+        .parent{} 
+
     </style>
 
 </head>
 
 <body>
     <center>
-        <h1 class="header">Test Page for controlling servo with websocket</h1>
-        <div>
-            <table>
-                <td class="normalText">Angle:</td>
-                <td class="normalText" id="angleNumber"> 90</td>
+        <h1 class="header">Controlar manipulador</h1>
+
+        <div align="center" class="parent" style="position: relative; z-index: 1;">
+
+            <div style="display: inline-block; padding: 20px;">
                 <div class="slidecontainer">
-                    <input type="range" orient="vertical" min="1" max="180" value="90" class="slider" id="angleValue" oninput="sendAngle()"> </input>
-                </div>
-            </table>
+                    <input type="range" orient="vertical" 
+                        min="0" max="180" value="90" 
+                        class="slider" id="slider0" 
+                        oninput="sendAngle('slider0', 'value0')"> 
+                    </input>
+                </div>    
+                <div class="normalText" id="value0" style="padding: 20px;">90</div>
+            </div>
+
+            <div style="display: inline-block; padding: 20px">
+                <div class="slidecontainer">
+                <input type="range" orient="vertical" 
+                    min="0" max="180" value="90" 
+                    class="slider" id="slider1" 
+                    oninput="sendAngle('slider1', 'value1')"> 
+                </input>
+                </div>    
+                <div class="normalText" id="value1" style="padding: 20px;"> 90</div>
+            </div>
+
+            <div style="display: inline-block; padding: 20px;">
+                <div class="slidecontainer">
+                    <input type="range" orient="vertical" 
+                    min="0" max="180" value="90" 
+                    class="slider" id="slider2" 
+                    oninput="sendAngle('slider2', 'value2')"> 
+                </input>
+                </div>    
+                <div class="normalText" id="value2" style="padding: 20px;"> 90</div>
+            </div>
+
+            <div style="display: inline-block; padding: 20px;">
+                <div class="slidecontainer">
+                    <input type="range" orient="vertical" 
+                    min="0" max="180" value="90" 
+                    class="slider" id="slider3" 
+                    oninput="sendAngle('slider3', 'value3')"> 
+                </input>
+                </div>    
+                <div class="normalText" id="value3" style="padding: 20px;"> 90</div>
+            </div>
+
+            <div style="display: inline-block; padding: 20px;">
+                <div class="slidecontainer">
+                    <input type="range" orient="vertical" 
+                    min="0" max="180" value="90" 
+                    class="slider" id="slider4" 
+                    oninput="sendAngle('slider4', 'value4')"> 
+                </input>
+                </div>    
+                <div class="normalText" id="value4" style="padding: 20px;"> 90</div>
+            </div>
         </div>
-        <div style="width:99%; position:absolute; bottom:0">
-            <img src="svgpattern.svg" alt="pattern" style="position:relative">
+
+        <div class="bottom pattern" style="width:99%; position:fixed; bottom:0">
+            <img src="svgpattern.svg" alt="pattern" style="position:relative; z-index: -1;"> 
         </div>
     </center>
 
