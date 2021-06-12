@@ -1,5 +1,10 @@
 #include <AFMotor.h>
 
+#define    encoder_C1   2                     //Conexão C1 do encoder
+#define    encoder_C2   24                     //Conexão C2 do encoder
+#define    encoder_C3   3                    //Conexão C1 do encoder
+#define    encoder_C4   28                     //Conexão C2 do encoder
+
 const byte numChars = 32;
 char receivedChars[numChars];
 char tempChars[numChars];        // temporary array for use when parsing
@@ -24,8 +29,10 @@ long velocidadeA = 0;
 long velocidadeB = 0;
 int Xdif = 0;
 
-String botao = "";
-boolean state = false;
+byte      Encoder_C1Last;
+float rpm = 0;
+int pulse_number1;
+boolean direction_m;
 
 void setup() {
   // put your setup code here, to run once:
@@ -34,7 +41,7 @@ void setup() {
   Serial2.println("O arduino espera uma mensagem do tipo <String, int, int>");
   Serial2.println();
   Serial.println("O arduino espera uma mensagem do tipo <String, int, int>");
-
+  attachInterrupt(0, contador_pulsos, FALLING);
 }
 
 void loop() {
@@ -48,17 +55,14 @@ void loop() {
     showParsedData();
     newData = false;
   }
-  /*
-      if(botao == "ok"){
-          state != state;
-      }
-  */
 
   if (strcmp(messageFromPC, "carrinho") == 0) {
     velocidade = mensagem_velocidade;
     angulo = mensagem_angulo;
   }
+  calculo();
   controle();
+  pulse_number1 = 0;
 }
 
 void controle() {
@@ -71,13 +75,8 @@ void controle() {
     motor3.run(FORWARD);
     motor4.run(FORWARD);
 
-    velocidadeA = map(velocidade, 20, 100, 0, 255);
-    velocidadeB = map(velocidade, 20, 100, 0, 255);
-
-    motor1.setSpeed(velocidadeA);
-    motor2.setSpeed(velocidadeB);
-    motor3.setSpeed(velocidadeA);
-    motor4.setSpeed(velocidadeB);
+    velocidadeA = map(velocidade, 0, 100, 0, 255);
+    velocidadeB = map(velocidade, 0, 100, 0, 255) + 20;
   }
 
   //Trás
@@ -87,8 +86,8 @@ void controle() {
     motor3.run(BACKWARD);
     motor4.run(BACKWARD);
 
-    velocidadeA = map(velocidade, 20, 100, 0, 255);
-    velocidadeB = map(velocidade, 20, 100, 0, 255);
+    velocidadeA = map(velocidade, 0, 100, 0, 255);
+    velocidadeB = map(velocidade, 0, 100, 0, 255) + 20;
   }
 
   //Esquerda
@@ -98,23 +97,23 @@ void controle() {
     motor3.run(FORWARD);
     motor4.run(FORWARD);
 
-    Xdif = map(velocidade, 0, 100, 0, 255);
-    velocidadeA = 150;
-    velocidadeB = Xdif;
+    Xdif = map(velocidade, 0, 100, 0, 150);
+    velocidadeA = 150 + Xdif;
+    velocidadeB = 160 - Xdif * 0.75;
 
 
   }
 
   //Direita
-  else if (angulo > 350 and angulo < 10) {
+  else if (angulo > 340 and angulo < 360) {
     motor1.run(FORWARD);
     motor2.run(FORWARD);
     motor3.run(FORWARD);
     motor4.run(FORWARD);
 
-    Xdif = map(velocidade, 0, 100, 0, 255);
-    velocidadeA = Xdif;
-    velocidadeB = 170;
+    Xdif = map(velocidade, 0, 100, 0, 150);
+    velocidadeA = 150 - Xdif * 0.75;
+    velocidadeB = 160 + Xdif;
   }
 
   //Parar
@@ -128,10 +127,26 @@ void controle() {
     velocidadeB = 0;
   }
 
+if (velocidadeA > 255) {
+    velocidadeA = 255;
+  }
+
+  if (velocidadeB > 255) {
+    velocidadeB = 255;
+  }
+
+  if (velocidadeA < 0) {
+    velocidadeA = 0;
+  }
+
+  if (velocidadeB < 0) {
+    velocidadeB = 0;
+  }
+
   //Mudança de velocidade
   motor1.setSpeed(velocidadeA);
-  motor2.setSpeed(velocidadeB);
-  motor3.setSpeed(velocidadeA);
+  motor2.setSpeed(velocidadeA);
+  motor3.setSpeed(velocidadeB);
   motor4.setSpeed(velocidadeB);
 
 }
@@ -194,7 +209,35 @@ void showParsedData() {
   Serial.print("Robô: ");
   Serial.println(messageFromPC);
   Serial.print("Velocidade: ");
-  Serial.println(velocidadeA);
+  Serial.println(velocidade);
   Serial.print("Ângulo: ");
   Serial.println(angulo);
+}
+
+
+void contador_pulsos()
+{
+  int Lstate = digitalRead(encoder_C1);       //Lê estado de encoder_C1 e armazena em Lstate
+
+  if (!Encoder_C1Last && Lstate)              //Encoder_C1Last igual a zero e Lstate diferente de zero?
+  { //Sim...
+    int val = digitalRead(encoder_C2);        //Lê estado de encoder_C2 e armazena em val
+
+    if (!val && direction_m) direction_m = false;     //Sentido reverso
+
+    else if (val && !direction_m) direction_m = true; //Sentido direto
+
+  } //end if
+
+  Encoder_C1Last = Lstate;                    //Encoder_C1Last recebe o valor antigo
+  if (!direction_m) pulse_number1++;
+  else              pulse_number1--;
+}
+
+void calculo() {
+  Serial.print("Num. Pulsos: ");              //Imprime
+  Serial.println(pulse_number1);
+  rpm = (pulse_number1 / 341.2) * 300;
+  Serial.print(" Rpm: ");              //Imprime
+  Serial.print(rpm);
 }
