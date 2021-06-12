@@ -12,10 +12,16 @@ connection.onclose = function () {
   console.log('WebSocket connection closed');
 };
 
+let last = +new Date();
+
 function sendAngle(slider, sliderValue) {
     document.getElementById(sliderValue).innerHTML = document.getElementById(slider).value;
-    var command = slider + ',' + sliderValue;
-    connection.send(command)
+    var command = "<" + sliderValue + ',' + document.getElementById(slider).value + ">";
+    const now = +new Date();
+    if (now - last > 50){
+        last = now;
+        connection.send(command)
+    }
   };
 
   function receiveSpeed(){}

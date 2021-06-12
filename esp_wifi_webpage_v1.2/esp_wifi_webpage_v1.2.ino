@@ -16,19 +16,21 @@ WebSocketsServer webSocket(81); // WebSocket na porta 81
 
 //variaveis para comunicação no sentindo arduino -> ESP
 
-const byte numChars = 32;       //Número máxim de caracteres por mensagem
+const byte numChars = 64;       //Número máxim de caracteres por mensagem
 char receivedChars[numChars];   //Armazenar mensagem
 char tempChars[numChars];       // Array temporário para parsing
 
 
 // Armazenar mensagem depois do parsing
 
-char messageFromPC[numChars] = {0};
-int integerFromPC = 0;
-int integerFromPC2 = 0;
+//messageFromMC (micro controller) para diferenciar da messageFromPC no código do arduino
+
+char messageFromMC[numChars] = {0};
+int integerFromMC = 0;
+int integerFromMC2 = 0;
 
 //Adicionar mais conforme necessidade
-//float floatFromPC = 0.0;
+//float floatFromMC = 0.0;
 
 boolean newData = false;
 
@@ -65,12 +67,13 @@ void setup() {
       -O servidor http
   */
 
-  Serial.print("<");
+  //Serial.print("<");
+  Serial.println("<ESP ready to accept messages from the Arduino>");
   startWiFi();
-  startMDNS("roboSTEM");
+  startMDNS("stem");
   startWebSocket();
   startServer();
-  Serial.print(">");
+  //Serial.print(">");
 
 }
 
@@ -84,7 +87,11 @@ void loop() {
   if (newData == true) {
     strcpy(tempChars, receivedChars);
     parseData();
-    sendMessageWs(id, messageFromPC);
+//    int sum = integerFromPC + integerFromPC2;
+//    char a [33];
+//    itoa(sum, a, 16);
+    sendMessageWs(id, "Something came");
+    //Serial.println("<Arduino diz:>");
     newData = false; //Esperar por nova mensagem
   }
 }
@@ -95,17 +102,18 @@ void startWiFi(){
   wifiMulti.addAP("Charlie 2.4", "vox populi");
   wifiMulti.addAP("carreta-stem-01", "Stem2021!!");
 
-  Serial.println("Connecting");
+  Serial.println("<Connecting>");
   while (wifiMulti.run() != WL_CONNECTED) {  // Esperar WiFi conectar
     delay(250);
-    Serial.print(".");
+    Serial.print("<.>");
   }
 
   Serial.println("\r\n");
-  Serial.print("Connected to ");
+  Serial.print("<Connected to ");
   Serial.println(WiFi.SSID());             // Nome da rede
   Serial.print("IP address:\t");
   Serial.print(WiFi.localIP());            // Ip do esp na rede local
+  Serial.print(">");
 
 
   Serial.println("\r\n");
@@ -115,7 +123,7 @@ void startWiFi(){
 void startWebSocket() { // Inicializa o webSocket
   webSocket.begin();
   webSocket.onEvent(webSocketEvent);          // função de callback para eventos que acontecerem no webSocket
-  Serial.println("WebSocket server started.");
+  Serial.println("<WebSocket server started.>");
 }
 
 void startMDNS(String mdnsName){ // Iniciar o mDNS com o nome desejado para a rede .local
@@ -124,9 +132,9 @@ void startMDNS(String mdnsName){ // Iniciar o mDNS com o nome desejado para a re
   if (!MDNS.begin(mdnsName)) {
     //Serial.println("Error setting up MDNS responder!");
   }
-  Serial.print("mDNS responder started: http://");
+  Serial.print("<mDNS responder started: http://");
   Serial.print(mdnsName);
-  Serial.println(".local");
+  Serial.println(".local>");
 
 }
 
@@ -137,7 +145,7 @@ void startServer(){ // Inicia o servidor com um File Read Handler e um upload ha
     server.send(404, "text/plain", "404: Not Found");   // Retornar 404 se não existir
   });
   server.begin();                                       // Inicia o servidor
-  Serial.println("HTTP server started");
+  Serial.println("<HTTP server started>");
 
 }
 
@@ -173,6 +181,7 @@ String getContentType(String filename) { // Converter o arquivo para MIME
   else if (filename.endsWith(".css")) return "text/css";
   else if (filename.endsWith(".js")) return "application/javascript";
   else if (filename.endsWith(".ico")) return "image/x-icon";
+  else if (filename.endsWith(".svg")) return "image/svg+xml";
   else if(filename.endsWith(".gz")) return "application/x-gzip";
   return "text/plain";
 }
@@ -237,13 +246,13 @@ void parseData() {      // Dividir a mensagem em partes
     char * strtokIndx; // Índice de srttok()
 
     strtokIndx = strtok(tempChars,",");     // Pegar primeira parte (String)
-    strcpy(messageFromPC, strtokIndx);      // Armazenar em messageFromPC 
+    strcpy(messageFromMC, strtokIndx);      // Armazenar em messageFromPC 
  
     strtokIndx = strtok(NULL, ",");         // Continuar a dividir a mensagem
-    integerFromPC = atoi(strtokIndx);       // Converte para interiro e armazena na variável
+    integerFromMC = atoi(strtokIndx);       // Converte para interiro e armazena na variável
 
     strtokIndx = strtok(NULL, ",");         // Repete a operação anterior
-    integerFromPC2 = atoi(strtokIndx);      // Repetir para quantas partes forem necessárias
+    integerFromMC2 = atoi(strtokIndx);      // Repetir para quantas partes forem necessárias
 
     // strtokIndx = strtok(NULL, ",");
     // floatFromPC = atof(strtokIndx);      // Caso seja necessário receber um float

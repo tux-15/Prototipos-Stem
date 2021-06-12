@@ -1,6 +1,4 @@
-//==========================================================================
-
-const byte numChars = 32;       //Número máxim de caracteres por mensagem
+const byte numChars = 64;       //Número máxim de caracteres por mensagem
 char receivedChars[numChars];   //Armazenar mensagem
 char tempChars[numChars];       // Array temporário para parsing
 
@@ -44,6 +42,8 @@ void loop() {
         newData = false; //Esperar por nova mensagem
     }
     //Resto do código que não depende de haver nova mensagem
+    //Serial.println("<This is coming from the Arduino>");
+    //delay(100);
 }
 
 //============
