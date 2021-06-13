@@ -7,6 +7,7 @@ connection.onerror = function (error) {
 };
 connection.onmessage = function (e) {
   console.log('Server: ', e.data);
+  receiveData(e.data)
 };
 connection.onclose = function () {
   console.log('WebSocket connection closed');
@@ -24,4 +25,19 @@ function sendAngle(slider, sliderValue) {
     }
   };
 
-  function receiveSpeed(){}
+function sendPWM(leftInput, rightInput, valueLeft, valueRight, slider0, slider1) {
+  document.getElementById(valueLeft).innerHTML = document.getElementById(leftInput).value;
+  document.getElementById(valueRight).innerHTML = document.getElementById(rightInput).value;
+  document.getElementById(slider0).value = document.getElementById(leftInput).value;
+  document.getElementById(slider1).value = document.getElementById(rightInput).value;
+  var pwm = "<" + 'carrinho' + ',' + document.getElementById(valueLeft).value + "," + document.getElementById(valueRight) + ">";
+ 
+  connection.send(pwm)
+
+}
+
+  // function receiveSpeed(){}
+
+  // function receiveData(data) {
+  //   document.getElementById(ws_test).innerHTML = data;
+  // }

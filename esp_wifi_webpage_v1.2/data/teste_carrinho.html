@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calibração carrinho</title>
+
+    <style>
+        .slidercontainer{
+            width: 100%; /* Width of the outside container */
+        }
+        .slider {
+            -webkit-appearance: slider-vertical;
+            writing-mode: bt-lr;
+            top: 965px;
+            left: 525px;
+            width: 10px;
+            height: 240px;
+            background: #6A7777 0% 0% no-repeat padding-box;
+            border-radius: 10px;
+            opacity: 1;
+            outline: none;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+        .slider:hover {
+            opacity: 1;
+        }   
+        .slider::-webkit-slider-thumb { /* outros browsers */
+            -webkit-appearance: none;
+            appearance: none;
+            top: 1125px;
+            left: 514px;
+            width: 32px;
+            height: 32px;
+            border: 0;
+            background: url(slider_thumb.svg);
+            cursor: pointer;
+        }    
+        .slider::-moz-range-thumb { /* firefox */
+            top: 1125px;
+            left: 514px;
+            width: 32px;
+            height: 32px;
+            background:  /* #2012da; */ url(slider_thumb.svg);
+            cursor: pointer;
+            border: 0;
+            border-radius: 50%;
+        }
+    </style>
+
+<style>
+    .header{
+        font: normal normal bold 27px/33px Orkney;
+        color: #014D8F;
+        letter-spacing: 0px;
+        top: 298px;
+        left: 360px;
+        width: 1097px;
+        height: 62px;
+        padding-bottom: 50px;
+    }
+
+    .normalText{
+        font: normal normal normal 24px/28px Orkney;
+        letter-spacing: 0px;
+        color: #707070;
+        opacity: 1;
+    }
+
+    /*
+    body {
+        background-image: url(svgpattern.svg);
+        background-repeat: no-repeat;
+        background-attachment: fixed;  
+        background-size: auto, -50%;
+    } */
+
+    .parent{} 
+
+</style>
+
+</head>
+
+<body>
+    <div align="center">
+        <h1 class="header">
+            Controlar a quantidade de pwm em cada lado do carrinho
+        </h1>
+
+        <div class=normalText>
+            Movimentar o slider ou a caixa de texto para controlar o valor que será enviado
+        </div>
+
+        <div style="display: inline-block; padding: 20px;">
+            <div class="slidecontainer">
+                <input type="range" orient="vertical" 
+                    min="0" max="255" value="0" 
+                    class="slider" id="slider0" 
+                    oninput="sendAngle('slider0', 'value0')"> 
+                </input>
+            </div>    
+            <div class="normalText" id="value0" style="padding: 20px;">0</div>
+        </div>
+
+        <div style="display: inline-block; padding: 20px">
+            <div class="slidecontainer">
+            <input type="range" orient="vertical" 
+                min="0" max="255" value="0" 
+                class="slider" id="slider1" 
+                oninput="sendAngle('slider1', 'value1')"> 
+            </input>
+            </div>    
+            <div class="normalText" id="value1" style="padding: 20px;"> 0</div>
+        </div>
+
+        <form>
+            <label for="right_wheel">Rodas esquerdas:</label>
+            <input type="text" id="left_wheel" placeholder="digitar valor de 0 a 255"><br><br>
+
+            <label for="left_wheel">Rodas direitas:</label>
+            <input type="text" id="right_wheel" placeholder="digitar valor de 0 a 255"><br><br>
+
+            <input type="button" value="Atualizar" onclick="sendPWM('left_wheel', 'right_wheel', 'value0', 'value1', 'slider0', 'slider1')">
+        </form>
+
+    </div>
+
+    <script src="dynamic.js"></script>
+</body>
