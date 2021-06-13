@@ -30,10 +30,15 @@ function sendPWM(leftInput, rightInput, valueLeft, valueRight, slider0, slider1)
   document.getElementById(valueRight).innerHTML = document.getElementById(rightInput).value;
   document.getElementById(slider0).value = document.getElementById(leftInput).value;
   document.getElementById(slider1).value = document.getElementById(rightInput).value;
-  var pwm = "<" + 'carrinho' + ',' + document.getElementById(valueLeft).value + "," + document.getElementById(valueRight) + ">";
+  var pwm = "<" + 'carrinho' + ',' + document.getElementById(leftInput).value + "," + document.getElementById(rightInput).value + ">";
  
   connection.send(pwm)
 
+}
+
+function invertDirection() {
+  var button = "<" + "inverter" + "," + "1" + ">";
+  connection.send(button);
 }
 
   // function receiveSpeed(){}
