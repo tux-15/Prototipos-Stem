@@ -20,9 +20,6 @@ AF_DCMotor motor4(4);
 
 int velocidadeD = 0;
 int velocidadeE = 0;
-int velocidadeA = 0;
-int velocidadeB = 0;
-int inverte = 0;
 bool sentido = false;
 
 //============
@@ -67,7 +64,7 @@ void loop() {
 
 //Valor vindo do botão inverter
   if (strcmp(messageFromPC, "inverter") == 0) {
-    inverte = mensagemInverte;
+    sentido = !sentido;
   }
 
   controle();
@@ -77,10 +74,6 @@ void loop() {
 //============
 
 void controle() {
-  if (inverte == 1){
-    sentido != sentido;
-    inverte = 0;
-  }
   
   //Frente
   if (sentido == true) {
@@ -88,9 +81,6 @@ void controle() {
     motor2.run(FORWARD);
     motor3.run(FORWARD);
     motor4.run(FORWARD);
-
-    velocidadeA = map(velocidadeD, 0, 100, 0, 255);
-    velocidadeB = map(velocidadeE, 0, 100, 0, 255);
   }
 
   //Trás
@@ -99,27 +89,24 @@ void controle() {
     motor2.run(BACKWARD);
     motor3.run(BACKWARD);
     motor4.run(BACKWARD);
-
-    velocidadeA = map(velocidadeD, 0, 100, 0, 255);
-    velocidadeB = map(velocidadeE, 0, 100, 0, 255);
   }
 
   //Parar
-  if (velocidadeD < 20 && velocidadeE < 20) {
+  if (velocidadeD < 90 && velocidadeE < 90) {
     motor1.run(RELEASE);
     motor2.run(RELEASE);
     motor3.run(RELEASE);
     motor4.run(RELEASE);
-    velocidadeA = 0;
-    velocidadeB = 0;
+    velocidadeD = 0;
+    velocidadeE = 0;
   }
 
   //Lado Direito
-  motor1.setSpeed(velocidadeA);
-  motor2.setSpeed(velocidadeA);
+  motor1.setSpeed(velocidadeD);
+  motor2.setSpeed(velocidadeD);
   //Lado Esquerdo
-  motor3.setSpeed(velocidadeB);
-  motor4.setSpeed(velocidadeB);
+  motor3.setSpeed(velocidadeE);
+  motor4.setSpeed(velocidadeE);
 }
 
 //============
@@ -166,14 +153,10 @@ void parseData() {      // split the data into its parts
   strcpy(messageFromPC, strtokIndx); // copy it to messageFromPC
 
   strtokIndx = strtok(NULL, ","); // this continues where the previous call left off
-  mensagemVelocidadeD = atoi(strtokIndx);     // convert this part to an integer
-
-  strtokIndx = strtok(NULL, ","); // this continues where the previous call left off
   mensagemVelocidadeE = atoi(strtokIndx);     // convert this part to an integer
 
   strtokIndx = strtok(NULL, ","); // this continues where the previous call left off
-  mensagemInverte = atoi(strtokIndx);     // convert this part to an integer
-
+  mensagemVelocidadeD = atoi(strtokIndx);     // convert this part to an integer
 
   // strtokIndx = strtok(NULL, ",");
   // floatFromPC = atof(strtokIndx);     // convert this part to a float
