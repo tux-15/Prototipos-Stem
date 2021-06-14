@@ -50,14 +50,14 @@
 
 <style>
     .header{
-        font: normal normal bold 27px/33px Orkney;
+        font: normal normal bold 24px/28px Orkney;
         color: #014D8F;
         letter-spacing: 0px;
         top: 298px;
         left: 360px;
-        width: 1097px;
-        height: 62px;
-        padding-bottom: 50px;
+        /* width: 1097px;
+        height: 62px; */
+        padding-bottom: 20px;
     }
 
     .normalText{
@@ -77,6 +77,68 @@
 
     .parent{} 
 
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+        }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        }
+
+        /* The slider */
+        .slider_switch {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+        }
+
+        .slider_switch:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+        }
+
+        input:checked + .slider_switch {
+        background-color: #2196F3;
+        }
+
+        input:focus + .slider_switch {
+        box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider_switch:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider_switch.round {
+        border-radius: 34px;
+        }
+
+        .slider_switch.round:before {
+        border-radius: 50%;
+    }
+
 </style>
 
 </head>
@@ -87,8 +149,8 @@
             Controlar a quantidade de pwm em cada lado do carrinho
         </h1>
 
-        <div class=normalText>
-            Movimentar o slider ou a caixa de texto para controlar o valor que será enviado
+        <div>
+            <h1 class="normalText">Movimentar o slider ou usar a caixa de texto para controlar o valor que será enviado</h1>
         </div>
 
         <div style="display: inline-block; padding: 20px;">
@@ -122,6 +184,19 @@
 
             <input type="button" value="Atualizar" onclick="sendPWM('left_wheel', 'right_wheel', 'value0', 'value1', 'slider0', 'slider1')">
         </form>
+
+        <div style="padding-top: 5px;">
+            <h2 class="normalText">
+                Inverter sentido
+            </h2>
+        </div>
+
+        <div style="padding-top: 5px;">
+            <label class="switch">
+                <input type="checkbox" onclick="invertDirection()">
+                <span class="slider_switch round"></span>
+            </label>
+        </div>
 
     </div>
 
