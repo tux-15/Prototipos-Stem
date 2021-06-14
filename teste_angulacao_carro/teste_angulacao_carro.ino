@@ -6,10 +6,9 @@ char tempChars[numChars];        // temporary array for use when parsing
 
 // variables to hold the parsed data
 char messageFromPC[numChars] = {0};
-int mensagemVelocidadeL = 0;
+int mensagemVelocidadeE = 0;
 int mensagemVelocidadeD = 0;
-int mensagemPower = 0;
-int mensagemSentido = 0;
+int mensagemInverte = 0;
 //float floatFromPC = 0.0;
 
 boolean newData = false;
@@ -19,12 +18,12 @@ AF_DCMotor motor2(2);
 AF_DCMotor motor3(3);
 AF_DCMotor motor4(4);
 
-int velocidadeR = 0;
-int velocidadeL = 0;
+int velocidadeD = 0;
+int velocidadeE = 0;
 int velocidadeA = 0;
 int velocidadeB = 0;
-int power = 0;
-int sentido = 0;
+int inverte = 0;
+bool sentido = false;
 
 //============
 
@@ -49,51 +48,64 @@ void loop() {
     newData = false;
   }
 
+//Valores vindo dos sliders
+  //Esperando a string 'value0' para a velocidade da roda esquerda
+  if (strcmp(messageFromPC, "value0") == 0) {
+    velocidadeE = mensagemVelocidadeE;
+  }
+
+  //Esperando a string 'value1' para a velocidade da roda direita
+  if (strcmp(messageFromPC, "value1") == 0) {
+    velocidadeD = mensagemVelocidadeD;
+  }
+
+//Valores vindo das caixas de texto
   if (strcmp(messageFromPC, "carrinho") == 0) {
-    power = mensagemPower;
-    sentido = mensagemSentido;
-    velocidadeR = mensagemVelocidadeD;
-    velocidadeL = mensagemVelocidadeL;
+    velocidadeE = mensagemVelocidadeE;
+    velocidadeD = mensagemVelocidadeD;
   }
 
-  if (power == 1) {
-    Serial2.println("Carro Ligado!");
-    controle();
+//Valor vindo do botão inverter
+  if (strcmp(messageFromPC, "inverter") == 0) {
+    inverte = mensagemInverte;
   }
 
-  else {
-    Serial2.println("Carro desligado!");
-  }
+  controle();
 
 }
 
 //============
 
 void controle() {
+  if (inverte == 1){
+    sentido != sentido;
+    inverte = 0;
+  }
+  
   //Frente
-  if (sentido == 1) {
+  if (sentido == true) {
     motor1.run(FORWARD);
     motor2.run(FORWARD);
     motor3.run(FORWARD);
     motor4.run(FORWARD);
 
-    velocidadeA = map(velocidadeR, 0, 100, 0, 255);
-    velocidadeB = map(velocidadeL, 0, 100, 0, 255);
+    velocidadeA = map(velocidadeD, 0, 100, 0, 255);
+    velocidadeB = map(velocidadeE, 0, 100, 0, 255);
   }
 
   //Trás
-  else if (sentido == 2) {
+  else if (sentido == false) {
     motor1.run(BACKWARD);
     motor2.run(BACKWARD);
     motor3.run(BACKWARD);
     motor4.run(BACKWARD);
 
-    velocidadeA = map(velocidadeR, 0, 100, 0, 255);
-    velocidadeB = map(velocidadeL, 0, 100, 0, 255);
+    velocidadeA = map(velocidadeD, 0, 100, 0, 255);
+    velocidadeB = map(velocidadeE, 0, 100, 0, 255);
   }
 
   //Parar
-  if (velocidadeR < 20 && velocidadeL < 20) {
+  if (velocidadeD < 20 && velocidadeE < 20) {
     motor1.run(RELEASE);
     motor2.run(RELEASE);
     motor3.run(RELEASE);
@@ -157,13 +169,10 @@ void parseData() {      // split the data into its parts
   mensagemVelocidadeD = atoi(strtokIndx);     // convert this part to an integer
 
   strtokIndx = strtok(NULL, ","); // this continues where the previous call left off
-  mensagemVelocidadeL = atoi(strtokIndx);     // convert this part to an integer
+  mensagemVelocidadeE = atoi(strtokIndx);     // convert this part to an integer
 
   strtokIndx = strtok(NULL, ","); // this continues where the previous call left off
-  mensagemPower = atoi(strtokIndx);     // convert this part to an integer
-
-  strtokIndx = strtok(NULL, ","); // this continues where the previous call left off
-  mensagemSentido = atoi(strtokIndx);     // convert this part to an integer
+  mensagemInverte = atoi(strtokIndx);     // convert this part to an integer
 
 
   // strtokIndx = strtok(NULL, ",");
@@ -179,5 +188,5 @@ void showParsedData() {
   Serial.print("Velocidade Rodas Direitas: ");
   Serial.println(mensagemVelocidadeD);
   Serial.print("Velocidade Rodas Esquerdas:");
-  Serial.println(mensagemVelocidadeL);
+  Serial.println(mensagemVelocidadeE);
 }
