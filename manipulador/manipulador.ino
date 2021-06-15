@@ -30,14 +30,14 @@ int slider4 = 0;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  Serial2.begin(9600);
-  Serial2.println("O arduino espera uma mensagem do tipo <String, int, int>");
+  Serial.begin(9600);
+  Serial.println("O arduino espera uma mensagem do tipo <String, int, int>");
 
-  base.attach(6);
-  elo2.attach(7);
-  elo3.attach(8);
-  elo4.attach(9);
-  garra.attach(10);
+  base.attach(8);
+  elo2.attach(9);
+  elo3.attach(10);
+  elo4.attach(11);
+  garra.attach(12);
 
   base.write(90);
   elo2.write(90);
@@ -107,8 +107,8 @@ void recvWithStartEndMarkers() {
   char endMarker = '>';
   char rc;
 
-  while (Serial2.available() > 0 && newData == false) {
-    rc = Serial2.read();
+  while (Serial.available() > 0 && newData == false) {
+    rc = Serial.read();
 
     if (recvInProgress == true) {
       if (rc != endMarker) {
@@ -153,9 +153,9 @@ void parseData() {      // split the data into its parts
 //============
 
 void showParsedData() {
-  Serial.print("Robô: ");
+  Serial.print("Servo: ");
   Serial.println(messageFromPC);
-  Serial.print("Angulo: ");
+  Serial.print("Int: ");
   Serial.println(mensagemAngulo);
 
 }
