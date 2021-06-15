@@ -18,7 +18,7 @@
             left: 525px;
             width: 10px;
             height: 240px;
-            background: #6A7777 0% 0% no-repeat padding-box;
+            background: #ccc 0% 0% no-repeat padding-box;
             border-radius: 10px;
             opacity: 1;
             outline: none;
@@ -60,7 +60,7 @@
             left: 360px;
             width: 1097px;
             height: 62px;
-            padding-bottom: 50px;
+            padding-bottom: 20px;
         }
 
         .normalText{
@@ -80,13 +80,89 @@
 
         .parent{} 
 
+        .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+        }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        }
+
+        /* The slider */
+        .slider_switch {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+        }
+
+        .slider_switch:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+        }
+
+        input:checked + .slider_switch {
+        /* background-color: #2196F3; */
+        background: transparent linear-gradient(180deg, #0077DF 0%, var(--unnamed-color-9c00de) 100%) 0% 0% no-repeat padding-box;
+        background: transparent linear-gradient(180deg, #0077DF 0%, #9C00DE 100%) 0% 0% no-repeat padding-box;
+        opacity: 1;
+        }
+
+        input:focus + .slider_switch {
+        box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider_switch:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider_switch.round {
+        border-radius: 34px;
+        }
+
+        .slider_switch.round:before {
+        border-radius: 50%;
+    }
+
     </style>
+
+    <linearGradient id="Gradiente_sem_nome_21" y1="21" x2="42" y2="21" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#014d8f"/><stop offset="1" stop-color="#9c00de"/>
+    </linearGradient>
 
 </head>
 
 <body>
     <center>
         <h1 class="header">Controlar manipulador</h1>
+
+        <div style="padding-top: 5px; padding-bottom: 40px;">
+            <label class="switch">
+                <input type="checkbox" onclick="invertDirection()">
+                <span class="slider_switch round"></span>
+            </label>
+        </div>
 
         <div align="center" class="parent" style="position: relative; z-index: 1;">
 
@@ -149,6 +225,7 @@
         <div class="bottom pattern" style="width:99%; position:fixed; bottom:0">
             <img src="svgpattern.svg" alt="pattern" style="position:relative; z-index: -1;"> 
         </div>
+
     </center>
 
     <script src="dynamic.js"></script>

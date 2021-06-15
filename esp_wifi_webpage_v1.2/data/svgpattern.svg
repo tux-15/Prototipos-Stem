@@ -1,4 +1,9 @@
 <svg id="Camada_1" data-name="Camada 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 476.93"><defs>
+
+<linearGradient id="Gradiente_sem_nome_21" y1="21" x2="42" y2="21" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#014d8f"/><stop offset="1" stop-color="#9c00de"/>
+</linearGradient>
+
 <style>
     .cls-1{
         opacity:0.3;
