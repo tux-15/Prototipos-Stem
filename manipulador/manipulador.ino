@@ -16,8 +16,8 @@ Servo base;
 Servo elo2;
 Servo elo3;
 Servo elo4;
+Servo elo5;
 Servo garra;
-
 
 int slider0 = 0;
 int slider1 = 0;
@@ -25,11 +25,13 @@ int slider2 = 0;
 int slider3 = 0;
 int slider4 = 0;
 
+bool fechar = false;
+
+
 //============
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
   Serial.begin(9600);
   Serial.println("O arduino espera uma mensagem do tipo <String, int, int>");
 
@@ -37,13 +39,17 @@ void setup() {
   elo2.attach(9);
   elo3.attach(10);
   elo4.attach(11);
-  garra.attach(12);
-
-  base.write(90);
-  elo2.write(90);
-  elo3.write(90);
-  elo4.write(90);
-  garra.write(90);
+  elo5.attach(12);
+  
+  garra.attach(13);
+  
+//  base.write(90);
+//  elo2.write(90);
+//  elo3.write(90);
+//  elo4.write(90);
+//  elo5.write(90);
+//  garra.write(90);
+  
   delay(15);
 }
 
@@ -83,18 +89,29 @@ void loop() {
     slider4 = mensagemAngulo;
   }
 
+//  if (strcmp(messageFromPC, "inverter") == 0) {
+//    fechar = !fechar;
+//  }
+
   controle();
+
 
 }
 
 //============
 
 void controle() {
+  
+//  if (fechar == true){
+//    a.write(180);
+//  }
+//  else a.write(180);
+
   base.write(slider0);
   elo2.write(slider1);
   elo3.write(slider2);
   elo4.write(slider3);
-  garra.write(slider4);
+  elo5.write(slider4);
   delay(100);
 }
 
