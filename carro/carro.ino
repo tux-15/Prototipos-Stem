@@ -60,7 +60,7 @@ void loop() {
     velocidade = mensagem_velocidade;
     angulo = mensagem_angulo;
   }
-  calculo();
+  //calculo();
   controle();
   pulse_number1 = 0;
 }
