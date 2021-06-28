@@ -53,7 +53,6 @@ bool handleFileRead(String path);
 
 void setup() {
 
-
   Serial.begin(9600);
   delay(500);
   Serial.println('\n');
@@ -67,13 +66,11 @@ void setup() {
       -O servidor http
   */
 
-  //Serial.print("<");
   Serial.println("<ESP ready to accept messages from the Arduino>");
   startWiFi();
   startMDNS("stem");
   startWebSocket();
   startServer();
-  //Serial.print(">");
 
 }
 
@@ -83,17 +80,16 @@ void loop() {
   server.handleClient();
   webSocket.loop();
  
-//  recvWithStartEndMarkers();
-//  if (newData == true) {
-//    strcpy(tempChars, receivedChars);
-//    parseData();
-////    int sum = integerFromPC + integerFromPC2;
-////    char a [33];
-////    itoa(sum, a, 16);
-//    //sendMessageWs(id, "Something came");
-//    //Serial.println("<Arduino diz:>");
-//    newData = false; //Esperar por nova mensagem
-//  }
+    recvWithStartEndMarkers();
+    if (newData == true) {
+      
+      strcpy(tempChars, receivedChars);
+      parseData();
+      
+      //sendMessageWs(id, messageFromMC);
+      //Serial.println("esp says hi");
+      newData = false; //Esperar por nova mensagem
+    }
 }
 
 void startWiFi(){

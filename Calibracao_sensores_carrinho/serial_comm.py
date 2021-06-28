@@ -2,7 +2,7 @@ import serial
 encoding = 'utf-8'
 
 
-ser = serial.Serial(port='/dev/ttyACM0', baudrate=9600, timeout=2)
+ser = serial.Serial(port='/dev/ttyS4', baudrate=9600, timeout=2)
 
 
 while True:
