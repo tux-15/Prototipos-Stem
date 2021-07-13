@@ -14,6 +14,9 @@ int integerFromPC2 = 0;
 
 boolean newData = false;
 
+long previousMillis = 0; 
+long interval = 1000;  
+
 //============
 
 void setup() {
@@ -25,6 +28,15 @@ void setup() {
 //============
 
 void loop() {
+
+  unsigned long currentMillis = millis();
+  
+  if(currentMillis - previousMillis > interval) {
+    previousMillis = currentMillis;
+    
+    Serial.println("<arduino says Hi, 3, 4>");
+    Serial.print("I got: "); Serial.print(integerFromPC); Serial.println();
+  }
 
     //Comunicação e parsing -----------------------------
     recvWithStartEndMarkers();
@@ -85,9 +97,12 @@ void recvWithStartEndMarkers() {
 
 void parseData() {      // Dividir a mensagem em partes
 
+    char copy_receivedChars[sizeof(receivedChars)] = "";
+    strcpy(copy_receivedChars, receivedChars);
+
     char * strtokIndx; // Índice de srttok()
 
-    strtokIndx = strtok(tempChars,",");     // Pegar primeira parte (String)
+    strtokIndx = strtok(copy_receivedChars,",");     // Pegar primeira parte (String)
     strcpy(messageFromPC, strtokIndx);      // Armazenar em messageFromPC 
  
     strtokIndx = strtok(NULL, ",");         // Continuar a dividir a mensagem

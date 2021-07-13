@@ -14,16 +14,16 @@ WebSocketsServer webSocket(81); // WebSocket na porta 81
 
 //====================================================================
 
-//variaveis para comunicação no sentindo arduino -> ESP
+//variaveis para comunicação
 
-const byte numChars = 64;       //Número máxim de caracteres por mensagem
+const byte numChars = 64;       //Número máximo de caracteres por mensagem
 char receivedChars[numChars];   //Armazenar mensagem
 char tempChars[numChars];       // Array temporário para parsing
 
 
 // Armazenar mensagem depois do parsing
 
-//messageFromMC (micro controller) para diferenciar da messageFromPC no código do arduino
+//messageFromMC (microcontroller) para diferenciar da messageFromPC no código do arduino
 
 char messageFromMC[numChars] = {0};
 int integerFromMC = 0;
@@ -33,6 +33,16 @@ int integerFromMC2 = 0;
 //float floatFromMC = 0.0;
 
 boolean newData = false;
+
+//===================================================================
+// Para realizar a comunicação bidirecional ESP <---> Arduino
+// É utilizada a técnica "Blink without delay", com atenção para em quais partes do código
+// As mensagens são enviadas e recebidas
+
+// Variáveis para Blink Without Delay
+
+long previousMillis = 0; 
+long interval = 1000;  // (em milissegundos) -> define o tempo de "delay"
 
 //====================================================================
 
@@ -57,6 +67,8 @@ void setup() {
   delay(500);
   Serial.println('\n');
   SPIFFS.begin(); // Inicializa o SPI file system
+  
+  Serial.println("<ESP ready to accept messages from the Arduino>");
 
   /*
     Inicializa os serviços:
@@ -66,7 +78,6 @@ void setup() {
       -O servidor http
   */
 
-  Serial.println("<ESP ready to accept messages from the Arduino>");
   startWiFi();
   startMDNS("stem");
   startWebSocket();
@@ -75,28 +86,36 @@ void setup() {
 }
 
 void loop() {
+
+  //Usado pelo blink without delay
+  unsigned long currentMillis = millis();
+
+  //Se o tempo especificado tiver passado, executar bloco de código
+  //Colocar envio de mensagens aqui
+  if(currentMillis - previousMillis > interval) {
+    previousMillis = currentMillis;
+    Serial.println("<Esp says Hi, 1, 2>");
+  }
+ 
+  recvWithStartEndMarkers();
+  
+  if (newData == true) {
+    strcpy(tempChars, receivedChars);
+    parseData();
+    newData = false; //Esperar por nova mensagem
+  }
+  
   //Keep-alive do MDNS, servidor e webSocket
   MDNS.update();
   server.handleClient();
   webSocket.loop();
- 
-    recvWithStartEndMarkers();
-    if (newData == true) {
-      
-      strcpy(tempChars, receivedChars);
-      parseData();
-      
-      //sendMessageWs(id, messageFromMC);
-      //Serial.println("esp says hi");
-      newData = false; //Esperar por nova mensagem
-    }
 }
 
 void startWiFi(){
 
   wifiMulti.addAP("LUDUSKAM-2.4G", "ludusKAMt3ch");   // adicionar credenciais das redes
   wifiMulti.addAP("Charlie 2.4", "vox populi");
-  wifiMulti.addAP("carreta-stem-01", "Stem2021!!");
+  wifiMulti.addAP("carreta_stem01", "Cs2k21!!");
 
   Serial.println("<Connecting>");
   while (wifiMulti.run() != WL_CONNECTED) {  // Esperar WiFi conectar
@@ -239,9 +258,12 @@ void recvWithStartEndMarkers(){
 
 void parseData() {      // Dividir a mensagem em partes
 
-    char * strtokIndx; // Índice de srttok()
+    char copy_receivedChars[sizeof(receivedChars)] = "";
+    strcpy(copy_receivedChars, receivedChars);
 
-    strtokIndx = strtok(tempChars,",");     // Pegar primeira parte (String)
+    char * strtokIndx; // Índice de strtok()
+
+    strtokIndx = strtok(copy_receivedChars,",");     // Pegar primeira parte (String)
     strcpy(messageFromMC, strtokIndx);      // Armazenar em messageFromPC 
  
     strtokIndx = strtok(NULL, ",");         // Continuar a dividir a mensagem
