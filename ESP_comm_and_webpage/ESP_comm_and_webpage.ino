@@ -24,10 +24,10 @@ char tempChars[numChars];       // Array temporário para parsing
 // Armazenar mensagem depois do parsing
 
 //messageFromMC (microcontroller) para diferenciar da messageFromPC no código do arduino
+//A função atoi() não pode retornar null, então todos os campos precisam ser preenchidos
 
+// Variáveis que serão enviadas pelo websocket
 char messageFromMC[numChars] = {0};
-int integerFromMC = 0;
-int integerFromMC2 = 0;
 
 //Adicionar mais conforme necessidade
 //float floatFromMC = 0.0;
@@ -42,7 +42,7 @@ boolean newData = false;
 // Variáveis para Blink Without Delay
 
 long previousMillis = 0; 
-long interval = 1000;  // (em milissegundos) -> define o tempo de "delay"
+long interval = 100;  // (em milissegundos) -> define o tempo de "delay"
 
 //====================================================================
 
@@ -68,7 +68,7 @@ void setup() {
   Serial.println('\n');
   SPIFFS.begin(); // Inicializa o SPI file system
   
-  Serial.println("<ESP ready to accept messages from the Arduino>");
+  Serial.println("<ESP ready to accept messages from the Arduino, 0, 0>");
 
   /*
     Inicializa os serviços:
@@ -91,10 +91,12 @@ void loop() {
   unsigned long currentMillis = millis();
 
   //Se o tempo especificado tiver passado, executar bloco de código
-  //Colocar envio de mensagens aqui
+  //Colocar envio de mensagens aqui/
   if(currentMillis - previousMillis > interval) {
     previousMillis = currentMillis;
-    Serial.println("<Esp says Hi, 1, 2>");
+    
+    sendMessageWs(id, messageFromMC);
+    //Serial.print("I got:"); Serial.print(messageFromMC);Serial.print(", ");Serial.print(integerFromMC_str);Serial.print(", ");Serial.println(integerFromMC2);
   }
  
   recvWithStartEndMarkers();
@@ -260,19 +262,6 @@ void parseData() {      // Dividir a mensagem em partes
 
     char copy_receivedChars[sizeof(receivedChars)] = "";
     strcpy(copy_receivedChars, receivedChars);
-
-    char * strtokIndx; // Índice de strtok()
-
-    strtokIndx = strtok(copy_receivedChars,",");     // Pegar primeira parte (String)
-    strcpy(messageFromMC, strtokIndx);      // Armazenar em messageFromPC 
- 
-    strtokIndx = strtok(NULL, ",");         // Continuar a dividir a mensagem
-    integerFromMC = atoi(strtokIndx);       // Converte para interiro e armazena na variável
-
-    strtokIndx = strtok(NULL, ",");         // Repete a operação anterior
-    integerFromMC2 = atoi(strtokIndx);      // Repetir para quantas partes forem necessárias
-
-    // strtokIndx = strtok(NULL, ",");
-    // floatFromPC = atof(strtokIndx);      // Caso seja necessário receber um float
+    strcpy(messageFromMC, copy_receivedChars);      // Armazenar em messageFromPC 
 
 }

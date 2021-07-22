@@ -35,13 +35,13 @@ void setup() {
   Serial.begin(9600);
   Serial.println("O arduino espera uma mensagem do tipo <String, int, int>");
 
-  base.attach(8);
-  elo2.attach(9);
-  elo3.attach(10);
-  elo4.attach(11);
-  elo5.attach(12);
+  base.attach(4);
+  elo2.attach(5);
+  elo3.attach(6);
+  elo4.attach(7);
+  elo5.attach(8);
   
-  garra.attach(13);
+  garra.attach(9);
   
 //  base.write(90);
 //  elo2.write(90);

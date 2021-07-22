@@ -44,5 +44,6 @@ function invertDirection() {
   // function receiveSpeed(){}
 
   function receiveData(data) {
-    document.getElementById("ws_test").innerHTML = data;
+    var complete_data = "RPM: " + data;
+    document.getElementById("ws_test").innerHTML = complete_data;
   }
