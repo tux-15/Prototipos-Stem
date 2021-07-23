@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calibração carrinho</title>
+    <link rel="stylesheet" href="carrinho_style.css">
+</head>
+
+<body>
+    <div align="center">
+        <h1 class="header">
+            Controlar a quantidade de pwm em cada lado do carrinho
+        </h1>
+
+        <div>
+            <h1 class="normalText">Movimentar o slider ou usar a caixa de texto para controlar o valor que será enviado</h1>
+        </div>
+
+        <div>
+            <div id="rpm_roda_direita" class="normalText" style="padding-top: 1cm; display: inline-block;">
+                RPM:
+            </div>
+            <div id="rpm_roda_direita" class="normalText" style="padding-top: 1cm; display: inline-block;">
+                RPM:
+            </div>
+        </div>
+
+        <div style="display: inline-block; padding: 20px;">
+            <div class="slidecontainer">
+                <input type="range" orient="vertical" 
+                    min="0" max="255" value="0" 
+                    class="slider" id="slider0" 
+                    oninput="sendAngle('slider0', 'value0')"> 
+                </input>
+            </div>    
+            <div class="normalText" id="value0" style="padding: 20px;">0</div>
+        </div>
+
+        <div style="display: inline-block; padding: 20px">
+            <div class="slidecontainer">
+            <input type="range" orient="vertical" 
+                min="0" max="255" value="0" 
+                class="slider" id="slider1" 
+                oninput="sendAngle('slider1', 'value1')"> 
+            </input>
+            </div>    
+            <div class="normalText" id="value1" style="padding: 20px;"> 0</div>
+        </div>
+
+        <form>
+            <label for="right_wheel">Rodas esquerdas:</label>
+            <input type="text" id="left_wheel" placeholder="digitar valor de 0 a 255"><br><br>
+
+            <label for="left_wheel">Rodas direitas:</label>
+            <input type="text" id="right_wheel" placeholder="digitar valor de 0 a 255"><br><br>
+
+            <input type="button" value="Atualizar" onclick="sendPWM('left_wheel', 'right_wheel', 'value0', 'value1', 'slider0', 'slider1')">
+        </form>
+
+        <div style="padding-top: 5px;">
+            <h2 class="normalText">
+                Inverter sentido
+            </h2>
+        </div>
+
+        <div style="padding-top: 5px;">
+            <label class="switch">
+                <input type="checkbox" onclick="invertDirection()">
+                <span class="slider_switch round"></span>
+            </label>
+        </div>
+
+    </div>
+
+    <script src="carrinho_script.js"></script>
+</body>
