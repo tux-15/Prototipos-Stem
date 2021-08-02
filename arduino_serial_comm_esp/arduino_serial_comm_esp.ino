@@ -20,7 +20,7 @@ long interval = 1000;
 //============
 
 void setup() {
-    Serial.begin(9600);
+    Serial.begin(9600);      
     Serial.println("O arduino espera uma mensagem do tipo <String, int, int>");
     Serial.println();
 }

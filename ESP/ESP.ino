@@ -87,12 +87,10 @@ void setup() {
 
 void loop() {
 
-  //Usado pelo blink without delay
-  unsigned long currentMillis = millis();
+  unsigned long currentMillis = millis(); //Usado pelo blink without delay
 
-  //Se o tempo especificado tiver passado, executar bloco de código
-  //Colocar envio de mensagens aqui/
-  if(currentMillis - previousMillis > interval) {
+  //Colocar envio de mensagens aqui
+  if(currentMillis - previousMillis > interval) { //Se o tempo especificado tiver passado, executar bloco de código
     previousMillis = currentMillis;
     
     sendMessageWs(id, messageFromMC);
@@ -157,7 +155,7 @@ void startMDNS(String mdnsName){ // Iniciar o mDNS com o nome desejado para a re
 
 void startServer(){ // Inicia o servidor com um File Read Handler e um upload handler
 
-  server.onNotFound([]() {                              // Caso o client requisiste um arquivo
+  server.onNotFound([]() {                              // Caso o client requisite um arquivo
   if (!handleFileRead(server.uri()))                    // Mandar se existir
     server.send(404, "text/plain", "404: Not Found");   // Retornar 404 se não existir
   });
