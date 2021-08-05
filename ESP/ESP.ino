@@ -24,13 +24,9 @@ char tempChars[numChars];       // Array temporário para parsing
 // Armazenar mensagem depois do parsing
 
 //messageFromMC (microcontroller) para diferenciar da messageFromPC no código do arduino
-//A função atoi() não pode retornar null, então todos os campos precisam ser preenchidos
 
 // Variáveis que serão enviadas pelo websocket
 char messageFromMC[numChars] = {0};
-
-//Adicionar mais conforme necessidade
-//float floatFromMC = 0.0;
 
 boolean newData = false;
 
@@ -94,14 +90,12 @@ void loop() {
     previousMillis = currentMillis;
     
     sendMessageWs(id, messageFromMC);
-    //Serial.print("I got:"); Serial.print(messageFromMC);Serial.print(", ");Serial.print(integerFromMC_str);Serial.print(", ");Serial.println(integerFromMC2);
   }
  
   recvWithStartEndMarkers();
   
   if (newData == true) {
     strcpy(tempChars, receivedChars);
-    parseData();
     newData = false; //Esperar por nova mensagem
   }
   
@@ -244,6 +238,7 @@ void recvWithStartEndMarkers(){
                 receivedChars[ndx] = '\0'; // caractere de terminação
                 recvInProgress = false;
                 ndx = 0;
+                strcpy(messageFromMC,receivedChars);
                 newData = true;
             }
         }
@@ -252,14 +247,4 @@ void recvWithStartEndMarkers(){
             recvInProgress = true;
         }
     }
-}
-
-//=================================================================
-
-void parseData() {      // Dividir a mensagem em partes
-
-    char copy_receivedChars[sizeof(receivedChars)] = "";
-    strcpy(copy_receivedChars, receivedChars);
-    strcpy(messageFromMC, copy_receivedChars);      // Armazenar em messageFromPC 
-
 }

@@ -15,13 +15,16 @@ int integerFromPC2 = 0;
 boolean newData = false;
 
 long previousMillis = 0; 
-long interval = 1000;  
+long interval = 500;  
+int i = 0;
+int j = 0;
+int k = 0;
 
 //============
 
 void setup() {
     Serial.begin(9600);      
-    Serial.println("O arduino espera uma mensagem do tipo <String, int, int>");
+    Serial.println("O arduino espera uma mensagem do tipo String, int, int");
     Serial.println();
 }
 
@@ -34,8 +37,11 @@ void loop() {
   if(currentMillis - previousMillis > interval) {
     previousMillis = currentMillis;
     
-    Serial.println("<arduino says Hi, 3, 4>");
-    Serial.print("I got: "); Serial.print(integerFromPC); Serial.println();
+    Serial.print("<mensagem do carrinho, "); Serial.print(i); Serial.print(", "); Serial.print(j); Serial.print(", "); Serial.print(k); Serial.print(", "); Serial.println("5>");
+    i++;
+    j = i + 1;
+    k = i + 2;
+    //Serial.print("I got: "); Serial.print(integerFromPC); Serial.println();
   }
 
     //Comunicação e parsing -----------------------------
@@ -96,6 +102,8 @@ void recvWithStartEndMarkers() {
 //============
 
 void parseData() {      // Dividir a mensagem em partes
+
+    String, int, int
 
     char copy_receivedChars[sizeof(receivedChars)] = "";
     strcpy(copy_receivedChars, receivedChars);

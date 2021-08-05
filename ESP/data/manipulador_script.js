@@ -31,6 +31,6 @@ function switchEffector(){
 }
 
 function receiveData(data) {
-    var complete_data = "Mensagemar: " + data;
+    var complete_data = "Mensagem: " + data;
     document.getElementById("mensagem_manipulador").innerHTML = complete_data;
 }
