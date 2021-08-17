@@ -16,7 +16,7 @@ int integerFromPC2 = 0;
 boolean newData = false;
 
 long previousMillis = 0; 
-long interval = 250;  
+long interval = 1000;  
 
 Servo servo1;
 Servo servo2;
@@ -24,28 +24,86 @@ Servo servo3;
 Servo servo4;
 Servo servo5;
 
-void setup() {
-  Serial.begin(9600);
-  Serial.println("<Manipulador iniciando, 0, 0>");
+void checkNewData();
+void sendMessage();
+void moveServo();
+void startPosition();
 
-  servo1.attach();
-  servo2.attach();
-  servo3.attach();
-  servo4.attach();
-  servo5.attach();
+void setup() {
+  
+  Serial.begin(9600);
+  delay(250);
+  
+
+  servo1.attach(8);
+  servo2.attach(4);
+  servo3.attach(5);
+  servo4.attach(6);
+  servo5.attach(7);
+
+  startPosition();
+
+  Serial.println("<Manipulador iniciando, 0, 0>");
 
 }
 
 void loop() {
 
+  sendMessage("Manipulador", 1, 1);
+  recvWithStartEndMarkers();
+  checkNewData();
+  moveServo(messageFromPC, integerFromPC);
+
+}
+
+void startPosition(){
+  servo1.write(90);
+  servo2.write(9);
+  servo3.write(10);
+  servo4.write(60);
+  servo5.write(66);
+  
+}
+
+void moveServo(char servo[numChars], int angle){
+  
+  if (strcmp(servo, "value0") == 0){
+    servo1.write(angle);
+  }
+  
+  if (strcmp(servo, "value1") == 0){
+    servo2.write(angle);
+  }
+  
+  if (strcmp(servo, "value2") == 0){
+    servo3.write(angle);
+  }
+  
+  if (strcmp(servo, "value3") == 0){
+    servo4.write(angle);
+  }
+  
+  if (strcmp(servo, "value4") == 0){
+    servo5.write(angle);
+  }
+}
+
+
+void sendMessage(char message[numChars], int num1, int num2){
+
+  unsigned long currentMillis = millis();
+  
   if(currentMillis - previousMillis > interval) {
     previousMillis = currentMillis;
-  
-    Serial.println("<arduino says Hi, 3, 4>");
-  //Serial.print("I got: "); Serial.print(integerFromPC); Serial.println();
+    Serial.print("<");
+    Serial.print(message);Serial.print(", ");
+    Serial.print(num1);Serial.print(", ");
+    Serial.print(num2);Serial.println(">");
   }
+}
 
-  recvWithStartEndMarkers();
+void checkNewData(){
+  
   if (newData == true) {
     strcpy(tempChars, receivedChars);
     parseData();
