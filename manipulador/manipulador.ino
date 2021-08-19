@@ -57,11 +57,11 @@ void loop() {
 }
 
 void startPosition(){
-  servo1.write(90);
-  servo2.write(9);
+  servo1.write(77);
+  servo2.write(0);
   servo3.write(10);
-  servo4.write(60);
-  servo5.write(66);
+  servo4.write(141);
+  servo5.write(90);
   
 }
 

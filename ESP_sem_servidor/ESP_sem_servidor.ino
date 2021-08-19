@@ -6,7 +6,7 @@
 ESP8266WiFiMulti wifiMulti;     // Obejto para gerenciar credenciais de rede
 WebSocketsClient webSocket; // WebSocket
 
-const int port = 5000;
+const int port = 1801;
 
 const byte numChars = 64;       //Número máximo de caracteres por mensagem
 char receivedChars[numChars];   //Armazenar mensagem
@@ -48,9 +48,13 @@ void loop() {
 
   //Colocar envio de mensagens aqui
   if(currentMillis - previousMillis > interval) { //Se o tempo especificado tiver passado, executar bloco de código
+
+//    long intervalo = currentMillis - previousMillis;
+//    char aaa[10];
+//    itoa(intervalo, aaa, 10);
     previousMillis = currentMillis;
     
-    sendMessageWs(messageFromMC);
+    //sendMessageWs();
   }
 
   recvWithStartEndMarkers();
@@ -104,72 +108,41 @@ void startWebSocket() { // Inicializa o webSocket
   
   webSocket.onEvent(webSocketEvent);          // função de callback para eventos que acontecerem no webSocket
   
-  Serial.println("<WebSocket server started.>");
+  Serial.println("<WebSocket client started.>");
 }
-
-//void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght) { // Quando alguma mensagem chega pelo webSocket
-//  switch (type) {
-//    case WStype_DISCONNECTED:             // Se a conexão for interrompida
-//      Serial.printf("<[%u] Disconnected!>\n", num);
-//      Salva o id da conexão atual
-//      id = num;  
-//      Serial.println();
-//      break;
-//    case WStype_CONNECTED: {              // Quando a conexão é estabelecida
-//        IPAddress ip = webSocket.remoteIP(num);
-//        Serial.printf("<[%u] Connected from %d.%d.%d.%d url: %s>\n", num, ip[0], ip[1], ip[2], ip[3], payload);
-//        Serial.println();
-//      }
-//      break;
-//    case WStype_TEXT:                     // Se novos dados forem recebidos
-//        Serial.printf("[%u] get Text: %s\n", num, payload);
-//        Serial.printf("%s\n", payload);
-//        Serial.println();
-//        delay(100);
-//        break;
-//  }
-//}
 
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 
   switch(type) {
-    case WStype_DISCONNECTED:
-      //Serial.printf("[WSc] Disconnected!\n");
+    
+    case WStype_DISCONNECTED: 
+      Serial.printf("\rDisconnected!\n");
       break;
-    case WStype_CONNECTED: {
-      Serial.printf("[WSc] Connected to url: %s\n", payload);
-
+    
+    case WStype_CONNECTED: 
+      Serial.printf("\rConnected to url: %s\n", payload);
+      Serial.println();
       // send message to server when Connected
-      webSocket.sendTXT("Connected");
-    }
+      webSocket.sendTXT("ESP_on");
       break;
+      
     case WStype_TEXT:
-      //Serial.printf("[WSc] get text: %s\n", payload);
-      Serial.printf("%s\n", payload);
+      Serial.printf("%s", payload);
       Serial.println();
 
       // send message to server
       // webSocket.sendTXT("message here");
       break;
-    case WStype_BIN:
-      Serial.printf("[WSc] get binary length: %u\n", length);
-      hexdump(payload, length);
-
-      // send data to server
-      // webSocket.sendBIN(payload, length);
-      break;
-        case WStype_PING:
-            // pong will be send automatically
-            Serial.printf("[WSc] get ping\n");
-            break;
-        case WStype_PONG:
-            // answer to a ping we send
-            Serial.printf("[WSc] get pong\n");
-            break;
+      case WStype_BIN:
+        //Serial.printf("[WSc] get binary length: %u\n", length);
+        hexdump(payload, length);
+        Serial.println();
+        // send data to server
+        // webSocket.sendBIN(payload, length);
+        break;
     }
 
 }
-
 void sendMessageWs(const char * payload){
     webSocket.sendTXT(payload);
 }

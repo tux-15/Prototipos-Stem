@@ -7,29 +7,29 @@ connection.onerror = function (error) {
 };
 connection.onmessage = function (e) {
   console.log('Server: ', e.data);
-  receiveData(e.data) 
-  getVel(e.data);
+  //receiveData(e.data) 
+  //getVel(e.data);
 };
 connection.onclose = function () {
   console.log('WebSocket connection closed');
 };
 
 function receiveData(received_data) {
-    let data = received_data;
-    let parsed_data = data.split(",");
+    // let data = received_data;
+    // let parsed_data = data.split(",");
 
-    let mensagem = parsed_data[0];
+    // let mensagem = parsed_data[0];
 
-    let rpm_esquerda = parsed_data[1];
-    let rpm_direita = parsed_data[2];
+    // let rpm_esquerda = parsed_data[1];
+    // let rpm_direita = parsed_data[2];
 
-    let vel_esquerda = parsed_data[3];
-    let vel_direita = parsed_data[4];
+    // let vel_esquerda = parsed_data[3];
+    // let vel_direita = parsed_data[4];
 
-    var rpm_data = "RPM Esquerdo: " + rpm_esquerda + " RPM Direito: " + rpm_direita;
-    var vel_data = "Velocidade esquerda: " + vel_esquerda + " Velocidade direita: " + vel_direita;
-    document.getElementById("rpm").innerHTML = rpm_data;
-    document.getElementById("velocidade").innerHTML = vel_data;
+    // var rpm_data = "RPM Esquerdo: " + rpm_esquerda + " RPM Direito: " + rpm_direita;
+    // var vel_data = "Velocidade esquerda: " + vel_esquerda + " Velocidade direita: " + vel_direita;
+    // document.getElementById("rpm").innerHTML = rpm_data;
+    // document.getElementById("velocidade").innerHTML = vel_data;
     document.getElementById("dados_carrinho").innerHTML = received_data;
 }
 
