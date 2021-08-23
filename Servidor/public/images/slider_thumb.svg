@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 42 42">
+<defs>
+<style>
+
+    .cls-1{
+        fill:url(#Gradiente_sem_nome_21);
+    }
+    .cls-2{
+        fill:#fff;
+    }
+
+</style>
+<linearGradient id="Gradiente_sem_nome_21" y1="21" x2="42" y2="21" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#014d8f"/><stop offset="1" stop-color="#9c00de"/>
+</linearGradient>
+
+</defs>
+
+<g id="Camada_2" data-name="Camada 2">
+<g id="Camada_1-2" data-name="Camada 1">
+<circle class="cls-1" cx="21" cy="21" r="21"/>
+<circle class="cls-2" cx="21" cy="21" r="16"/>
+</g>
+</g>
+</svg>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="stylesheet" href="stylesheets/manipulador_style.css">
+    <meta charset="utf-8"/>
+    <title>Manipulador Stem</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'>
+
+    <linearGradient id="Gradiente_sem_nome_21" y1="21" x2="42" y2="21" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#014d8f"/><stop offset="1" stop-color="#9c00de"/>
+    </linearGradient>
+
+</head>
+
+<body>
+    <center>
+        <h1 class="header">Controlar manipulador</h1>
+
+        <div style="padding-top: 5px; padding-bottom: 30px;">
+            <label class="switch">
+                <input type="checkbox" onclick="switchEffector()">
+                <span class="slider_switch round"></span>
+            </label>
+        </div>
+
+        <div align="center" class="parent" style="position: relative; z-index: 1;">
+            <div class="normalText" id="mensagem_manipulador">
+                mensagem:
+            </div>
+            <div style="display: inline-block; padding: 20px;">
+                <div class="slidecontainer">
+                    <input type="range" orient="vertical" 
+                        min="0" max="180" value="90" 
+                        class="slider" id="slider0" 
+                        oninput="sendAngle('slider0', 'value0')"> 
+                    </input>
+                </div>    
+                <div class="normalText" id="value0" style="padding: 20px;">90</div>
+            </div>
+
+            <div style="display: inline-block; padding: 20px">
+                <div class="slidecontainer">
+                <input type="range" orient="vertical" 
+                    min="0" max="180" value="90" 
+                    class="slider" id="slider1" 
+                    oninput="sendAngle('slider1', 'value1')"> 
+                </input>
+                </div>    
+                <div class="normalText" id="value1" style="padding: 20px;">90</div>
+            </div>
+
+            <div style="display: inline-block; padding: 20px;">
+                <div class="slidecontainer">
+                    <input type="range" orient="vertical" 
+                    min="0" max="180" value="90" 
+                    class="slider" id="slider2" 
+                    oninput="sendAngle('slider2', 'value2')"> 
+                </input>
+                </div>    
+                <div class="normalText" id="value2" style="padding: 20px;">90</div>
+            </div>
+
+            <div style="display: inline-block; padding: 20px;">
+                <div class="slidecontainer">
+                    <input type="range" orient="vertical" 
+                    min="0" max="180" value="90" 
+                    class="slider" id="slider3" 
+                    oninput="sendAngle('slider3', 'value3')"> 
+                </input>
+                </div>    
+                <div class="normalText" id="value3" style="padding: 20px;">90</div>
+            </div>
+
+            <div style="display: inline-block; padding: 20px;">
+                <div class="slidecontainer">
+                    <input type="range" orient="vertical" 
+                    min="0" max="60" value="30" 
+                    class="slider" id="slider4" 
+                    oninput="sendAngle('slider4', 'value4')"> 
+                </input>
+                </div>    
+                <div class="normalText" id="value4" style="padding: 20px;">30</div>
+            </div>
+        </div>
+
+        <div class="bottom pattern" style="width:99%; position:fixed; bottom:0">
+            <img src="images/svgpattern.svg" alt="pattern" style="position:relative; z-index: -1;"> 
+        </div>
+
+    </center>
+
+    <script src="javascripts/manipulador_script.js"></script>
+</body> 
