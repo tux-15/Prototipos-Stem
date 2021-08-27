@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/aaa', function(req, res){
+router.get('/getESPs', function(req, res){
   esp_list = "";
   global.esps.forEach(esp => esp_list = esp_list + esp.ip + "<br>");
   res.send(esp_list);
