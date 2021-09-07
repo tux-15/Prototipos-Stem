@@ -3,7 +3,8 @@ var router = express.Router();
 
 /* GET manipulador page. */
 router.get('/', function(req, res, next) {
-    res.render('manipulador', { title: 'Express' });
-  });
+  console.log("Mandando página do manipulador");
+  res.render('manipulador', {title: "Manipulador"});
+});
 
 module.exports = router;

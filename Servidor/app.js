@@ -11,62 +11,60 @@ var calibracaoCarrinhoRouter = require('./routes/calibracao');
 
 var WebSocket = require('ws');
 
-function removeItemOnce(arr, value) {
-  var index = arr.indexOf(value);
-  if (index > -1) {
-    arr.splice(index, 1);
-  }
-  return;
+var Esp = require("./classes/ESP.js");
+// var removeItemOnce = Esp.removeItemOnce;
+// var noop = Esp.noop;
+var ping  = Esp.ping;
+var heartbeat = Esp.heartbeat;
+
+var Page = require("./classes/Page.js");
+
+class Chatters {
+  constructor(esp, page){
+    this.esp = esp;
+    this.page = page;
+    console.log(this.esp, "is binding to ", this.page);
+  };
+
 }
 
 const wss = new WebSocket.Server({
   port: 1801,
 });
 
+const interval = setInterval(ping, 3000);
+
+wss.on('close', function close() {
+  clearInterval(interval);
+});
+
 
 global.esps = [];
-let pages = [];
-
-function noop() {};
-
-function heartbeat() {
-  current_ip = this['_socket']['_peername']['address'];
-  global.esps.forEach(function each(esp){
-    if(current_ip == esp.ip){
-      esp.status = true;
-    }
-  })
-}
-
-class Esp {
-  constructor(connection, ip, status){
-    this.connection = connection;
-    this.ip = ip;
-    this.status = status
-  }
-
-}
+global.pages = [];
+let rooms = [];
 
 wss.on('connection', function connection(ws, request) {
 
   ws.on('pong', heartbeat);
-  
+
   ws.on('message', function incoming(message) {
     message_string = message.toString();
+    // message_json = JSON.parse(message);
+    // console.log(message_json);
 
     if(message_string == "ESP_on"){
       global.esps.push(new Esp(ws, request.socket.remoteAddress, true));
-      console.log("new ESP: ", global.esps[global.esps.length-1].ip);
+      console.log("new ESP: ", global.esps[global.esps.length-1].id);
       console.log("-----------------------------------------------------------------");
-      //console.log("new ESP: ", global.esps[esps.length-1].status);
-      //console.log("new ESP: ", global.esps[esps.length-1].connection);
-      //esps.forEach(esp => console.log(esp.status, esp.ip));
     }
 
-    if(message_string == "page_on"){
-      page_data = {'ip': ws.ip, 'connection': ws};
-      pages.push(page_data);
-      pages.forEach(page => console.log("Pages = ", page.ip));
+    // if(message_json['start'] == "page_on"){
+      if(message_string == "page_on"){
+      var ip = request.socket.remoteAddress
+      // console.log("The address ", ip, " wants to access the esp", message_json['esp_id'], "to use", message_json['robot']);
+      global.pages.push(new Page(ws, ip));
+      console.log("new page: ", global.pages[global.pages.length-1].id);
+      //rooms.push(new Chatters(indexRouter.participants[0], indexRouter.participants[1]));
     }
 
     //esps.forEach(esp => esp.connection.send(message));
@@ -76,29 +74,6 @@ wss.on('connection', function connection(ws, request) {
   //ws.send('Connected to Server\n');
 });
 
-const interval = setInterval(function ping() {
-
-  global.esps.forEach(function each(esp) {
-    if (esp.status === false) {
-      console.log(esp.ip + " is dead");
-      console.log("-----------------------------------------------------------------");
-      esp.connection.terminate();
-      removeItemOnce(global.esps, esp);
-      return;
-    }
-
-    esp.status = false;
-    esp.connection.ping(noop);
-    // global.esps.forEach(esp => console.log("active esps: ", esp.ip));
-    // console.log("-----------------------------------------------------------------");
-  });
-}, 1500);
-
-wss.on('close', function close() {
-  clearInterval(interval);
-});
-
-
 var app = express();
 
 // view engine setup
@@ -107,7 +82,7 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

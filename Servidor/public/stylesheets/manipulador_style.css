@@ -26,7 +26,7 @@
     width: 32px;
     height: 32px;
     border: 0;
-    background: url(images/slider_thumb.svg);
+    background: url(../images/slider_thumb.svg);
     cursor: pointer;
 }    
 .slider::-moz-range-thumb { /* firefox */

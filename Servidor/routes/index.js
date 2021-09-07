@@ -1,20 +1,18 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
 });
 
 router.get('/getESPs', function(req, res){
-  esp_list = "";
-  global.esps.forEach(esp => esp_list = esp_list + esp.ip + "<br>");
-  res.send(esp_list);
+  res.send(global.esps);
+  //res.render('select_prototype', {title: "aa"});
 });
 
-// /* GET Hello World page. */
-// router.get('/helloworld', function(req, res) {
-//   res.render('helloworld', { title: 'Hello, World!' });
+// router.post('/postInfo', function(req, res){
+//   console.log(req.body);
+//   res.redirect('/manipulador');
 // });
 
 module.exports = router;

@@ -2,24 +2,7 @@
 
 <head>
     <meta charset="utf-8" content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'>
-    <style>
-
-        .header{
-            top: 0px;
-            left: 0px;
-            width: 1920px;
-            height: 200px;
-            background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
-            background: #FFFFFF 0% 0% no-repeat padding-box;
-            opacity: 1;
-        }
-        .header_center{
-            top: 54px;
-            left: 360px;
-            width: 1199px;
-            height: 92px;
-        }
-    </style>
+    <link rel="stylesheet" href="stylesheets/index_style.css">
 </head>
 
 
@@ -27,59 +10,31 @@
 
     <div align="center">
         <div>
-            <h1>
-                Página Inicial do WebServer usando ESP8266
+            <h1 class="header">
+                Página Inicial do Servidor usando Node.js
             </h1>
         </div>
 
-        <div>
-            Selecione abaixo qual página você deseja visitar:
-        </div>
-
-        <div style="padding-top: 20px;">
-            <a href="carrinho">
-                Carrinho
+        <!-- <div class="normalText">
+            <a href="/manipulador">
+                aaaa
             </a>
-        </div>
+        </div> -->
 
-        <div style="padding-top: 20px;">
-            <a href="manipulador">
-                Manipulador
-            </a>    
-        </div>
-
-        <div style="padding-top: 20px;">
-            <a href="calibracao">
-                Teste do carrinho aa
-            </a>
+        <div class="normalText">
+            Os ESPs conectados ao serivdor aparecerão abaixo:
         </div>
         
-        <div style="padding-top: 1cm;">
-            <button type="button" onclick="loadXMLDoc()" >Procurar ESPs</button>
+        <div style="padding-top: 1cm;", id="procurarEspBotao">
+            <button type="button" onclick="searchESPs()">Procurar ESPs</button>
         </div>
 
-        <div id="demo" style="padding-top: 2cm; padding-bottom: 2cm;">
-
+        <div id="esps_ativos" class="normalText" style="padding: 1s5px;">
+            
         </div>
 
     </div>
 
-    <script>
-        function loadXMLDoc() {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                // xmlDoc = this.responseXML;
-                // txt = "";
-
-                document.getElementById("demo").innerHTML =
-                this.responseText;
-            }
-        };
-        xhttp.open("GET", "/getESPs", true);
-        xhttp.send();
-        }
-    </script>
-
+    <script src="javascripts/index_script.js"></script>
 
 </body>

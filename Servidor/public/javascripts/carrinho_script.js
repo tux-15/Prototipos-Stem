@@ -2,6 +2,8 @@ var connection = new WebSocket('ws://' + location.hostname + ':1801/', ['arduino
 connection.onopen = function () {
   connection.send('Connect ' + new Date());
   connection.send('page_on');
+  connection.send(sendCookie());
+
 };
 connection.onerror = function (error) {
   console.log('WebSocket Error ', error);
@@ -71,4 +73,31 @@ function sendPWM(leftInput, rightInput, valueLeft, valueRight, slider0, slider1)
 function send(x,y,speed,angle){
   data = '<' + 'carrinho, ' + speed + ', ' + angle + '>'
   connection.send(data);
+}
+
+function sendCookie() {
+  let id = getCookie("esp_id");
+  let robot = getCookie("robot");
+  if (id != "") {
+    info = {"esp_id": id, "robot": robot};
+    infoJson = JSON.stringify(info);
+    return(infoJson);
+    // console.log(connection);
+  } 
+} 
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+      }
+  }
+  return "";
 }

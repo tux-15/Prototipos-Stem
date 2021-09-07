@@ -1,0 +1,17 @@
+.header{
+  font: normal normal bold 54px/65px Orkney;
+  color: #014D8F;
+  letter-spacing: 0px;
+  /* top: 298px;
+  left: 360px;
+  width: 1097px;
+  height: 62px; */
+  padding-bottom: 20px;
+}
+
+.normalText{
+  font: normal normal normal 24px/28px Orkney;
+  letter-spacing: 0px;
+  color: #707070;
+  opacity: 1;
+}
