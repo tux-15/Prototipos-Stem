@@ -1,16 +1,14 @@
 
 var connection = new WebSocket('ws://' + location.hostname + ':1801/', ['arduino']);
 connection.onopen = function () {
-  // connection.send('Connect ' + new Date());
-  connection.send('page_on');
-  // connection.send(sendJson());
+  connection.send(startPage());
 };
 connection.onerror = function (error) {
   console.log('WebSocket Error ', error);
 };
 connection.onmessage = function (e) {
   console.log('Server: ', e.data);
-  receiveData(e.data)
+  receiveData(e.data);
 };
 connection.onclose = function () {
   console.log('WebSocket connection closed');
@@ -20,17 +18,24 @@ let last = +new Date();
 
 function sendAngle(slider, sliderValue) {
     document.getElementById(sliderValue).innerHTML = document.getElementById(slider).value;
-    var command = "<" + sliderValue + ',' + document.getElementById(slider).value + ">";
+    var command = {
+      "slider": sliderValue,
+      "angulo": document.getElementById(slider).value
+    };
+
+    commandJson = JSON.stringify(command);
+
     const now = +new Date();
     if (now - last > 50){
         last = now;
-        connection.send(command);
-    }
+        connection.send(commandJson);
+    };
 };
 
 function switchEffector(){
-    var command = "<" + "effector, " + "0, " + "0>";
-    connection.send(command);
+    var command = {"slider": "effector", "valor": "0"};
+    commandJson = JSON.stringify(command);
+    connection.send(commandJson);
 };
 
 function receiveData(data) {
@@ -38,25 +43,17 @@ function receiveData(data) {
     document.getElementById("mensagem_manipulador").innerHTML = complete_data;
 };
 
-
-function sendCookie() {
+function startPage() {
   let id = getCookie("esp_id");
   let robot = getCookie("robot");
-  if (id != "") {
-    info = {"esp_id": id, "robot": robot};
-    infoJson = JSON.stringify(info);
-    return(infoJson);
-    // console.log(connection);
-  } 
-} 
-
-function sendJson() {
-  let id = getCookie("esp_id");
-  let robot = getCookie("robot");
-  a = {"start": "page_on", "esp_id": id, "robot": robot};
-  aa = JSON.stringify(a);
-  return aa;
-}
+  startInfo = {
+    "start": "page_on", 
+    "to": id, 
+    "meta": robot,
+  };
+  startInfoJson = JSON.stringify(startInfo);
+  return startInfoJson;
+};
   
 
 function getCookie(cname) {
@@ -70,7 +67,7 @@ function getCookie(cname) {
       }
       if (c.indexOf(name) == 0) {
           return c.substring(name.length, c.length);
-      }
-  }
+      };
+  };
   return "";
-}
+};

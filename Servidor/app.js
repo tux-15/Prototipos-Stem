@@ -12,21 +12,19 @@ var calibracaoCarrinhoRouter = require('./routes/calibracao');
 var WebSocket = require('ws');
 
 var Esp = require("./classes/ESP.js");
-// var removeItemOnce = Esp.removeItemOnce;
-// var noop = Esp.noop;
 var ping  = Esp.ping;
 var heartbeat = Esp.heartbeat;
 
 var Page = require("./classes/Page.js");
 
-class Chatters {
-  constructor(esp, page){
-    this.esp = esp;
-    this.page = page;
-    console.log(this.esp, "is binding to ", this.page);
-  };
+// class Chatters {
+//   constructor(esp, page){
+//     this.esp = esp;
+//     this.page = page;
+//     console.log(this.esp, "is binding to ", this.page);
+//   };
 
-}
+// }
 
 const wss = new WebSocket.Server({
   port: 1801,
@@ -43,32 +41,70 @@ global.esps = [];
 global.pages = [];
 let rooms = [];
 
+/**
+ * JSON map:
+ * {
+ *    meta: indica contexto(manipulador/carrinho)
+ *    start: indica se um esp/pagina entrou no servido
+ *    to: id do alvo
+ *    data: [{angulo0: 110}, {angulo1: 234}] etc etc //opcional
+ * } 
+ *  
+ */
+
 wss.on('connection', function connection(ws, request) {
 
-  ws.on('pong', heartbeat);
+  ws.on('pong', function(){heartbeat(ws)});
 
   ws.on('message', function incoming(message) {
-    message_string = message.toString();
-    // message_json = JSON.parse(message);
-    // console.log(message_json);
 
-    if(message_string == "ESP_on"){
+    messageJson = JSON.parse(message);
+
+    if(messageJson['start'] == "ESP_on"){
+
       global.esps.push(new Esp(ws, request.socket.remoteAddress, true));
+
       console.log("new ESP: ", global.esps[global.esps.length-1].id);
-      console.log("-----------------------------------------------------------------");
-    }
+    };
 
-    // if(message_json['start'] == "page_on"){
-      if(message_string == "page_on"){
-      var ip = request.socket.remoteAddress
-      // console.log("The address ", ip, " wants to access the esp", message_json['esp_id'], "to use", message_json['robot']);
-      global.pages.push(new Page(ws, ip));
-      console.log("new page: ", global.pages[global.pages.length-1].id);
+    if(messageJson['start'] == "page_on"){
+      var ip = request.socket.remoteAddress;
+      global.pages.push(new Page(ws, ip, messageJson['to'], messageJson['meta']));
+      lastPage = global.pages[global.pages.length-1];
+
+      rooms.push({"pageId": lastPage.id, "espId": lastPage.pageEsp});
+      console.log(rooms);
+
+      // console.log("pageEsp: ", global.pages[global.pages.length-1].pageEsp);
+      // console.log("meta: ", global.pages[global.pages.length-1].meta);
+      // console.log("new page: ", global.pages[global.pages.length-1].id);
+
       //rooms.push(new Chatters(indexRouter.participants[0], indexRouter.participants[1]));
-    }
+    };
 
-    //esps.forEach(esp => esp.connection.send(message));
-    console.log('received: %s', message);
+    var wsId = ws['_socket']['_peername']['address'].slice(7);
+
+    //console.log("from: ", wsId);
+
+
+    //TESTAR AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+  // if(rooms[0] != undefined){
+  //   rooms.forEach(room => {
+  //     if (wsId == room.pageId){
+  //       //sconsole.log("a página foi achada");
+  //       global.esps.forEach(esp =>{
+  //         if (room.espId = esp.id){
+  //           //console.log("achou esp");
+  //           esp.connection.send(message);
+  //         };
+  //       });
+  //     };
+  //   });
+  // };
+
+  esps.forEach(esp => esp.connection.send(message));
+  console.log('received: %s', message);
   });
 
   //ws.send('Connected to Server\n');
