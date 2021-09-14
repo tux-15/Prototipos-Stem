@@ -1,15 +1,15 @@
 class Esp {
-    constructor(connection, ip, status){
+    constructor(connection, id, status){
       this.connection = connection;
-      this.id = ip.toString().slice(17);
-      this.status = status
-
+      this.id = id;
+      this.status = status;
+      this.taken;
     };
 
     static heartbeat(wsObject) {
-      var current_ip = wsObject['_socket']['_peername']['address'];
+      var current_id = wsObject['_socket']['_peername']['address'].toString().slice(17);
       global.esps.forEach(function each(esp){
-        if(current_ip == esp.ip){
+        if(current_id == esp.id){
           esp.status = true;
         }
       });
@@ -22,6 +22,7 @@ class Esp {
           console.log(esp.id + " is dead");
           console.log("--------------------------------------------------");
           esp.connection.terminate();
+          esp.taken = false;
           removeItemOnce(global.esps, esp);
           return;
         }
@@ -33,6 +34,7 @@ class Esp {
 
   };
 
+  
 function noop() {};  
 
 function removeItemOnce(arr, value) {

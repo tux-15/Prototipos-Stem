@@ -16,44 +16,40 @@ var ping  = Esp.ping;
 var heartbeat = Esp.heartbeat;
 
 var Page = require("./classes/Page.js");
+var pingPage = Page.pingPage;
+var heartbeaPage = Page.heartbeaPage;
 
 const wss = new WebSocket.Server({
   port: 1801,
 });
 
-const interval = setInterval(ping, 3000);
+const interval = setInterval(function(){
+  ping();
+  pingPage();
+}, 3000);
 
 wss.on('close', function close() {
   clearInterval(interval);
 });
 
-
 global.esps = [];
 global.pages = [];
 let rooms = [];
 
-/**
- * JSON map:
- * {
- *    meta: indica contexto(manipulador/carrinho)
- *    start: indica se um esp/pagina entrou no servidor
- *    to: id do alvo
- *    data: [{angulo0: 110}, {angulo1: 234}] etc etc //opcional
- * } 
- *  
- */
-
 wss.on('connection', function connection(ws, request) {
 
-  ws.on('pong', function(){heartbeat(ws)});
+  ws.on('pong', function(){
+    heartbeat(ws);
+    heartbeaPage(ws);
+  });
 
   ws.on('message', function incoming(message) {
 
     messageJson = JSON.parse(message);
 
     if(messageJson['start'] == "ESP_on"){
-      var ip = request.socket.remoteAddress
-      global.esps.push(new Esp(ws, ip, true));
+      var id = request.socket.remoteAddress.toString().slice(17);
+      global.esps.push(new Esp(ws, id, true));
       console.log("new ESP: ", global.esps[global.esps.length-1].id);
     };
 
@@ -61,31 +57,28 @@ wss.on('connection', function connection(ws, request) {
 
       var ip = request.socket.remoteAddress;
 
-      global.pages.push(new Page(ws, ip, messageJson['to'], messageJson['meta']));
+      global.pages.push(new Page(ws, ip, messageJson['to'], true));
 
       lastPage = global.pages[global.pages.length-1];
-      rooms.push({"pageId": lastPage.id, "espId": lastPage.pageEsp});
-      console.log(rooms);
+      console.log("page id no app.js", lastPage.id);
+
+      global.esps.forEach(esp => {
+        if (esp.id == lastPage.pageEsp){
+          rooms.push({"pageConnection": lastPage.connection, "espConnection": esp.connection});
+          esp.taken = true;
+          console.log("The page ", lastPage.id, "is sending messages to ESP", esp.id);
+        };
+      });
+      //console.log(rooms);
     };
 
-    var wsId = ws['_socket']['_peername']['address'].slice(7);
-
-    //TESTAR AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
-  if(rooms[0] != undefined){
-    rooms.forEach(room => {
-      if (wsId == room.pageId){
-        //sconsole.log("a página foi achada");
-        global.esps.forEach(esp =>{
-          if (room.espId = esp.id){
-            //console.log("achou esp");
-            console.log("Page", room.pageId, "is sending messages to ESP", room.espId);
-            esp.connection.send(message);
-          };
-        });
-      };
-    });
-  };
+    if(rooms[0] != undefined){
+      rooms.forEach(room => {
+        if(ws == room["pageConnection"]){
+          room["espConnection"].send(message);
+        };
+      });
+    };
 
   //esps.forEach(esp => esp.connection.send(message));
   //console.log('received: %s', message);

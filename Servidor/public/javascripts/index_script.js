@@ -18,22 +18,23 @@ function searchESPs() {
 
             if(esp_list[0] != undefined){
                 esp_list.forEach(esp => {
+                    if(esp.taken != true){
+                        const titleDiv = document.createElement("div");
+                        titleDiv.innerText = esp.id;
+                        titleDiv.style = "padding-top: 20px;";
+                        mainDiv.appendChild(titleDiv);
 
-                    const titleDiv = document.createElement("div");
-                    titleDiv.innerText = esp.id;
-                    titleDiv.style = "padding-top: 20px;";
-                    mainDiv.appendChild(titleDiv);
+                        const button1 = document.createElement("button");
+                        button1.innerHTML = "Manipulador";
+                        button1.onclick =  function() {startRobot(esp.id, 'manipulador')};
 
-                    const button1 = document.createElement("button");
-                    button1.innerHTML = "Manipulador";
-                    button1.onclick =  function() {startRobot(esp.id, 'manipulador')};
+                        const button2 = document.createElement("button");
+                        button2.innerHTML = "Carrinho";
+                        button2.onclick =  function() {startRobot(esp.id, 'carrinho')};
 
-                    const button2 = document.createElement("button");
-                    button2.innerHTML = "Carrinho";
-                    button2.onclick =  function() {startRobot(esp.id, 'carrinho')};
-
-                    mainDiv.appendChild(button1);
-                    mainDiv.appendChild(button2);
+                        mainDiv.appendChild(button1);
+                        mainDiv.appendChild(button2);
+                    };
                 });
             };
         };
