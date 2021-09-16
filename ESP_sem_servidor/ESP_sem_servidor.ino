@@ -7,6 +7,7 @@ ESP8266WiFiMulti wifiMulti;     // Obejto para gerenciar credenciais de rede
 WebSocketsClient webSocket; // WebSocket
 
 const int port = 1801;
+const char * ip = "192.168.2.105";
 
 long previousMillis = 0; 
 long interval = 100;  // (em milissegundos) -> define o tempo de "delay"
@@ -25,7 +26,6 @@ void setup() {
   
   startWiFi();
   startWebSocket();
-
 
 }
 
@@ -74,7 +74,7 @@ void startWiFi(){
 }
 
 void startWebSocket() { // Inicializa o webSocket
-  webSocket.begin("192.168.2.108", port, "/");
+  webSocket.begin(ip, port, "/");
   
   webSocket.onEvent(webSocketEvent);          // função de callback para eventos que acontecerem no webSocket
   
@@ -107,7 +107,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
         
     case WStype_PING:
       // pong will be send automatically
-      Serial.printf("\r[WSc] get ping\n\r");
+      //Serial.printf("\r[WSc] get ping\n\r");
       break;
       
     case WStype_PONG:
