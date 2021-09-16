@@ -1,3 +1,5 @@
+var moment = require('moment')
+
 class Esp {
     constructor(connection, id, status){
       this.connection = connection;
@@ -19,7 +21,7 @@ class Esp {
 
       global.esps.forEach(function each(esp) {
         if (esp.status === false) {
-          console.log(esp.id + " is dead");
+          console.log(moment().format('MMMM Do YYYY, h:mm:ss a'), "|| ", esp.id + " is dead");
           console.log("--------------------------------------------------");
           esp.connection.terminate();
           esp.taken = false;

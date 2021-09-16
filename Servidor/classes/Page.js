@@ -8,16 +8,11 @@ class Page {
     };
 
     static heartbeaPage(wsObject) {
-      // console.log("oi em cima");
-      var current_id = wsObject['_socket']['_peername']['address'].toString().slice(7);
-      // console.log("current_id:", current_id);
-      global.pages.forEach(function each(page){
-        console.log("oi");
-        console.log("inside for each", page.id);
-        if(current_id == page.id){
 
-          page.status = true;
-        }
+      var current_id = wsObject['_socket']['_peername']['address'].toString().slice(7);
+
+      global.pages.forEach(function each(page){
+        if(current_id == page.id) {page.status = true;};
       });
     };
 
@@ -29,9 +24,23 @@ class Page {
           console.log("--------------------------------------------------");
           page.connection.terminate();
           page.taken = false;
+
+          global.esps.forEach(esp => {
+            if (esp.id == page.pageEsp){
+              esp.taken = false;
+              global.rooms.forEach(room => {
+                if (room["espConnection"] == esp.connection){
+                  removeItemOnce(room, global.rooms);
+                  console.log(global.rooms);
+                }
+              })
+            }
+          });
+
+          //console.log("hm ", global.esps.id.indexOf(page.pageEsp));
           removeItemOnce(global.pages, page);
           return;
-        }
+        };
     
         page.status = false;
         page.connection.ping(noop);

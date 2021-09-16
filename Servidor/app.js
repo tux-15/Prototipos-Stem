@@ -3,13 +3,21 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var moment = require('moment')
 
 var indexRouter = require('./routes/index');
 var manipuladorRouter = require('./routes/manipulador');
 var carrinhoRouter = require('./routes/carrinho');
 var calibracaoCarrinhoRouter = require('./routes/calibracao');
+ 
 
+// A comunicação dos protótipos se dá através de um websocket que é aberto na porta 1801
 var WebSocket = require('ws');
+
+const wss = new WebSocket.Server({
+  port: 1801,
+});
+
 
 var Esp = require("./classes/ESP.js");
 var ping  = Esp.ping;
@@ -19,61 +27,60 @@ var Page = require("./classes/Page.js");
 var pingPage = Page.pingPage;
 var heartbeaPage = Page.heartbeaPage;
 
-const wss = new WebSocket.Server({
-  port: 1801,
-});
-
 const interval = setInterval(function(){
   ping();
-  pingPage();
+  //pingPage();
 }, 3000);
 
 wss.on('close', function close() {
   clearInterval(interval);
 });
 
+// os 3 arrays tomam conta dos esps e páginas atualmente conectados ao servidor, assim como à "sala" de bate-papo
+// onde eles ficam
+
 global.esps = [];
 global.pages = [];
-let rooms = [];
+global.rooms = [];
 
 wss.on('connection', function connection(ws, request) {
 
-  ws.on('pong', function(){
+  ws.on('pong', function(){ //Quando receber "pong" pelo websocket, o dispositivo continua online
     heartbeat(ws);
-    heartbeaPage(ws);
+    //heartbeaPage(ws);
   });
 
   ws.on('message', function incoming(message) {
 
-    messageJson = JSON.parse(message);
+    messageJson = JSON.parse(message); // converte a mensagem string em JSON
 
-    if(messageJson['start'] == "ESP_on"){
+    if(messageJson['start'] == "ESP_on"){ // Indica que um novo esp entrou no servidor
       var id = request.socket.remoteAddress.toString().slice(17);
       global.esps.push(new Esp(ws, id, true));
-      console.log("new ESP: ", global.esps[global.esps.length-1].id);
+      console.log(moment().format('MMMM Do YYYY, h:mm:ss a'), " || new ESP: ", global.esps[global.esps.length-1].id);
     };
 
-    if(messageJson['start'] == "page_on"){
+    if(messageJson['start'] == "page_on"){ // Indica que uma nova página entrou no servidor
 
       var ip = request.socket.remoteAddress;
 
       global.pages.push(new Page(ws, ip, messageJson['to'], true));
 
       lastPage = global.pages[global.pages.length-1];
-      console.log("page id no app.js", lastPage.id);
 
+      //Verifica com qual ESP a página quer se comunicar e coloca os 2 em uma sala de bate-papo 
       global.esps.forEach(esp => {
         if (esp.id == lastPage.pageEsp){
-          rooms.push({"pageConnection": lastPage.connection, "espConnection": esp.connection});
-          esp.taken = true;
+          global.rooms.push({"pageConnection": lastPage.connection, "espConnection": esp.connection});
+          //esp.taken = true; // Informa que este ESP já está sendo usado por uma página
           console.log("The page ", lastPage.id, "is sending messages to ESP", esp.id);
         };
       });
-      //console.log(rooms);
+      //console.log(global.rooms);
     };
 
-    if(rooms[0] != undefined){
-      rooms.forEach(room => {
+    if(global.rooms[0] != undefined){
+      global.rooms.forEach(room => {
         if(ws == room["pageConnection"]){
           room["espConnection"].send(message);
         };

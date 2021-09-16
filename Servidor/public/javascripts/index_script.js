@@ -1,5 +1,5 @@
 
-window.setInterval(searchESPs, 1000);
+// window.setInterval(searchESPs, 1000);
 
 function searchESPs() {
     var xhttp = new XMLHttpRequest();
