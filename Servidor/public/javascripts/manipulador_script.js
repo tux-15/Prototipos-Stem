@@ -20,7 +20,7 @@ function sendAngle(slider, sliderValue) {
     document.getElementById(sliderValue).innerHTML = document.getElementById(slider).value;
     var command = {
       "slider": sliderValue,
-      "angulo": document.getElementById(slider).value
+      "angle": document.getElementById(slider).value
     };
 
     commandJson = JSON.stringify(command);

@@ -23,14 +23,15 @@ class Page {
           console.log(page.id + " is dead");
           console.log("--------------------------------------------------");
           page.connection.terminate();
-          page.taken = false;
+          // page.taken = false;
 
           global.esps.forEach(esp => {
             if (esp.id == page.pageEsp){
+              console.log("ESP", esp.id, "is available")
               esp.taken = false;
               global.rooms.forEach(room => {
                 if (room["espConnection"] == esp.connection){
-                  removeItemOnce(room, global.rooms);
+                  removeItemOnce(global.rooms, room);
                   console.log(global.rooms);
                 }
               })

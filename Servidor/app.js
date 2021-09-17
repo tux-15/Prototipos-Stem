@@ -29,7 +29,7 @@ var heartbeaPage = Page.heartbeaPage;
 
 const interval = setInterval(function(){
   ping();
-  //pingPage();
+  pingPage();
 }, 3000);
 
 wss.on('close', function close() {
@@ -47,7 +47,7 @@ wss.on('connection', function connection(ws, request) {
 
   ws.on('pong', function(){ //Quando receber "pong" pelo websocket, o dispositivo continua online
     heartbeat(ws);
-    //heartbeaPage(ws);
+    heartbeaPage(ws);
   });
 
   ws.on('message', function incoming(message) {
@@ -72,11 +72,11 @@ wss.on('connection', function connection(ws, request) {
       global.esps.forEach(esp => {
         if (esp.id == lastPage.pageEsp){
           global.rooms.push({"pageConnection": lastPage.connection, "espConnection": esp.connection});
-          //esp.taken = true; // Informa que este ESP já está sendo usado por uma página
+          esp.taken = true; // Informa que este ESP já está sendo usado por uma página
           console.log("The page ", lastPage.id, "is sending messages to ESP", esp.id);
         };
       });
-      //console.log(global.rooms);
+      console.log(global.rooms);
     };
 
     if(global.rooms[0] != undefined){
