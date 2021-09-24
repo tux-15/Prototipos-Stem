@@ -8,15 +8,23 @@ connection.onerror = function (error) {
 };
 connection.onmessage = function (e) {
   console.log('Server: ', e.data);
-  //receiveData(e.data) 
-  //getVel(e.data);
+  receiveData(e.data); 
 };
 connection.onclose = function () {
   console.log('WebSocket connection closed');
 };
 
 function receiveData(received_data) {
-    document.getElementById("dados_carrinho").innerHTML = received_data;
+
+    try{
+      receiveData_json = JSON.parse(received_data);
+      document.getElementById("rpm_direito").innerHTML = receiveData_json["speedR"];
+      document.getElementById("rpm_esquerdo").innerHTML = receiveData_json["speedL"];
+    }
+    catch(err){
+      console.log("Erro ao pegar o JSON: ", err);
+      console.log("A mensagem recebida foi:", received_data);
+    }
 }
 
 function send(x,y,speed,angle){

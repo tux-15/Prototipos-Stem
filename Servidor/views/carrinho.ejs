@@ -10,19 +10,25 @@
 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 color:rgb(128, 128, 128);
 font-size: xx-large;">
+
     <h1 style="text-align:center">
-        Joystick Virtual </h1>
+        Joystick Virtual 
+    </h1>
+
     <p style="text-align: center; visibility: hidden;">
         X: <span id="x_coordinate"> </span>
         Y: <span id="y_coordinate"> </span>
     </p>
+
     <p style="text-align: center;">
         Speed: <span id="speed"> </span> 
         Angle: <span id="angle"> </span>
     </p>
-    <p id="velocidade_joystick" style="text-align: center;">
-        Velocidade do carrinho: <span> </span>
-    </p>
+    <div id="rpm_das_rodas" style="text-align: center;">
+        <div style="display: inline-block; margin-right: 5px;">RPM direito: <span id="rpm_direito"> foo</div>
+        <div style="display: inline-block; margin-right: 5px;">RPM esquerdo: <span id="rpm_esquerdo"> bar</div>
+    </div>
+
     <canvas id="canvas" name="game"></canvas>
 
     <script>

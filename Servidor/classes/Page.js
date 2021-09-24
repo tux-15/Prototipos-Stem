@@ -1,8 +1,7 @@
 class Page {
-    constructor(connection, ip, pageEsp, status){
+    constructor(connection, id, pageEsp, status){
       this.connection = connection;
-      this.ip = ip;
-      this.id = ip.toString().slice(7);
+      this.id = id;
       this.pageEsp = pageEsp;
       this.status = status;
     };

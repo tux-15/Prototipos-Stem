@@ -7,9 +7,20 @@ var moment = require('moment')
 
 var indexRouter = require('./routes/index');
 var manipuladorRouter = require('./routes/manipulador');
-var carrinhoRouter = require('./routes/carrinho');
-var calibracaoCarrinhoRouter = require('./routes/calibracao');
- 
+var carrinhoRouter = require('./routes/carrinho'); 
+
+function ab2str(buf) {
+  return String.fromCharCode.apply(null, new Uint16Array(buf));
+}
+function str2ab(str) {
+  var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
+  var bufView = new Uint16Array(buf);
+  for (var i=0, strLen=str.length; i < strLen; i++) {
+    bufView[i] = str.charCodeAt(i);
+  }
+  return buf;
+}
+
 
 // A comunicação dos protótipos se dá através de um websocket que é aberto na porta 1801
 var WebSocket = require('ws');
@@ -36,8 +47,8 @@ wss.on('close', function close() {
   clearInterval(interval);
 });
 
-// os 3 arrays tomam conta dos esps e páginas atualmente conectados ao servidor, assim como à "sala" de bate-papo
-// onde eles ficam
+// os 3 arrays tomam conta dos esps e páginas atualmente conectados ao servidor
+//assim como da "sala" de bate-papo onde eles ficam
 
 global.esps = [];
 global.pages = [];
@@ -52,7 +63,12 @@ wss.on('connection', function connection(ws, request) {
 
   ws.on('message', function incoming(message) {
 
-    messageJson = JSON.parse(message); // converte a mensagem string em JSON
+    try {
+      messageJson = JSON.parse(message); // converte a mensagem string em JSON
+    }
+    catch(err){
+      console.log("Erro: ", err);
+    }
 
     if(messageJson['start'] == "ESP_on"){ // Indica que um novo esp entrou no servidor
       var id = request.socket.remoteAddress.toString().slice(17);
@@ -62,9 +78,9 @@ wss.on('connection', function connection(ws, request) {
 
     if(messageJson['start'] == "page_on"){ // Indica que uma nova página entrou no servidor
 
-      var ip = request.socket.remoteAddress;
+      var id = request.socket.remoteAddress.toString().slice(7);
 
-      global.pages.push(new Page(ws, ip, messageJson['to'], true));
+      global.pages.push(new Page(ws, id, messageJson['to'], true));
 
       lastPage = global.pages[global.pages.length-1];
 
@@ -76,19 +92,20 @@ wss.on('connection', function connection(ws, request) {
           console.log("The page ", lastPage.id, "is sending messages to ESP", esp.id);
         };
       });
-      console.log(global.rooms);
+      //console.log(global.rooms);
     };
 
-    if(global.rooms[0] != undefined){
-      global.rooms.forEach(room => {
-        if(ws == room["pageConnection"]){
-          room["espConnection"].send(message);
-        };
-      });
-    };
+    global.rooms.forEach(room => {
+      if(ws == room["pageConnection"]){
+        room["espConnection"].send(message);
+      }
+      else if (ws == room['espConnection']){
+        room["pageConnection"].send(ab2str(message));
+      };
+    });
 
   //esps.forEach(esp => esp.connection.send(message));
-  //console.log('received: %s', message);
+  console.log('received: %s', message);
   });
 });
 
@@ -107,7 +124,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/manipulador', manipuladorRouter);
 app.use('/carrinho', carrinhoRouter);
-app.use('/calibracao', calibracaoCarrinhoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
