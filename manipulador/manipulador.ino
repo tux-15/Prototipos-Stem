@@ -1,8 +1,8 @@
 #include <Servo.h>
 #include <ArduinoJson.h>
 
-long previousMillis = 0; 
-long interval = 1000;  
+//long previousMillis = 0; 
+//long interval = 1000;  
 
 Servo servo1;
 Servo servo2;
@@ -91,14 +91,14 @@ void getJson(){
   if(Serial.available()>2){
     StaticJsonDocument<100> doc;
     DeserializationError err = deserializeJson(doc, Serial);
-//    ReadLoggingStream loggingStream(Serial3, Serial);
-//    DeserializationError err = deserializeJson(doc, loggingStream);
-    
+        
     if (err == DeserializationError::Ok) 
     {
       const char* servo = doc["slider"].as<const char*>();
       int angle = doc["angle"].as<int>();
+      Serial.print("Servo: ");
       Serial.println(servo);
+      Serial.print("Angulo: ");
       Serial.println(angle);
       moveServo(servo, angle);
     } 
