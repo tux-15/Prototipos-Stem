@@ -15,7 +15,6 @@ function searchESPs() {
                 }; 
             };
 
-
             if(esp_list[0] != undefined){
                 esp_list.forEach(esp => {
                     if(esp.taken != true){

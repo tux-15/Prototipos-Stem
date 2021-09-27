@@ -36,7 +36,7 @@ var heartbeat = Esp.heartbeat;
 
 var Page = require("./classes/Page.js");
 var pingPage = Page.pingPage;
-var heartbeaPage = Page.heartbeaPage;
+var heartbeatPage = Page.heartbeatPage;
 
 const interval = setInterval(function(){
   ping();
@@ -58,7 +58,7 @@ wss.on('connection', function connection(ws, request) {
 
   ws.on('pong', function(){ //Quando receber "pong" pelo websocket, o dispositivo continua online
     heartbeat(ws);
-    heartbeaPage(ws);
+    heartbeatPage(ws);
   });
 
   ws.on('message', function incoming(message) {

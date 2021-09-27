@@ -6,7 +6,7 @@ class Page {
       this.status = status;
     };
 
-    static heartbeaPage(wsObject) {
+    static heartbeatPage(wsObject) {
 
       var current_id = wsObject['_socket']['_peername']['address'].toString().slice(7);
 

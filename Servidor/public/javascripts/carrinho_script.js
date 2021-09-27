@@ -29,7 +29,6 @@ function receiveData(received_data) {
 
 function send(x,y,speed,angle){
   data = {
-    "meta": "carrinho",
     "speed": speed,
     "angle": angle,
   };
