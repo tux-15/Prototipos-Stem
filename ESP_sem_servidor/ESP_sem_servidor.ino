@@ -11,7 +11,10 @@ char receivedChars[numChars];
 boolean newData = false;
 
 const int port = 1801;
-const char * ip = "192.168.2.105";
+const char * ip = "10.0.0.151";
+
+// 10.0.0.151 - ip do raspberry
+// 10.0.0.119 - notebook
 
 long previousMillis = 0; 
 long interval = 100;  // (em milissegundos) -> define o tempo de "delay"
@@ -48,6 +51,7 @@ void startWiFi(){
   wifiMulti.addAP("MUSTAFA_2.4G", "96143008");
   wifiMulti.addAP("Seixas_Net", "Mayum647");
   wifiMulti.addAP("Tux", "1234abcd");
+  wifiMulti.addAP("STEMLABNET", "1n0v@c@02021");
 
   Serial.println("Connecting");
   while (wifiMulti.run() != WL_CONNECTED) {  // Esperar WiFi conectar
