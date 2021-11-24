@@ -23,11 +23,11 @@ void setup() {
   delay(250);
   
 
-  servo1.attach(8);
-  servo2.attach(4);
-  servo3.attach(5);
-  servo4.attach(6);
-  servo5.attach(7);
+  servo1.attach(4);
+  servo2.attach(5);
+  servo3.attach(6);
+  servo4.attach(7);
+  servo5.attach(8);
 
   startPosition();
 
@@ -41,13 +41,13 @@ void loop() {
 }
 
 void startPosition(){
-  servo1.write(93);
-  servo2.write(80);
-  servo3.write(15);
-  servo4.write(94);
-  servo5.write(60);
+  servo1.write(90);
+  servo2.write(90);
+  servo3.write(90);
+  servo4.write(90);
+  servo5.write(0);
   
-}
+};
 
 void moveServo(const char* servo, int angle){
   
@@ -70,7 +70,7 @@ void moveServo(const char* servo, int angle){
   if (strcmp(servo, "value4") == 0){
     servo5.write(angle);
   }
-}
+};
 
 
 //void sendMessage(char message[numChars], int num1, int num2){

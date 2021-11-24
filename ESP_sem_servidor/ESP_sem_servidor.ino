@@ -1,4 +1,4 @@
- #include <ESP8266WiFi.h>        // WiFi
+#include <ESP8266WiFi.h>        // WiFi
 #include <ESP8266WiFiMulti.h>   // Armazenar credenciais de múltiplas redes e conectar-se na mais forte
 #include <WebSocketsClient.h>   // WebSocket
 
@@ -11,7 +11,7 @@ char receivedChars[numChars];
 boolean newData = false;
 
 const int port = 1801;
-const char * ip = "10.0.0.151";
+const char * ip = "10.0.0.119";
 
 // 10.0.0.151 - ip do raspberry
 // 10.0.0.119 - notebook
@@ -126,7 +126,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
       //Serial.printf("\r[WSc] get pong\n");
       break;       
   }
-}
+};
 
 void recvWithStartEndMarkers() {
     static boolean recvInProgress = false;
@@ -160,4 +160,4 @@ void recvWithStartEndMarkers() {
             ndx++;
         }
     }
-}
+};

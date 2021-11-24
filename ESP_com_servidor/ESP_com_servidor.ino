@@ -110,6 +110,7 @@ void startWiFi(){
   wifiMulti.addAP("LUDUSKAM-2.4G", "ludusKAMt3ch");   // adicionar credenciais das redes
   wifiMulti.addAP("Charlie 2.4", "vox populi");
   wifiMulti.addAP("carreta_stem01", "Cs2k21!!");
+  wifiMulti.addAP("STEMLABNET", "1n0v@c@02021");
 
   Serial.println("<Connecting>");
   while (wifiMulti.run() != WL_CONNECTED) {  // Esperar WiFi conectar
