@@ -3,32 +3,18 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var moment = require('moment')
+var moment = require('moment');
+
+var WebSocket = require('ws');
 
 var indexRouter = require('./routes/index');
 var manipuladorRouter = require('./routes/manipulador');
 var carrinhoRouter = require('./routes/carrinho'); 
 
-function ab2str(buf) {
-  return String.fromCharCode.apply(null, new Uint16Array(buf));
-}
-function str2ab(str) {
-  var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
-  var bufView = new Uint16Array(buf);
-  for (var i=0, strLen=str.length; i < strLen; i++) {
-    bufView[i] = str.charCodeAt(i);
-  }
-  return buf;
-}
-
-
 // A comunicação dos protótipos se dá através de um websocket que é aberto na porta 1801
-var WebSocket = require('ws');
-
 const wss = new WebSocket.Server({
-  port: 1801,
+  port:1801,
 });
-
 
 var Esp = require("./classes/ESP.js");
 var ping  = Esp.ping;
@@ -37,6 +23,10 @@ var heartbeat = Esp.heartbeat;
 var Page = require("./classes/Page.js");
 var pingPage = Page.pingPage;
 var heartbeatPage = Page.heartbeatPage;
+
+function ab2str(buf) {
+  return String.fromCharCode.apply(null, new Uint16Array(buf));
+}
 
 const interval = setInterval(function(){
   ping();
@@ -71,7 +61,8 @@ wss.on('connection', function connection(ws, request) {
     }
 
     if(messageJson['start'] == "ESP_on"){ // Indica que um novo esp entrou no servidor
-      var id = request.socket.remoteAddress.toString().slice(17);
+      var id = request.socket.remoteAddress.toString().slice(14);
+
       global.esps.push(new Esp(ws, id, true));
       console.log(moment().format('MMMM Do YYYY, h:mm:ss a'), " || new ESP: ", global.esps[global.esps.length-1].id);
     };
