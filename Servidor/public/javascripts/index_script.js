@@ -46,4 +46,4 @@ function startRobot(esp_id, robot){
     document.cookie = "esp_id" + "=" + esp_id;
     document.cookie = "robot" + "=" + robot;
     location.href = "/" + robot;
-};
+};  
