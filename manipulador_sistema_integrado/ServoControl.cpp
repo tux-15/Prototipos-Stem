@@ -35,7 +35,7 @@ void ServoControl::doTrajectory(const float trajetoria[][4], int sizeOfTrajector
     for (int j = 0; j < 4; j++) {
       this->servos[j].write(trajetoria[i][j]);
       //Serial.println(trajetoria[i][j]);
-    }; delay(50);
+    }; delay(150);
   };
 //  trajetoria = NULL;
 };
