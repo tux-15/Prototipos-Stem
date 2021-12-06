@@ -27,11 +27,15 @@ void WifiManager::startWiFi(){
 
 void WifiManager::startMDNS(String mdnsName){ // Iniciar o mDNS com o nome desejado para a rede .local
 
-  MDNS.begin(mdnsName); // começa a transmissão do nome
+  //MDNS.begin(mdnsName); // começa a transmissão do nome
   if (!MDNS.begin(mdnsName)) {
+    while (1) {
+      delay(250);
+    }
     //Serial.println("Error setting up MDNS responder!");
   }
-  Serial.print("mDNS responder started: http://"); 
+  MDNS.addService("ws", "tcp", 81);
+  Serial.print("mDNS responder started: ws://"); 
   Serial.print(mdnsName); Serial.println(".local");
 
 };

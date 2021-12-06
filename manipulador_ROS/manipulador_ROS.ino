@@ -33,7 +33,7 @@ void joint_cb(const sensor_msgs::JointState& cmd_msg){
   servo3.write(pos3);
   servo4.write(pos4);
   //servo5.write(pos5);
-}
+};
 
 ros::Subscriber<sensor_msgs::JointState> sub("joint_states", joint_cb);
 

@@ -4,7 +4,7 @@
 #include <Arduino.h>
 
 void recvWithStartEndMarkers();
-char* getMessageFromSerial();
+char * getMessageFromSerial();
 void setNewData(boolean state);
 
 #endif

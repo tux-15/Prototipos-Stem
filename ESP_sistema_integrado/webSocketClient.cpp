@@ -4,12 +4,14 @@ WebSocketsClient webSocketClient;
 
 void updateWebsocketClient(){
   webSocketClient.loop();
+ 
 };
 
 void startWebSocketClient(String ip, int port) { // Inicializa o webSocket
   
   webSocketClient.begin(ip, port, "/");
   webSocketClient.onEvent(webSocketClientEvent);  
+  webSocketClient.enableHeartbeat(750, 1500, 2);
   Serial.println("WebSocket client started.");
 };
 
@@ -25,7 +27,7 @@ void webSocketClientEvent(WStype_t type, uint8_t * payload, size_t length) {
       break;
     
     case WStype_CONNECTED: 
-      Serial.printf("\rConnected to url: %s\n\r", payload);
+      Serial.printf("\rConnected to ESP server on url: %s\n\r", payload);
 
       // send message to server when Connected
       webSocketClient.sendTXT("{\"start\": \"ESP_on\"}");

@@ -12,12 +12,13 @@ const int port = 1801; //porta do websocket no servidor principal
 void setup() {
   
   Serial.begin(9600);
-  Serial.println("\n Starting");
+  Serial.println("\n\r Starting");
   wifi.startWiFi();
   wifi.startMDNS("stem");
   startWebSocketClient(ip, port);
   startWebSocketServer();
   updateWebsocketClient();
+  updateWebSocketServer();
   Serial.println("End of Setup");
   
 };
@@ -27,17 +28,13 @@ void loop() {
   //Any message sent by the server will be sent through Serial Communication.
   updateWebsocketClient();
   updateWebSocketServer();
+  
   char * messageFromSerial = getMessageFromSerial();
 
   if (messageFromSerial != "0"){
+    sendMessageWsServer(messageFromSerial);
     Serial.println(messageFromSerial);
   };
-  //if (messageFromSerial != noData){
-    //newDataFromArduino = false;
-    //Enviar mensagem ao servidor e aos outros robôs aqui
-//    sendMessageWsClient(messageFromSerial);
-//    sendMessageWsServer(messageFromSerial);
 
-  //};
   wifi.updateMDNS();
 };

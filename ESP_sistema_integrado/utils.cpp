@@ -1,6 +1,6 @@
 #include "utils.h"
 
-const byte numChars = 32;
+const byte numChars = 64;
 char receivedChars[numChars];
 
 boolean newDataFromArduino = false;

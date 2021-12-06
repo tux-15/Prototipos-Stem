@@ -3,7 +3,8 @@
 #include "utils.h"
 
 WifiManager wifi;
-const String ip = "10.0.0.129"; //ip do Esp servidor
+const String ip = "10.0.0.161"; //ip do Esp servidor
+//const String ip = "ws://stem.local";
 const int port = 81; //porta do websocket no Esp servidor
 
 void setup() {
@@ -17,7 +18,9 @@ void setup() {
 
 void loop() {
   updateWebsocketClient();
+  
   char * messageFromSerial = getMessageFromSerial();
+  
   if (messageFromSerial != "0"){
     Serial.println(messageFromSerial);
     sendMessageWsClient(messageFromSerial);

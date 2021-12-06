@@ -47,7 +47,7 @@ void doTrajectory(float trajetoria[][4], int sizeOfTrajectory) {
       Serial.println(trajetoria[i][j]);
     }
   }
-}
+};
 
 void startPosition() {
   servo1.write(90);
@@ -56,4 +56,4 @@ void startPosition() {
   servo4.write(90);
   servo5.write(90);
 
-}
+};

@@ -6,6 +6,6 @@
 void startWebSocketServer();
 void webSocketServerEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght);
 void updateWebSocketServer();
-void sendMessageWsServer(String payload);
+void sendMessageWsServer(char * payload);
 
 #endif

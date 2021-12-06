@@ -1,6 +1,6 @@
 #include "utils.h"
 
-const byte numChars = 32;
+const byte numChars = 64;
 char receivedChars[numChars];
 
 boolean newDataFromArduino = false;
@@ -8,7 +8,7 @@ long previousMillis = 0;
 long interval =100;  // (em milissegundos) -> define o tempo de "delay"
 
 
-char* getMessageFromSerial() {
+char * getMessageFromSerial() {
   
   recvWithStartEndMarkers();
   unsigned long currentMillis = millis(); 
