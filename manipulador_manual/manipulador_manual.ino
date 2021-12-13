@@ -45,7 +45,7 @@ void startPosition(){
   servo2.write(90);
   servo3.write(90);
   servo4.write(90);
-  servo5.write(0);
+  servo5.write(30);
   
 };
 

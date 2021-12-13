@@ -11,12 +11,12 @@ void ServoControl::startPosition(){
   this->servo3.write(90);
   this->servo4.write(90);
   this->servo5.write(30);
-  delay(1000);
+  delay(500);
 };
 
 void ServoControl::effector(String state){
   if(state == "open") this->servo5.write(30);
-  else if (state == "close") this->servo5.write(150);
+  else if (state == "close") this->servo5.write(65);
 };
 
 void ServoControl::attachServos(){
@@ -35,7 +35,7 @@ void ServoControl::doTrajectory(const float trajetoria[][4], int sizeOfTrajector
     for (int j = 0; j < 4; j++) {
       this->servos[j].write(trajetoria[i][j]);
       //Serial.println(trajetoria[i][j]);
-    }; delay(150);
+    }; delay(80);
   };
 //  trajetoria = NULL;
 };

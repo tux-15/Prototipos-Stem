@@ -2,7 +2,6 @@
 #include <sensor_msgs/JointState.h>
 #include <std_msgs/String.h>
 #include <Servo.h>
-//#include <joint_angles.h>
 
 ros::NodeHandle nh;
 
@@ -19,11 +18,19 @@ void joint_cb();
 
 void joint_cb(const sensor_msgs::JointState& cmd_msg){
 
-  int pos1 = cmd_msg.position[0] * (180/PI);
-  int pos2 = cmd_msg.position[4] * (180/PI);
-  int pos3 = cmd_msg.position[1] * (180/PI);
-  int pos4 = cmd_msg.position[5] * (180/PI);
+// Manipulador com base antiga
+//  int pos1 = cmd_msg.position[0] * (180/PI);
+//  int pos2 = cmd_msg.position[4] * (180/PI);
+//  int pos3 = cmd_msg.position[1] * (180/PI);
+//  int pos4 = cmd_msg.position[5] * (180/PI);
 //  int pos5 = cmd_msg.position[4] * (180/PI);
+
+ //Manipulador com base nova
+  int pos1 = cmd_msg.position[5] * (180/PI);
+  int pos2 = cmd_msg.position[3] * (180/PI);
+  int pos3 = cmd_msg.position[4] * (180/PI);
+  int pos4 = cmd_msg.position[1] * (180/PI);
+  //int pos5 = cmd_msg.position[4] * (180/PI);
 
   str_msg.data = "Banana";
   chatter.publish( &str_msg );
