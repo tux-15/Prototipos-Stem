@@ -3,7 +3,8 @@
 #include "utils.h"
 
 WifiManager wifi;
-const String ip = "10.0.0.161"; //ip do Esp servidor
+//const String ip = "10.0.0.161"; //ip do Esp servidor
+const String ip = "192.168.1.38";
 //const String ip = "ws://stem.local";
 const int port = 81; //porta do websocket no Esp servidor
 
