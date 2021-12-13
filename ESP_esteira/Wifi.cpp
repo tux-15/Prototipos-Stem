@@ -21,7 +21,9 @@ void WifiManager::startWiFi(){
   Serial.println(WiFi.SSID());             // Nome da rede
   Serial.print("IP address:\t");
   Serial.print(WiFi.localIP());            // Ip do esp na rede local
-
+  
+  this->ip = WiFi.localIP().toString().c_str();
+  
   Serial.println("\r\n");
 };
 

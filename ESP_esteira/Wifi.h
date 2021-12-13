@@ -13,6 +13,8 @@ class WifiManager {
   public:
     WifiManager(); //Constructor
     ~WifiManager();
+
+    String ip = "";
     
     void startWiFi();
     void startMDNS(String mdnsName);
