@@ -17,7 +17,7 @@ class Serial_comm{
     StaticJsonDocument<100> docFromSerial;
     
     void getJson();
-    void sendJson(String meta, int passo, int estado);
+    void sendJson(String meta, String passo, int estado);
 };
 
 #endif

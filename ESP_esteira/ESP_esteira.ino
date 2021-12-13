@@ -5,15 +5,9 @@
 #include "serial_comm.h"
 
 WifiManager wifi;
-
-<<<<<<< HEAD
-//const String ip = "10.0.0.119"; //ip do servidor principal
-const String ip = "192.168.1.37";
-=======
 Serial_comm serial;
 
 const String ip = "10.0.0.119"; //ip do servidor principal
->>>>>>> 8a19712a5f11de80df5114194661bb3895fd8304
 const int port = 1801; //porta do websocket no servidor principal
 //O webSocketServer abre na porta 81
 
@@ -24,18 +18,18 @@ void setup() {
   
   wifi.startWiFi();
   //wifi.startMDNS("stem");
-<<<<<<< HEAD
-  //startWebSocketClient(ip, port);
+
+  startWebSocketClient(ip, port);
   startWebSocketServer();
-  //updateWebsocketClient();
-=======
+  updateWebsocketClient();
   serial.sendJson("ESP_IP", wifi.ip, 1),  
   
   startWebSocketClient(ip, port);
   startWebSocketServer();
+
+  delay(150);
   
   updateWebsocketClient();
->>>>>>> 8a19712a5f11de80df5114194661bb3895fd8304
   updateWebSocketServer();
   Serial.println("End of Setup");
   
@@ -44,7 +38,7 @@ void setup() {
 void loop() {
 
   //Any message sent by the server will be sent through Serial Communication.
-  //updateWebsocketClient();
+  updateWebsocketClient();
   updateWebSocketServer();
   
   char * messageFromSerial = getMessageFromSerial();

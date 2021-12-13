@@ -41,12 +41,12 @@ void loop() {
     Serial.println("back to origin");
     servos.doTrajectory(pos2ToOrigin, pos2ToOrigin_size);
     servos.effector("close");
-    serial.sendJson("M2", 11, 1);
+    serial.sendJson("M2", "11", 1);
   };  
 };
 
 bool checkMessage() {
-  if(serial.docFromSerial["meta"].as<String>() == "E" && serial.docFromSerial["passo"].as<int>() == 9 && serial.docFromSerial["estado"].as<int>() == 1){
+  if(serial.docFromSerial["meta"].as<String>() == "E" && serial.docFromSerial["passo"].as<String>() == "9" && serial.docFromSerial["estado"].as<int>() == 1){
     serial.docFromSerial["estado"] = 0;
     return true;
   }

@@ -24,11 +24,11 @@ void Serial_comm::getJson() {
     if (err == DeserializationError::Ok){
       
       this->docFromSerial["meta"] = doc["meta"].as<String>();
-      this->docFromSerial["passo"] = doc["passo"].as<int>();
+      this->docFromSerial["passo"] = doc["passo"].as<String>();
       this->docFromSerial["estado"] = doc["estado"].as<int>();
       
       Serial.println(this->docFromSerial["meta"].as<String>());
-      Serial.println(this->docFromSerial["passo"].as<int>());
+      Serial.println(this->docFromSerial["passo"].as<String>());
       Serial.println(this->docFromSerial["estado"].as<int>());
     }
     else {
