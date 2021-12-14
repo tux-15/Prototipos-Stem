@@ -7,10 +7,11 @@ void updateWebsocketClient(){
 };
 
 void startWebSocketClient(String ip, int port) { // Inicializa o webSocket
-  
+  Serial_comm serial;
   webSocketClient.begin(ip, port, "/");
   webSocketClient.onEvent(webSocketClientEvent);  
   Serial.println("WebSocket client started.");
+  serial.sendJson("ws_client", "started", 1);
 };
 
 void sendMessageWsClient(String payload){

@@ -1,10 +1,6 @@
 #include "serial_comm.h"
 
-Serial_comm::Serial_comm() {
-    this->docEstatico["meta"]="M2";
-    this->docEstatico["passo"]="11";
-    this->docEstatico["estado"]="1";
-};
+Serial_comm::Serial_comm() {};
 
 Serial_comm::~Serial_comm(){};
 
@@ -24,11 +20,11 @@ void Serial_comm::getJson() {
     if (err == DeserializationError::Ok){
       
       this->docFromSerial["meta"] = doc["meta"].as<String>();
-      this->docFromSerial["passo"] = doc["passo"].as<int>();
+      this->docFromSerial["passo"] = doc["passo"].as<String>();
       this->docFromSerial["estado"] = doc["estado"].as<int>();
       
-      Serial.println(this->docFromSerial["meta"].as<String>());
-      Serial.println(this->docFromSerial["passo"].as<int>());
+      Serial.print(this->docFromSerial["meta"].as<String>()); Serial.print(" : ");
+      Serial.print(this->docFromSerial["passo"].as<String>());Serial.print(" : ");
       Serial.println(this->docFromSerial["estado"].as<int>());
     }
     else {

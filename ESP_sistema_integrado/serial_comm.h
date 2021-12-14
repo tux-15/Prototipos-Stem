@@ -13,7 +13,6 @@ class Serial_comm{
     Serial_comm();
     ~Serial_comm();
 
-    StaticJsonDocument<100> docEstatico;
     StaticJsonDocument<100> docFromSerial;
     
     void getJson();

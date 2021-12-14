@@ -2,10 +2,13 @@
 
 WebSocketsServer webSocketServer(81); // Servidor WebSocket na porta 81
 
+
 void startWebSocketServer() { // Inicializa o webSocket
+  Serial_comm serial;
   webSocketServer.begin();
   webSocketServer.onEvent(webSocketServerEvent);          // função de callback para eventos que acontecerem no webSocket
   Serial.println("WebSocket server started.");
+  serial.sendJson("ws_server","started",1);
 };
 
 void updateWebSocketServer(){

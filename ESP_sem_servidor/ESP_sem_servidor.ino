@@ -11,8 +11,7 @@ char receivedChars[numChars];
 boolean newData = false;
 
 const int port = 1801;
-//const char * ip = "10.0.0.119";
-const char * ip = "192.168.1.37";
+const char * ip = "10.0.0.119";
 
 // 10.0.0.151 - ip do raspberry
 // 10.0.0.119 - notebook

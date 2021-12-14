@@ -26,9 +26,9 @@ void joint_cb(const sensor_msgs::JointState& cmd_msg){
 //  int pos5 = cmd_msg.position[4] * (180/PI);
 
  //Manipulador com base nova
-  int pos1 = cmd_msg.position[5] * (180/PI);
+  int pos1 = cmd_msg.position[4] * (180/PI);
   int pos2 = cmd_msg.position[3] * (180/PI);
-  int pos3 = cmd_msg.position[4] * (180/PI);
+  int pos3 = cmd_msg.position[5] * (180/PI);
   int pos4 = cmd_msg.position[1] * (180/PI);
   //int pos5 = cmd_msg.position[4] * (180/PI);
 
@@ -58,7 +58,7 @@ void setup() {
 
   servo1.write(angle);
   servo2.write(angle);
-  servo3.write(angle);
+  servo3.write(140);
   servo4.write(angle);
  
   //servo5.attach(8);

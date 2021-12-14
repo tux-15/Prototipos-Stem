@@ -9,14 +9,20 @@ void ServoControl::startPosition(){
   this->servo1.write(90);
   this->servo2.write(90);
   this->servo3.write(90);
-  this->servo4.write(90);
+  this->servo4.write(140);
   this->servo5.write(30);
   delay(500);
 };
 
 void ServoControl::effector(String state){
-  if(state == "open") this->servo5.write(30);
-  else if (state == "close") this->servo5.write(65);
+  if(state == "open") {
+    this->servo5.write(40);
+    Serial.println("effector open");
+  }
+  else if (state == "close"){
+    this->servo5.write(75);
+    Serial.println("effector closed");
+  }
 };
 
 void ServoControl::attachServos(){

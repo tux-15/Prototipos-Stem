@@ -5,9 +5,11 @@
 #include <ESP8266mDNS.h>        // multi DNS
 #include <ESP8266WiFiMulti.h>
 
+
 class WifiManager {
 
   private:
+    
     ESP8266WiFiMulti wifiMulti;     // Obejto para gerenciar credenciais de rede
     
   public:
@@ -15,7 +17,6 @@ class WifiManager {
     ~WifiManager();
 
     String ip = "";
-    
     void startWiFi();
     void startMDNS(String mdnsName);
     void updateMDNS();

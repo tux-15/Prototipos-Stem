@@ -14,6 +14,8 @@ void sendMessage();
 void moveServo();
 void startPosition();
 void getJson();
+void switchEffector();
+bool effector = true; //true = garra fechada 
 
 const char * servo[20];
 
@@ -45,7 +47,7 @@ void startPosition(){
   servo2.write(90);
   servo3.write(90);
   servo4.write(90);
-  servo5.write(30);
+  servo5.write(70);
   
 };
 
@@ -67,9 +69,15 @@ void moveServo(const char* servo, int angle){
     servo4.write(angle);
   }
   
-  if (strcmp(servo, "value4") == 0){
-    servo5.write(angle);
+  if (strcmp(servo, "effector") == 0){
+    switchEffector();
   }
+};
+
+void switchEffector() {
+  if (effector == true) servo5.write(70);
+  else if (effector == false) servo5.write(20);
+  effector = !effector;
 };
 
 

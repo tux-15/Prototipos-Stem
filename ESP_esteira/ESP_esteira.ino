@@ -18,15 +18,11 @@ void setup() {
   
   wifi.startWiFi();
   //wifi.startMDNS("stem");
-
-  startWebSocketClient(ip, port);
-  startWebSocketServer();
-  updateWebsocketClient();
-  serial.sendJson("ESP_IP", wifi.ip, 1),  
   
+  serial.sendJson("ESP_IP", wifi.ip , 1);
   startWebSocketClient(ip, port);
   startWebSocketServer();
-
+  
   delay(150);
   
   updateWebsocketClient();
