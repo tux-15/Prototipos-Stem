@@ -27,12 +27,13 @@ function receiveData(received_data) {
     }
 }
 
-function send(x,y,speed,angle){
+function send(x,y,speed,angle) {
   data = {
     "speed": speed,
     "angle": angle,
   };
   dataJson = JSON.stringify(data);
+  console.log(dataJson);
   connection.send(dataJson);
 };
 
@@ -45,6 +46,7 @@ function startPage() {
     "meta": robot,
   };
   startInfoJson = JSON.stringify(startInfo);
+  console.log(startInfoJson);
   return startInfoJson;
 };
 

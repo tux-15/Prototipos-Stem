@@ -1,96 +1,183 @@
 <!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+      name="viewport"
+    />
 
-<head>
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
-    <link rel="stylesheet" href="stylesheets/manipulador_style.css">
-    <meta charset="utf-8"/>
     <title>Manipulador Stem</title>
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'>
 
-    <linearGradient id="Gradiente_sem_nome_21" y1="21" x2="42" y2="21" gradientUnits="userSpaceOnUse">
-        <stop offset="0" stop-color="#014d8f"/><stop offset="1" stop-color="#9c00de"/>
-    </linearGradient>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="images/favicon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
 
-</head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../stylesheets/manipulador_style.css" />
+  </head>
 
-<body>
-    <center>
-        <h1 class="header">Controlar manipulador</h1>
+  <body>
+    <header>
+      <div class="header-image">
+        <div class="description">
+          <a href="./" tabindex="-1">
+            <svg
+              id="Componente_1_4"
+              data-name="Componente 1 – 4"
+              xmlns="http://www.w3.org/2000/svg"
+              width="42"
+              height="39"
+              viewBox="0 0 42 39"
+            >
+              <path
+                id="Icon_ionic-md-arrow-round-back"
+                data-name="Icon ionic-md-arrow-round-back"
+                d="M27.545,15.467H12.95l5.661-5.415a2.256,2.256,0,0,0,0-3.083,2.017,2.017,0,0,0-2.946,0L6.239,16.108a2.077,2.077,0,0,0-.614,1.528v.027a2.077,2.077,0,0,0,.614,1.528l9.419,9.139a2.017,2.017,0,0,0,2.946,0,2.256,2.256,0,0,0,0-3.083l-5.661-5.415h14.6a2.135,2.135,0,0,0,2.087-2.182A2.112,2.112,0,0,0,27.545,15.467Z"
+                transform="translate(-5.625 2.17)"
+                fill="#014d8f"
+                opacity="0.7"
+              />
+              <line
+                id="Linha_1"
+                data-name="Linha 1"
+                y2="39"
+                transform="translate(40.5)"
+                fill="none"
+                stroke="#014d8f"
+                stroke-width="3"
+              />
+            </svg>
+          </a>
+          <span>Braço robótico</span>
+        </div>
+      </div>
+    </header>
 
-        <div style="padding-top: 5px; padding-bottom: 30px;">
-            <!-- <label class="switch">
-                <input type="checkbox" onclick="switchEffector()">
-                <span class="slider_switch round"></span>
-            </label> -->
+    <main>
+      <!-- <div>
+              <label class="switch">
+                  <input type="checkbox" onclick="switchEffector()">
+                  <span class="slider_switch round"></span>
+              </label>
+          </div> -->
+
+      <div class="button-container container">
+        <button
+          type="button"
+          onclick="switchEffector()"
+          class="switch-claw disabled"
+          tabindex="-1"
+        ></button>
+      </div>
+
+      <!-- <input
+        id="value4"
+        type="range"
+        class="c-rng"
+        min="0"
+        max="70"
+        step="1"
+        value="0"
+        data-range="circular"
+        data-modifier="c-rng--stem"
+        oninput="sendAngle('value4')"
+      /> -->
+
+      <section class="container">
+        <div class="slider-container" id="container-1">
+          <input
+            id="value0"
+            type="range"
+            class="c-rng"
+            min="0"
+            max="180"
+            step="1"
+            value="90"
+            data-range="circular"
+            data-modifier="c-rng--stem"
+            tabindex="1"
+          />
+          <span>Base</span>
         </div>
 
-        <div align="center" class="parent" style="position: relative; z-index: 1;">
-            <!-- <div class="normalText" id="mensagem_manipulador">
-                mensagem:
-            </div> -->
-            <div style="display: inline-block; padding: 20px;">
-                <div class="slidecontainer">
-                    <input type="range" orient="vertical" 
-                        min="0" max="180" value="90" 
-                        class="slider" id="slider0" 
-                        oninput="sendAngle('slider0', 'value0')"> 
-                    </input>
-                </div>    
-                <div class="normalText" id="value0" style="padding: 20px;">90</div>
-            </div>
+        <div class="slider-container" id="container-2">
+          <input
+            id="value1"
+            type="range"
+            class="c-rng"
+            min="0"
+            max="180"
+            step="1"
+            value="90"
+            data-range="circular"
+            data-modifier="c-rng--stem"
+            tabindex="2"
+          />
+          <span>Braço</span>
+        </div>
+      </section>
 
-            <div style="display: inline-block; padding: 20px">
-                <div class="slidecontainer">
-                <input type="range" orient="vertical" 
-                    min="0" max="180" value="90" 
-                    class="slider" id="slider1" 
-                    oninput="sendAngle('slider1', 'value1')"> 
-                </input>
-                </div>    
-                <div class="normalText" id="value1" style="padding: 20px;">90</div>
-            </div>
+      <div class="image-container container">
+        <img src="../images/manipulador/Robot_Arm_III.png" alt="" />
+      </div>
 
-            <div style="display: inline-block; padding: 20px;">
-                <div class="slidecontainer">
-                    <input type="range" orient="vertical" 
-                    min="0" max="180" value="90" 
-                    class="slider" id="slider2" 
-                    oninput="sendAngle('slider2', 'value2')"> 
-                </input>
-                </div>    
-                <div class="normalText" id="value2" style="padding: 20px;">90</div>
-            </div>
-
-            <div style="display: inline-block; padding: 20px;">
-                <div class="slidecontainer">
-                    <input type="range" orient="vertical" 
-                    min="0" max="180" value="90" 
-                    class="slider" id="slider3" 
-                    oninput="sendAngle('slider3', 'value3')"> 
-                </input>
-                </div>    
-                <div class="normalText" id="value3" style="padding: 20px;">90</div>
-            </div>
-
-            <div style="display: inline-block; padding: 20px;">
-                <div class="slidecontainer">
-                    <input type="range" orient="vertical" 
-                    min="0" max="75" value="30" 
-                    class="slider" id="slider4" 
-                    oninput="sendAngle('slider4', 'value4')"> 
-                </input>
-                </div>    
-                <div class="normalText" id="value4" style="padding: 20px;">30</div>
-            </div>
+      <section class="container">
+        <div class="slider-container" id="container-3">
+          <input
+            id="value2"
+            type="range"
+            class="c-rng"
+            min="0"
+            max="180"
+            step="1"
+            value="90"
+            data-range="circular"
+            data-modifier="c-rng--stem"
+            tabindex="3"
+          />
+          <span>Antebraço</span>
         </div>
 
-        <div class="bottom pattern" style="width:99%; position:fixed; bottom:0">
-            <img src="images/svgpattern.svg" alt="pattern" style="position:relative; z-index: -1;"> 
+        <div class="slider-container" id="container-4">
+          <input
+            id="value3"
+            type="range"
+            class="c-rng"
+            min="0"
+            max="180"
+            step="1"
+            value="90"
+            data-range="circular"
+            data-modifier="c-rng--stem"
+            tabindex="4"
+          />
+          <span>Punho</span>
         </div>
+      </section>
 
-    </center>
-
-    <script src="javascripts/manipulador_script.js"></script>
-</body> 
+      <div class="input-container"></div>
+    </main>
+    <script src="../javascripts/manipulador_script.js"></script>
+  </body>
+</html>
