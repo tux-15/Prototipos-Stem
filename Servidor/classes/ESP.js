@@ -5,7 +5,7 @@ class Esp {
       this.connection = connection;
       this.id = id;
       this.status = status;
-      this.taken;
+      this.taken = false;
     };
 
     static heartbeat(wsObject) {

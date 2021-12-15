@@ -1,0 +1,89 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(
+    rgb(1, 77, 143, 0.2),
+    rgb(104, 171, 48, 0.2)
+  );
+  overflow-x: hidden;
+}
+
+/* HEADER ================================= */
+
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  height: 45vh;
+  padding-bottom: 5rem; 
+  z-index: 1;
+
+  background-image: url("../../images/index/banner.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+  background-attachment: local;
+}
+
+.banner img {
+  height: 7rem;
+  margin-top: 5rem;
+}
+/* MAIN ==================================== */
+
+.description-esp {
+  text-align: center;
+}
+
+.description-esp:first-child {
+  margin-top: 3rem;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  height: 4.8rem;
+  width: 13.687rem;
+
+  border-radius: 1rem;
+
+  color: #FFF;
+  font-size: 1.2rem;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
+}
+
+
+.arm-button {
+  background: #014D8F;
+  padding: 0 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.car-button {
+  background: #7E08AF;
+  margin-top: 2.437rem;
+  padding: 0 1.8rem 0 1.5rem;
+}
+
+.car-button svg {
+  height: 2rem;
+}
+
+.divisor-esps {
+  height: 5rem;
+  background: transparent;
+}

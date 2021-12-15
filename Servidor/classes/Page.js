@@ -22,7 +22,7 @@ class Page {
           console.log(page.id + " is dead");
           console.log("--------------------------------------------------");
           page.connection.terminate();
-          // page.taken = false;
+          //page.taken = false;
 
           global.esps.forEach(esp => {
             if (esp.id == page.pageEsp){
@@ -31,7 +31,7 @@ class Page {
               global.rooms.forEach(room => {
                 if (room["espConnection"] == esp.connection){
                   removeItemOnce(global.rooms, room);
-                  console.log(global.rooms);
+                  //console.log(global.rooms);
                 }
               })
             }

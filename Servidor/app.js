@@ -57,7 +57,8 @@ wss.on('connection', function connection(ws, request) {
       messageJson = JSON.parse(message); // converte a mensagem string em JSON
     }
     catch(err){
-      console.log("Erro: ", err);
+      messageJson = "{\"erro\":\"null\"}";
+      //console.log("Erro: ", err);
     }
 
     if(messageJson['start'] == "ESP_on"){ // Indica que um novo esp entrou no servidor
@@ -65,6 +66,7 @@ wss.on('connection', function connection(ws, request) {
 
       global.esps.push(new Esp(ws, id, true));
       console.log(moment().format('MMMM Do YYYY, h:mm:ss a'), " || new ESP: ", global.esps[global.esps.length-1].id);
+      
     };
 
     if(messageJson['start'] == "page_on"){ // Indica que uma nova página entrou no servidor
@@ -96,7 +98,7 @@ wss.on('connection', function connection(ws, request) {
     });
 
   //esps.forEach(esp => esp.connection.send(message));
-  console.log('received: %s', message);
+  //console.log('received: %s', message);
   });
 });
 
