@@ -2,17 +2,19 @@
 #define SERVOCONTROL_H_
 
 
-#include <Servo.h>
+#include <VarSpeedServo.h> 
 #include <Arduino.h>
 
 class ServoControl{
   private:
-    Servo servo1;
-    Servo servo2;
-    Servo servo3;
-    Servo servo4;
-    Servo servo5;
-    Servo servos[4] = {servo1, servo2, servo3, servo4};
+    VarSpeedServo servo1;
+    VarSpeedServo servo2;
+    VarSpeedServo servo3;
+    VarSpeedServo servo4;
+    VarSpeedServo servo5;
+    VarSpeedServo servos[4] = {servo1, servo2, servo3, servo4};
+    
+    int servoSpeed = 0;
     
   public:
     ServoControl();
@@ -21,7 +23,10 @@ class ServoControl{
     void startPosition();
     void effector(String state);
 
-    void doTrajectory(const float trajetoria[][4], int sizeOfTrajectory);
+    void setServoSpeed(int servoSpeed);
+    void goTo(const float trajetoria[4]);
+    void moveServo(const char * servo, int angle);
+    void switchEffector();
 };
 
 #endif

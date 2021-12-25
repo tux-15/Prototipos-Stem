@@ -5,12 +5,11 @@ Serial_comm::Serial_comm() {};
 Serial_comm::~Serial_comm(){};
 
 void Serial_comm::sendJson(String meta, String passo, int estado){
-  Serial.println("sending message");
   DynamicJsonDocument doc(128);
   doc["meta"] = meta;
   doc["passo"] = passo;
   doc["estado"] = estado;
-  serializeJson(doc, Serial);
+  serializeJson(doc, Serial); Serial.println();
 };
 
 void Serial_comm::getJson() {

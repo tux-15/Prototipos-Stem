@@ -4,10 +4,9 @@
 #include "serial_comm.h"
 
 WifiManager wifi;
+Serial_comm serial;
 
 const String ip = "10.0.0.159"; //ip do Esp servidor
-
-Serial_comm serial;
 
 //const String ip = "ws://stem.local";
 const int port = 81; //porta do websocket no Esp servidor

@@ -18,6 +18,8 @@ void setup() {
   
   wifi.startWiFi();
   //wifi.startMDNS("stem");
+
+  delay(100);
   
   serial.sendJson("ESP_IP", wifi.ip , 1);
   startWebSocketClient(ip, port);

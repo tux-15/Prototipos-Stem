@@ -1,54 +1,18 @@
 #ifndef JOINTSTATES_H
 #define JOINTSTATES_H
 
-const float zero_to_esteira[][4] = {
-  {90, 90, 140, 90}, {90, 90, 139, 90},
-  {89, 92, 137, 89}, {88, 94, 133, 89},
-  {87, 99, 126, 87}, {85, 104, 118, 86},
-  {83, 110, 108, 84}, {80, 118, 97, 82},
-  {78, 124, 86, 80}, {76, 130, 77, 78},
-  {74, 135, 69, 77}, {73, 139, 63, 75},
-  {72, 141, 59, 75}, {72, 142, 58, 75},
-  {71, 142, 58, 74}
-};
+//m1
+const float origin[4] = {55, 60, 40, 140};
+const float esteira[4] = {55, 145, 58, 74};
 
-int zero_to_esteira_size =  sizeof(zero_to_esteira) / sizeof(zero_to_esteira[0]);
-
-const float esteira_to_zero[][4] = {
-  {71, 142, 58, 74},{72, 142, 58, 75},
-  {72, 141, 60, 75},{73, 138, 65, 76},
-  {75, 134, 71, 77},{76, 128, 80, 79},
-  {84, 108, 112, 85},{86, 102, 121, 86},
-  {87, 97, 129, 88},{89, 93, 134, 89},
-  {90, 91, 138, 90},{90, 90, 140, 90},
-  {90, 90, 140, 90}
-};
-
-int esteira_to_zero_size =  sizeof(esteira_to_zero) / sizeof(esteira_to_zero[0]);
-
-const float zero_to_carrinho[][4] = {
-    {90, 90, 140, 90},
-    {90, 90, 139, 90},{92, 90, 137, 90},
-    {95, 90, 133, 89},{99, 91, 126, 88},
-    {105, 91, 118, 88},{112, 92, 108, 86},
-    {120, 93, 96, 85},{129, 94, 84, 84},
-    {169, 97, 27, 78},{174, 98, 19, 77},
-    {177, 98, 14, 76},{179, 98, 12, 76},
-    {180, 98, 10, 76}
-};
-
-int zero_to_carrinho_size = sizeof(zero_to_carrinho) / sizeof(zero_to_carrinho[0]);
-
-const float carrinho_to_zero[][4] = {
-  {180, 98, 10, 76},{179, 98, 11, 76},
-  {178, 98, 13, 76},{175, 98, 17, 77},
-  {171, 97, 24, 77},{165, 97, 32, 78},
-  {158, 96, 42, 79},{150, 95, 54, 81},
-  {123, 93, 93, 85},{115, 92, 104, 86},
-  {96, 91, 131, 89},{93, 90, 136, 90},
-  {91, 90, 138, 90},{90, 90, 140, 90}
-};
-
-int carrinho_to_zero_size = sizeof(carrinho_to_zero) / sizeof(carrinho_to_zero[0]);
+const float carrinho[4] = {145, 125, 50, 95};
+const float carrinhoAux[4] = {145, 60, 50, 140};
+  
+//M2
+//const float origin[4] = {45, 60, 40, 140};
+//const float esteira[4] = {55, 135, 58, 74};
+//
+//const float carrinho[4] = {145, 160, 110, 100};
+//const float carrinhoAux[4] = {145, 80, 110, 100};
 
 #endif

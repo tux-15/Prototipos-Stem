@@ -1,4 +1,5 @@
 #include "ServoControl.h"
+#include "jointStates.h"
 
 ServoControl::ServoControl(){};
 
@@ -6,17 +7,17 @@ ServoControl::~ServoControl(){/* ¯\_(ツ)_/¯ */};
 
 void ServoControl::startPosition(){
   Serial.println("Start Position");
-  this->servo1.write(90);
-  this->servo2.write(90);
-  this->servo3.write(90);
-  this->servo4.write(140);
-  this->servo5.write(30);
-  delay(500);
+  this->goTo(origin);
+  delay(1000);
+};
+
+void ServoControl::setServoSpeed(int servoSpeed){
+  this->servoSpeed = servoSpeed;
 };
 
 void ServoControl::effector(String state){
   if(state == "open") {
-    this->servo5.write(40);
+    this->servo5.write(30);
     Serial.println("effector open");
   }
   else if (state == "close"){
@@ -26,7 +27,7 @@ void ServoControl::effector(String state){
 };
 
 void ServoControl::attachServos(){
-  Serial.println("Attaching");
+  Serial.println("Attaching servos");
   this->servo1.attach(4);
   this->servo2.attach(5);
   this->servo3.attach(6);
@@ -35,13 +36,38 @@ void ServoControl::attachServos(){
   delay(250);
 };
 
-void ServoControl::doTrajectory(const float trajetoria[][4], int sizeOfTrajectory) {
-  for (int i = 0; i < sizeOfTrajectory; i++) {
-    //Serial.println();
-    for (int j = 0; j < 4; j++) {
-      this->servos[j].write(trajetoria[i][j]);
-      //Serial.println(trajetoria[i][j]);
-    }; delay(80);
+void ServoControl::goTo(const float trajetoria[4]){
+
+  this->servos[0].write(trajetoria[0], this->servoSpeed);
+  this->servos[0].wait();
+  
+  for(int i=0; i<4; i++){
+    this->servos[i].write(trajetoria[i], this->servoSpeed);
   };
-//  trajetoria = NULL;
+  for(int i=1; i<4; i++){
+    this->servos[i].wait();
+  };
+};
+
+void ServoControl::moveServo(const char * servo, int angle){
+  
+  if (strcmp(servo, "value0") == 0){
+    this->servo1.write(angle);
+  }
+  
+  if (strcmp(servo, "value1") == 0){
+    this->servo2.write(angle);
+  }
+  
+  if (strcmp(servo, "value2") == 0){
+    this->servo3.write(angle);
+  }
+  
+  if (strcmp(servo, "value3") == 0){
+    this->servo4.write(angle);
+  }
+  
+  if (strcmp(servo, "effector") == 0){
+    //this->switchEffector();
+  }
 };

@@ -3,6 +3,7 @@
 
 //long previousMillis = 0; 
 //long interval = 1000;  
+// {"slider":"value0", "angle":90}
 
 Servo servo1;
 Servo servo2;
@@ -44,9 +45,9 @@ void loop() {
 
 void startPosition(){
   servo1.write(90);
-  servo2.write(90);
-  servo3.write(90);
-  servo4.write(90);
+  servo2.write(60);
+  servo3.write(40);
+  servo4.write(140);
   servo5.write(70);
   
 };
