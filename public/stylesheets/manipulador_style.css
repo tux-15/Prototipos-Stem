@@ -190,7 +190,9 @@ button {
     justify-content: space-between;
 
     height: calc(100vh - 7.5rem - 8rem);
-    padding: 7rem 25vw;
+    /* padding: 7rem 25vw; */
+    padding: 6rem 25vw 3rem;
+
 
     position: relative;
   }
@@ -221,7 +223,7 @@ button {
   .slider-group-container {
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
+    /* height: 100%; */
     padding: 0;
   }
 
@@ -234,7 +236,7 @@ button {
     padding: 0rem;
     position: absolute;
     z-index: -1;
-    top: 50%;
+    top: 55%;
     left: 50%;
   }
   
