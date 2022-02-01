@@ -49,6 +49,7 @@ div li {
 }
 .canvas_style {
   width: 100vw;
+  padding-left: 7rem;
 }
 
 @media screen and (min-width: 1024px) {
@@ -100,16 +101,21 @@ div li {
   }
   .canvas_style {
     width: 50vw;
+    padding-left: 0;
+    padding-right: 2rem;
     flex: 1;
   }
   .secao-joystick {
     display: flex;
-    flex-direction: row;
-    padding-top: 7rem;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 32rem;
   }
   .imagem_carrinho {
     width: 20vw;
-    margin-left: 15rem;
+    padding-top: 1.5rem;
+    padding-right: 30rem;
+    padding-left: 0;
     flex: 1;
   }
   .seta_retornar::selection {
@@ -131,10 +137,11 @@ div li {
     background:rgb(0, 0, 0, 0);
   }
   footer {
-    display: flex;
-    box-sizing: border-box;
-    height: 500px;
-    background: linear-gradient(to right, rgba(104, 171, 48, 0.9), rgba(1, 77, 143, 0.9));
-    clip-path: ellipse(105% 100% at 50% 100%);
+    position: absolute;
+    bottom: 0;
+    height: 8rem;
+    width: 100vw;
+    background-image: linear-gradient(to right,rgb(104, 171, 48),rgb(1, 77, 143));
+    clip-path: ellipse(70% 100% at 50% 100%);
   }
 }
