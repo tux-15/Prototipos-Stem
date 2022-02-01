@@ -109,7 +109,7 @@ div li {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-left: 32rem;
+    padding-left: 30rem;
   }
   .imagem_carrinho {
     width: 20vw;
