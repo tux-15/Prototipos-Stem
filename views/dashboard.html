@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monitoramento</title>
+    <link rel="stylesheet" href="../public/stylesheets/dashboard_style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-menu">
+        <a href="./" tabindex="1" id="back-button"></a>
+        <div class="logo"></div>
+        <h1>Monitoramento</h1>
+      </div>
+    </header>
+
+    <main>
+      <section class="gif-container">
+        <img src="../public/images/dashboard/robot.gif" />
+      </section>
+
+      <section class="card-container">
+        <div class="monitoring-card">
+          Esteira
+          <span id="running-machine">Off</span>
+        </div>
+        <div class="monitoring-card">
+          Braço 1
+          <span id="arm1">Off</span>
+        </div>
+        <div class="monitoring-card">
+          Braço 2
+          <span id="arm2">Off</span>
+        </div>
+        <div class="monitoring-card">
+          Velocidade<br/>do Carrinho
+          <span id="cart-speed">0</span>
+        </div>
+      </section>
+    </main>
+
+    <footer></footer>
+
+    <script src="../public/javascripts/dashboard_script.js"></script>
+  </body>
+</html>

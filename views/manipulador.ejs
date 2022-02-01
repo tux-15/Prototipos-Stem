@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+      name="viewport"
+    />
+
+    <title>Manipulador Stem</title>
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="images/favicon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../stylesheets/manipulador_style.css" />
+  </head>
+
+  <body>
+    <header>
+      <div class="header-menu">
+        <a href="./" tabindex="1" id="back-button"></a>
+        <div class="logo"></div>
+        <h1>Braço Robótico</h1>
+      </div>
+    </header>
+
+    <main>
+      <div class="button-container container">
+        <button
+          type="button"
+          onclick="switchEffector()"
+          class="switch-claw disabled"
+          tabindex="2"
+        ></button>
+      </div>
+
+      <section class="slider-group-container">
+        <div class="slider-container" id="container-1">
+          <input
+            id="value0"
+            type="range"
+            class="c-rng"
+            min="0"
+            max="180"
+            step="1"
+            value="90"
+            data-range="circular"
+            data-modifier="c-rng--stem"
+            tabindex="3"
+          />
+          <span class="control-description">Base</span>
+        </div>
+
+        <div class="slider-container" id="container-2">
+          <input
+            id="value1"
+            type="range"
+            class="c-rng"
+            min="0"
+            max="180"
+            step="1"
+            value="90"
+            data-range="circular"
+            data-modifier="c-rng--stem"
+            tabindex="4"
+          />
+          <span class="control-description">Braço</span>
+        </div>
+      </section>
+
+      <div class="image-container container">
+        <img src="../images/manipulador/Robot_Arm_III.png" alt="" />
+      </div>
+
+      <section class="slider-group-container">
+        <div class="slider-container" id="container-3">
+          <input
+            id="value2"
+            type="range"
+            class="c-rng"
+            min="0"
+            max="180"
+            step="1"
+            value="90"
+            data-range="circular"
+            data-modifier="c-rng--stem"
+            tabindex="5"
+          />
+          <span class="control-description">Antebraço</span>
+        </div>
+
+        <div class="slider-container" id="container-4">
+          <input
+            id="value3"
+            type="range"
+            class="c-rng"
+            min="0"
+            max="180"
+            step="1"
+            value="90"
+            data-range="circular"
+            data-modifier="c-rng--stem"
+            tabindex="6"
+          />
+          <span class="control-description">Punho</span>
+        </div>
+      </section>
+    </main>
+
+    <footer></footer>
+    <script src="../javascripts/manipulador_script.js"></script>
+  </body>
+</html>

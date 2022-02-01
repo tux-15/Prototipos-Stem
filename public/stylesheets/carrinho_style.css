@@ -1,0 +1,140 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  overflow: hidden;
+  background-image: linear-gradient(rgb(1, 77, 143, 0.15), rgb(104, 171, 48, 0.15));
+  background-attachment: fixed;
+  font-family: "Rubik", sans-serif;
+  font-weight: 400;
+  color: #014d8f;
+}
+
+header {
+  width: 100vw;
+  height: 22%;
+  background-image: url("../images/carrinho/background_header.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+}
+
+div li {
+  display: block;
+  position: relative;
+  float: left;
+}
+.header_text {
+  position: relative;
+  font-size: 60px;
+  padding-left: 1rem;
+  margin-top: 4.5rem;
+  vertical-align: baseline;
+}
+.seta_retornar {
+  width: 125px;
+  height: 125px;
+  padding: 2rem;
+  padding-left: 3rem;
+}
+.logo-acadstem {
+  display: none;
+}
+.imagem_carrinho {
+  position: relative;
+  width: 70vw;
+  padding-top: 3rem;
+  padding-left: 9rem;
+}
+.canvas_style {
+  width: 100vw;
+}
+
+@media screen and (min-width: 1024px) {
+  
+  body {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    overflow: hidden;
+    background-image: linear-gradient(rgb(1, 77, 143, 0), rgb(104, 171, 48, 0));
+    background-attachment: fixed;
+    font-family: "Rubik", sans-serif;
+    font-weight: 400;
+    color: black;
+  }
+  header {
+    display: flex;
+    width: 100vw;
+    height: 7.5rem;
+    background: #ffffff;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    align-items: center;
+  }
+  .header_text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+    font-size: 2.5rem;
+    margin-top: 2.25rem;
+  }
+  h1::selection {
+    background: rgb(0, 0, 0, 0);
+  }
+  .seta_retornar {
+    width: 48px;
+    height: 48px;
+    padding-top: 2.25rem;
+    padding-left: 3rem;
+    padding-right: 0;
+  }
+  .logo-acadstem {
+    display: block;
+    /* width: 11.15rem; */
+    height: 5.3rem;
+    margin-left: 2rem;
+    margin-top: 1.1rem;
+    /* padding: 2rem 0; */
+  }
+  .canvas_style {
+    width: 50vw;
+    flex: 1;
+  }
+  .secao-joystick {
+    display: flex;
+    flex-direction: row;
+    padding-top: 7rem;
+  }
+  .imagem_carrinho {
+    width: 20vw;
+    margin-left: 15rem;
+    flex: 1;
+  }
+  .seta_retornar::selection {
+    background:rgb(0, 0, 0, 0);
+  }
+  .secao-imagem-carrinho::selection {
+    background:rgb(0, 0, 0, 0);
+  }
+  .imagem_carrinho::selection {
+    background:rgb(0, 0, 0, 0);
+  }
+  .logo-acadstem::selection{
+    background:rgb(0, 0, 0, 0);
+  }
+  .secao-joystick::selection {
+    background:rgb(0, 0, 0, 0);
+  }
+  .canvas_style::selection {
+    background:rgb(0, 0, 0, 0);
+  }
+  footer {
+    display: flex;
+    box-sizing: border-box;
+    height: 500px;
+    background: linear-gradient(to right, rgba(104, 171, 48, 0.9), rgba(1, 77, 143, 0.9));
+    clip-path: ellipse(105% 100% at 50% 100%);
+  }
+}
