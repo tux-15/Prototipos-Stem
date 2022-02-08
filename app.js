@@ -7,7 +7,8 @@ var moment = require('moment')
 
 var indexRouter = require('./routes/index');
 var manipuladorRouter = require('./routes/manipulador');
-var carrinhoRouter = require('./routes/carrinho'); 
+var carrinhoRouter = require('./routes/carrinho');
+var dashboardRouter = require('./routes/dashboard'); 
 
 function ab2str(buf) {
   return String.fromCharCode.apply(null, new Uint16Array(buf));
@@ -124,6 +125,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/manipulador', manipuladorRouter);
 app.use('/carrinho', carrinhoRouter);
+app.use('/dashboard', dashboardRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

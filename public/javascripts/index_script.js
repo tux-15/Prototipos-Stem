@@ -24,7 +24,7 @@ function searchESPs() {
             <div class="container-monitoring-button">
               <a class="monitoring-button"
               onclick="
-                startRobot(${esp.id}, 'monitorador');
+                startRobot(${esp.id}, 'dashboard');
               "
               <svg
                   xmlns="http://www.w3.org/2000/svg"
