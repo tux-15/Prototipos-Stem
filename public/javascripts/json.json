@@ -1,6 +1,9 @@
 {
-  "runningMachine": "on",
-  "arm1": "off",
-  "arm2": "on",
-  "cartSpeed": 8
+  "runningMachineState": "on",
+  "arm1State": "off",
+  "arm2State": "on",
+  "cart": {
+    "cartState": "on",
+    "cartSpeed": 8
+  }
 }
