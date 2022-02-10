@@ -2,13 +2,16 @@ async function findPrototypeData() {
   const response = await fetch("javascripts/json.json");
   const prototypeData = await response.json();
 
+  return prototypeData;
+}
+
+function renderPrototypeData(prototypeData) {
   const {
     runningMachineState,
     arm1State,
     arm2State,
     cart: { cartState, cartSpeed },
   } = prototypeData;
-
 
   renderStateOfRunningMachine(runningMachineState);
   renderStateOfArm1(arm1State);
@@ -52,4 +55,4 @@ function renderVelocityOfCar(state, speed) {
   }
 }
 
-findPrototypeData();
+findPrototypeData().then((prototypeData) => renderPrototypeData(prototypeData));
