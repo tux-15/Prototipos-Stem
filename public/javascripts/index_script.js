@@ -38,7 +38,7 @@ function searchESPs() {
         }
 
         esp_list.forEach((esp) => {
-          if (!esp.taken) {
+          if (!esp.taken && esp.type === "manual") {
             htmlContainer += `
               <div class="container-img">
                 <img src="./images/index/robot-arm.png" class="robot-img">
