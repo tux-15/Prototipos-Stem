@@ -29,7 +29,7 @@ void webSocketClientEvent(WStype_t type, uint8_t * payload, size_t length) {
       Serial.printf("\rConnected to Node Server on url: %s\n\r", payload);
 
       // send message to server when Connected
-      webSocketClient.sendTXT("{\"start\": \"ESP_on\"}");
+      webSocketClient.sendTXT("{\"start\": \"ESP_on\", \"espType\": \"sistema\"}");
       break;
       
     case WStype_TEXT:
