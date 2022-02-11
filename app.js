@@ -72,9 +72,20 @@ wss.on('connection', function connection(ws, request) {
     }
 
     if(messageJson['start'] == "ESP_on"){ // Indica que um novo esp entrou no servidor
+
       var id = request.socket.remoteAddress.toString().slice(17);
+
+      if (messageJson['espType'] == "manual") {
+        global.esps.push(new Esp(ws, id, true, manual));
+      }
+
+      else if (message['espType'] == "sistema") {
+        global.esps.push(new Esp(ws, id, true, sistema));
+      }
+      
       global.esps.push(new Esp(ws, id, true));
-      console.log(moment().format('MMMM Do YYYY, h:mm:ss a'), " || new ESP: ", global.esps[global.esps.length-1].id);
+      console.log(moment().format('MMMM Do YYYY, h:mm:ss a'), " || ESP ", global.esps[global.esps.length-1].type + 
+                                                                      " id: " + global.esps[global.esps.length-1].id)
     };
 
     if(messageJson['start'] == "page_on"){ // Indica que uma nova página entrou no servidor
@@ -90,7 +101,7 @@ wss.on('connection', function connection(ws, request) {
         if (esp.id == lastPage.pageEsp){
           global.rooms.push({"pageConnection": lastPage.connection, "espConnection": esp.connection});
           esp.taken = true; // Informa que este ESP já está sendo usado por uma página
-          console.log("The page ", lastPage.id, "is sending messages to ESP", esp.id);
+          console.log("The page ", lastPage.id, "is communicating with ESP of id:", esp.id);
         };
       });
       //console.log(global.rooms);
