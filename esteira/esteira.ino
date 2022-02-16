@@ -1,58 +1,43 @@
-void motorRun(int meioPeriodo, boolean direcao);
-void debug();
+#include "esteira.h"
+#include "sensor.h"
+#include "utils.h"
 
-// Pinos do driver A4988
-const int stepPin = 4;
-const int dirPin = 3;
-const int pinIR_1 = 6;
 
-int valorPot = 0;
-int meioPeriodo = 1000; // tempo que o pino stepPin fica HIGH ou LOW gerando um pulso quadrado. Mexende nesse valor, pode alterar a frequância de rotação do motor
-int ir = 0;
+Sensor sensor1;
+Sensor sensor2;
 
-int RPM = 0;
+Esteira esteira;
+Utils utils;
 
-void setup () 
+void setup ()
 {
-  pinMode (stepPin, OUTPUT);
-  pinMode (dirPin, OUTPUT);
-  pinMode(A0, INPUT);
-
   Serial.begin(9600);
 }
 
 void loop()
-{
-    ir = digitalRead(pinIR_1);
-    valorPot = analogRead(A0);
-    meioPeriodo = map(valorPot, 0,1023, 500, 10000);  // Frequência com range de 300 RPM a 15 RPM
+{ 
+  int s1 = sensor1.estadoSensor(4);
+  int s2 = sensor2.estadoSensor(5);
+  
+  utils.getJson();
 
-   if(ir == 0)
-   {
-     Serial.println("Parado");
-   }
-
-  else
-  {  
-    motorRun(meioPeriodo, HIGH);
+  if (verificaMensagem() == true && s1 == 0) {
+    esteira.power = true;
   }
+
+  if (s2 == 0) {
+    esteira.power = false;
+  }
+
+    esteira.Run(1000, HIGH);
 }
 
-void motorRun(int meioPeriodo, boolean direcao)
-{
-  //Muda a direção da rotação
-  digitalWrite(dirPin,direcao);
 
-  digitalWrite(stepPin,HIGH);
-  delayMicroseconds(meioPeriodo);
-  digitalWrite(stepPin,LOW);
-  delayMicroseconds(meioPeriodo);
-}
+boolean verificaMensagem() {
+  if (utils.meta == "M1" && utils.passo == 4 && utils.estado == "1")
+  {
+    return true;
+  }
 
-void debug()
-{
-  float PPS = 1000000 / (2 * meioPeriodo); // Frequencia Pulsos por segundo
-  RPM = (PPS * 60) / 200;            // Calculo do RPM
-  Serial.print("  RPM: ");
-  Serial.println(RPM);
+  return false;
 }
