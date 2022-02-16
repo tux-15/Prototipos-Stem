@@ -10,6 +10,10 @@ a {
   cursor: pointer;
 }
 
+span {
+  display: block;
+}
+
 body {
   min-height: 100vh;
   background: linear-gradient(rgb(1, 77, 143, 0.2), rgb(104, 171, 48, 0.2));
@@ -69,12 +73,18 @@ body {
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
 }
 
+.container-monitoring-button span {
+  opacity: 0.75;
+  text-align: center;
+}
+
 .container-arm-car-button {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
+
 .container-arm-car-button a {
   display: flex;
   align-items: center;
@@ -86,18 +96,27 @@ body {
   font-size: 1.2rem;
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
 }
+
+.container-arm-car-button span {
+  opacity: 0.75;
+  text-align: center;
+}
+
 .robot-img {
   display: none;
 }
+
 .car-img {
   display: none;
 }
+
 .monitoring-button {
   background: #679C4A;
   text-align: center;
   padding: 0 2.5rem;
   margin-top: 1.5rem;
 }
+
 .arm-button {
   background: #014d8f;
   text-align: center;
@@ -120,30 +139,33 @@ body {
   background: transparent;
 }
 
-@media screen and (min-width: 1024px) {
+@media (min-width: 1024px) {
   body {
     overflow-x: hidden;
   }
+
   .banner {
     display: flex;
     width: 100vw;
-    height: 7.5rem;
+    height: 6rem;
     background: #ffffff;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
     justify-content: left;
   }
+
   .banner img {
-    /* width: 11.15rem; */
-    height: 5.3rem;
+    height: 5rem;
     margin-top: 5rem;
     margin-left: 4rem;
   }
+
   .container-monitoring-button{
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 5rem;
+    padding-top: 3rem;
   }
+
   .container-monitoring-button a {
     display: flex;
     align-items: center;
@@ -155,12 +177,14 @@ body {
     font-size: 1.2rem;
     box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
   }
+
   .container-arm-car-button {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: row;
   }
+
   .container-arm-car-button a {
     display: flex;
     align-items: center;
@@ -172,34 +196,39 @@ body {
     font-size: 1.2rem;
     box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
   }
+
   .monitoring-button {
     background: #679C4A;
     text-align: center;
     padding: 0 2.5rem;
     margin-top: 1.5rem;
   }
+
   .container-img {
     display: flex;
     justify-content: center;
     padding-top: 2rem;
   }
+
   .robot-img {
     display: flex;
     height: 9rem;
     margin-right: 13rem;
     margin-top: 1rem;
   }
+
   .car-img {
     display: flex;
     height: 6rem;
     margin-left: 13rem;
     margin-top: 4rem;
   }
+
   .container-arm-car-button {
     display: flex;
     justify-content: center;
-    
   }
+
   .arm-button {
     background: #014d8f;
     text-align: center;

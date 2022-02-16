@@ -29,7 +29,7 @@ header {
   display: flex;
 
   height: 7.5rem;
-  padding-top: 1rem;
+  padding-top: 0.5rem;
   padding-left: 1rem;
 
   background-image: url("../images/carrinho/background_header.svg");
@@ -46,6 +46,13 @@ header {
 
   width: 12.5rem;
   height: fit-content;
+}
+
+.header-menu #logo {
+  position: absolute;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .header-menu #back-button {
@@ -89,7 +96,7 @@ section.card-container {
   align-items: center;
   justify-content: space-between;
 
-  width: 16.75rem;
+  width: 19rem;
   height: 5.375rem;
   padding: 0 2rem;
   
@@ -107,14 +114,13 @@ section.card-container {
 
 
 /* DESKTOP ========================================================= */
-@media (min-width: 992px) {
+@media (min-width: 1024px) {
   /* ====================== */
   header {
     align-items: center;
 
     width: 100vw;
-    /* height: 7rem; */
-
+    height: 6rem;
     padding: 0 3rem;
 
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
@@ -131,20 +137,17 @@ section.card-container {
     background-size: 3rem;
   }
 
-  .header-menu .logo {
-    background-image: url(../images/manipulador/Logo\ acadstem.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-attachment: local;
+  .header-menu #logo {
+    height: 5rem;
+    margin-left: 1rem;
 
-    width: 11.15rem;
-    height: 4.868rem;
-    margin-left: 2rem;
+    position: static;
+    opacity: 1;
+    visibility: visible;
   }
 
   .header-menu h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: #000000;
 
     position: absolute;
@@ -158,7 +161,7 @@ section.card-container {
     align-items: center;
     justify-content: space-between;
 
-    height: calc(100vh - 8rem - 7.5rem);
+    height: calc(100vh - 4rem - 6rem);
     padding-left: 6.437rem;
     padding-right: 20rem;
   }
@@ -170,14 +173,27 @@ section.card-container {
   section.card-container {
     margin-top: 3rem;
     order: 1;
+    justify-content: space-around;
+    /* gap: 1.3rem; */
   }
+
+  .monitoring-card {
+    width: 15rem;
+    height: 5rem;
+  }
+
+  .monitoring-card.cart {
+    font-size: 1.5rem;
+  }
+
+
 
   /* ====================== */
   footer {
     position: absolute;
     bottom: 0;
 
-    height: 8rem;
+    height: 4rem;
     width: 100vw;
 
     background-image: linear-gradient(

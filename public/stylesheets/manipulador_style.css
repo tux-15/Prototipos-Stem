@@ -39,7 +39,7 @@ header {
   display: flex;
 
   height: 7.5rem;
-  padding-top: 1rem;
+  padding-top: 0.5rem;
   padding-left: 1rem;
 
   background-image: url("../images/carrinho/background_header.svg");
@@ -56,6 +56,13 @@ header {
 
   width: 12.5rem;
   height: fit-content;
+}
+
+.header-menu #logo {
+  position: absolute;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .header-menu #back-button {
@@ -139,13 +146,14 @@ button {
 }
 
 /* DESKTOP ========================================================= */
-@media (min-width: 992px) {
+@media (min-width: 1024px) {
   /* ====================== */
+
   header {
     align-items: center;
 
     width: 100vw;
-    /* height: 7rem; */
+    height: 6rem;
 
     padding: 0 3rem;
 
@@ -163,20 +171,17 @@ button {
     background-size: 3rem;
   }
 
-  .header-menu .logo {
-    background-image: url(../images/manipulador/Logo\ acadstem.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-attachment: local;
+  .header-menu #logo {
+    height: 5rem;
+    margin-left: 1rem;
 
-    width: 11.15rem;
-    height: 4.868rem;
-    margin-left: 2rem;
+    position: static;
+    opacity: 1;
+    visibility: visible;
   }
 
   .header-menu h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: #000000;
 
     position: absolute;
@@ -190,8 +195,7 @@ button {
     justify-content: space-between;
 
     height: calc(100vh - 7.5rem - 8rem);
-    padding: 6rem 25vw 3rem;
-
+    padding: 2rem 25vw 3rem;
 
     position: relative;
   }
@@ -199,7 +203,7 @@ button {
   /* ====================== */
   .button-container {
     position: absolute;
-    top: 6rem;
+    top: 3rem;
     left: 50%;
     transform: translateX(-50%);
 
@@ -222,7 +226,7 @@ button {
   .slider-group-container {
     flex-direction: column;
     justify-content: space-between;
-    /* height: 100%; */
+    gap: 1rem;
     padding: 0;
   }
 
@@ -235,7 +239,7 @@ button {
     padding: 0rem;
     position: absolute;
     z-index: -1;
-    top: 55%;
+    top: 70%;
     left: 50%;
   }
   
@@ -248,7 +252,7 @@ button {
     position: absolute;
     bottom: 0;
 
-    height: 8rem;
+    height: 4rem;
     width: 100vw;
 
     background-image: linear-gradient(

@@ -1,59 +1,83 @@
+:root {
+  --blue-color: #014d8f;
+}
+
 body {
   width: 100vw;
   height: 100vh;
   position: fixed;
   overflow: hidden;
-  background-image: linear-gradient(rgb(1, 77, 143, 0.15), rgb(104, 171, 48, 0.15));
+  background-image: linear-gradient(
+    rgb(1, 77, 143, 0.15),
+    rgb(104, 171, 48, 0.15)
+  );
   background-attachment: fixed;
   font-family: "Rubik", sans-serif;
   font-weight: 400;
-  color: #014d8f;
+  color: var(--blue-color);
 }
 
 header {
-  width: 100vw;
-  height: 22%;
+  display: flex;
+
+  height: 15%;
+  padding-top: 1rem;
+  padding-left: 1.5rem;
+
   background-image: url("../images/carrinho/background_header.svg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  display: flex;
+  background-attachment: local;
 }
 
-div li {
-  display: block;
-  position: relative;
-  float: left;
+.header-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: fit-content;
 }
-.header_text {
-  position: relative;
-  font-size: 60px;
-  padding-left: 1rem;
-  margin-top: 4.5rem;
-  vertical-align: baseline;
+
+.header-menu #logo {
+  position: absolute;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
 }
-.seta_retornar {
+
+.header-menu #back-button {
+  background-image: url(../images/manipulador/back-arrow.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 6rem;
+
   width: 125px;
   height: 125px;
-  padding: 2rem;
-  padding-left: 3rem;
 }
-.logo-acadstem {
-  display: none;
+
+.header-menu h1 {
+  font-size: 3rem;
+  font-weight: normal;
+  color: var(--blue-color);
+
+  margin-left: 1.5rem;
 }
+
 .imagem_carrinho {
+  margin-top: 2rem;
   position: relative;
   width: 70vw;
   padding-top: 3rem;
   padding-left: 9rem;
 }
+
 .canvas_style {
   width: 100vw;
   padding-left: 7rem;
 }
 
-@media screen and (min-width: 1024px) {
-  
+@media (min-width: 1024px) {
   body {
     width: 100vw;
     height: 100vh;
@@ -65,52 +89,62 @@ div li {
     font-weight: 400;
     color: black;
   }
+
   header {
-    display: flex;
-    width: 100vw;
-    height: 7.5rem;
-    background: #ffffff;
-    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
     align-items: center;
+
+    width: 100vw;
+    height: 6rem;
+    padding: 0;
+
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    background: #ffffff;
   }
-  .header_text {
+
+  .header-menu {
+    width: 100vw;
+    justify-content: left;
+    position: relative;
+  }
+
+  .header-menu #back-button {
+    background-size: 3rem;
+    margin-right: -1.4rem;
+    margin-left: 0.6rem;
+  }
+
+  .header-menu #logo {
+    height: 5rem;
+
+    position: static;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .header-menu h1 {
+    font-size: 2rem;
+    color: #000000;
+
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    margin-left: 0;
+  }
 
-    font-size: 2.5rem;
-    margin-top: 2.25rem;
-  }
-  h1::selection {
-    background: rgb(0, 0, 0, 0);
-  }
-  .seta_retornar {
-    width: 48px;
-    height: 48px;
-    padding-top: 2.25rem;
-    padding-left: 3rem;
-    padding-right: 0;
-  }
-  .logo-acadstem {
-    display: block;
-    /* width: 11.15rem; */
-    height: 5.3rem;
-    margin-left: 2rem;
-    margin-top: 1.1rem;
-    /* padding: 2rem 0; */
-  }
   .canvas_style {
     width: 50vw;
     padding-left: 0;
     padding-right: 2rem;
     flex: 1;
   }
+
   .secao-joystick {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-left: 30rem;
   }
+
   .imagem_carrinho {
     width: 20vw;
     padding-top: 1.5rem;
@@ -118,30 +152,27 @@ div li {
     padding-left: 0;
     flex: 1;
   }
-  .seta_retornar::selection {
-    background:rgb(0, 0, 0, 0);
+
+  .seta_retornar::selection,
+  .secao-imagem-carrinho::selection,
+  .imagem_carrinho::selection,
+  .logo-acadstem::selection,
+  .secao-joystick::selection,
+  .canvas_style::selection,
+  h1::selection {
+    background: rgb(0, 0, 0, 0);
   }
-  .secao-imagem-carrinho::selection {
-    background:rgb(0, 0, 0, 0);
-  }
-  .imagem_carrinho::selection {
-    background:rgb(0, 0, 0, 0);
-  }
-  .logo-acadstem::selection{
-    background:rgb(0, 0, 0, 0);
-  }
-  .secao-joystick::selection {
-    background:rgb(0, 0, 0, 0);
-  }
-  .canvas_style::selection {
-    background:rgb(0, 0, 0, 0);
-  }
+
   footer {
     position: absolute;
     bottom: 0;
-    height: 8rem;
+    height: 4rem;
     width: 100vw;
-    background-image: linear-gradient(to right,rgb(104, 171, 48),rgb(1, 77, 143));
+    background-image: linear-gradient(
+      to right,
+      rgb(104, 171, 48),
+      rgb(1, 77, 143)
+    );
     clip-path: ellipse(70% 100% at 50% 100%);
   }
 }

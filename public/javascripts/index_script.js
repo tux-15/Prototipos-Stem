@@ -32,7 +32,7 @@ function searchESPs() {
               startRobot(${systemEsp.id}, 'dashboard');
               "
             >
-              <span>Monitoramento</br>ID: ${systemEsp.id}</span>
+              <p>Monitoramento<span>ID: ${systemEsp.id}</span></p>
             </a>
           </div>`;
         }
@@ -53,7 +53,7 @@ function searchESPs() {
                   "
                 >
                 <img src="./images/index/robotic-arm.svg" />
-                  <span>Braço robótico ID: ${esp.id}</span>
+                  <p>Braço robótico<span>ID: ${esp.id}</span></p>
                 </a>
                 <a
                   class="car-button"
@@ -62,7 +62,7 @@ function searchESPs() {
                   "
                 >
                   <img src="./images/index/car.svg" />
-                  <span>Carrinho </br>ID: ${esp.id}</span>
+                  <p>Carrinho<span>ID: ${esp.id}</span></p>
                 </a>
               </div>
               <div class="divisor-esps"></div>`;
