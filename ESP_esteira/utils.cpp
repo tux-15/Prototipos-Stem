@@ -5,7 +5,7 @@ char receivedChars[numChars];
 
 boolean newDataFromArduino = false;
 long previousMillis = 0; 
-long interval =100;  // (em milissegundos) -> define o tempo de "delay"
+long interval = 100;  // (em milissegundos) -> define o tempo de "delay"
 
 
 char * getMessageFromSerial() {

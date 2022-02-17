@@ -12,11 +12,14 @@ class Serial_comm{
   public:
     Serial_comm();
     ~Serial_comm();
-
+    
     StaticJsonDocument<100> docFromSerial;
+
+    String from;
+    String state;
     
     void getJson();
-    void sendJson(String meta, String passo, int estado);
+    void sendJson(String from, String state);
 };
 
 #endif

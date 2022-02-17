@@ -26,7 +26,6 @@ class ServoControl{
     void setServoSpeed(int servoSpeed);
     void goTo(const float trajetoria[4]);
     void moveServo(const char * servo, int angle);
-    void switchEffector();
 };
 
 #endif

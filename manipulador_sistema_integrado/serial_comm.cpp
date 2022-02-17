@@ -4,11 +4,10 @@ Serial_comm::Serial_comm() {};
 
 Serial_comm::~Serial_comm(){};
 
-void Serial_comm::sendJson(String meta, String passo, int estado){
+void Serial_comm::sendJson(String from, String state){
   DynamicJsonDocument doc(128);
-  doc["meta"] = meta;
-  doc["passo"] = passo;
-  doc["estado"] = estado;
+  doc["from"] = from;
+  doc["state"] = state;
   serializeJson(doc, Serial); Serial.println();
 };
 
@@ -19,13 +18,11 @@ void Serial_comm::getJson() {
 
     if (err == DeserializationError::Ok){
       
-      this->docFromSerial["meta"] = doc["meta"].as<String>();
-      this->docFromSerial["passo"] = doc["passo"].as<String>();
-      this->docFromSerial["estado"] = doc["estado"].as<int>();
+      this->from = doc["from"].as<String>();
+      this->state = doc["state"].as<String>();
       
-      Serial.print(this->docFromSerial["meta"].as<String>()); Serial.print(" : ");
-      Serial.print(this->docFromSerial["passo"].as<String>());Serial.print(" : ");
-      Serial.println(this->docFromSerial["estado"].as<int>());
+      Serial.print(this->from); Serial.print(" || ");
+      Serial.println(this->state);
     }
     else {
 //      Serial.print("\ndeserializeJson() returned ");

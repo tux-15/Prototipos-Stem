@@ -1,7 +1,7 @@
 #ifndef JOINTSTATES_H
 #define JOINTSTATES_H
 
-//m1
+//M1
 const float origin[4] = {55, 60, 40, 140};
 const float esteira[4] = {55, 145, 58, 74};
 

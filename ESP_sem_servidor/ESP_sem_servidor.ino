@@ -104,7 +104,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
       Serial.printf("\rConnected to url: %s\n\r", payload);
 
       // send message to server when Connected
-      webSocket.sendTXT("{\"start\": \"ESP_on\"}");
+      webSocket.sendTXT("{\"start\": \"ESP_on\", \"espType\": \"manual\"}");
       break;
 
     case WStype_TEXT:
