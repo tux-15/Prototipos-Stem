@@ -25,16 +25,18 @@ function searchESPs() {
         const systemEsp = esp_list.find((esp) => esp.type === "sistema");
 
         if (systemEsp) {
-          htmlContainer += 
-          `<div class="container-monitoring-button">
-            <a class="monitoring-button"
-              onclick="
-              startRobot(${systemEsp.id}, 'dashboard');
-              "
-            >
-              <p>Monitoramento<span>ID: ${systemEsp.id}</span></p>
-            </a>
-          </div>`;
+          if (!systemEsp.taken) {
+            htmlContainer += 
+            `<div class="container-monitoring-button">
+              <a class="monitoring-button"
+                onclick="
+                startRobot(${systemEsp.id}, 'dashboard');
+                "
+              >
+                <p>Monitoramento<span>ID: ${systemEsp.id}</span></p>
+              </a>
+            </div>`;
+          }
         }
 
         esp_list.forEach((esp) => {
