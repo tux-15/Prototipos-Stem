@@ -12,8 +12,6 @@
 }
 
 body {
-  min-height: 100vh;
-  width: 100vw;
   background-attachment: fixed;
   background-image: linear-gradient(
     rgb(1, 77, 143, 0.15),
@@ -77,8 +75,10 @@ section.gif-container {
 }
 
 section.gif-container img {
-  width: 19.062rem;
-  height: 16.687rem;
+  width: 19rem;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+  border-radius: 1rem;
 }
 
 section.card-container {
@@ -101,6 +101,7 @@ section.card-container {
   padding: 0 2rem;
   
   background: var(--white-color);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 50%);
   border-radius: 1rem;
 
   color: var(--purple-color);
@@ -162,19 +163,26 @@ section.card-container {
     justify-content: space-between;
 
     height: calc(100vh - 4rem - 6rem);
-    padding-left: 6.437rem;
-    padding-right: 20rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
   }
+  
   /* ====================== */
   section.gif-container {
     order: 2;
   }
+
+  section.gif-container img { 
+    margin: 0;
+    width: auto;
+    height: 24.5rem;
+  }
+
   /* ====================== */
   section.card-container {
     margin-top: 3rem;
     order: 1;
     justify-content: space-around;
-    /* gap: 1.3rem; */
   }
 
   .monitoring-card {
@@ -185,8 +193,6 @@ section.card-container {
   .monitoring-card.cart {
     font-size: 1.5rem;
   }
-
-
 
   /* ====================== */
   footer {

@@ -5,7 +5,7 @@
   font-family: "Rubik", sans-serif;
 }
 
-a { 
+a {
   text-decoration: none;
   cursor: pointer;
 }
@@ -70,7 +70,8 @@ body {
 
   color: #fff;
   font-size: 1.2rem;
-  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
+  /* box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3); */
+  box-shadow: 0 1px 3px rgb(0 0 0 / 50%);
 }
 
 .container-monitoring-button span {
@@ -94,7 +95,8 @@ body {
   border-radius: 1rem;
   color: #fff;
   font-size: 1.2rem;
-  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
+  /* box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3); */
+  box-shadow: 0 1px 3px rgb(0 0 0 / 50%);
 }
 
 .container-arm-car-button span {
@@ -111,7 +113,7 @@ body {
 }
 
 .monitoring-button {
-  background: #679C4A;
+  background: #679c4a;
   text-align: center;
   padding: 0 2.5rem;
   margin-top: 1.5rem;
@@ -159,7 +161,7 @@ body {
     margin-left: 4rem;
   }
 
-  .container-monitoring-button{
+  .container-monitoring-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -175,7 +177,8 @@ body {
     border-radius: 1rem;
     color: #fff;
     font-size: 1.2rem;
-    box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
+    /* box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3); */
+    box-shadow: 0 1px 3px rgb(0 0 0 / 50%);
   }
 
   .container-arm-car-button {
@@ -194,11 +197,12 @@ body {
     border-radius: 1rem;
     color: #fff;
     font-size: 1.2rem;
-    box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
+    /* box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3); */
+    box-shadow: 0 1px 3px rgb(0 0 0 / 50%);
   }
 
   .monitoring-button {
-    background: #679C4A;
+    background: #679c4a;
     text-align: center;
     padding: 0 2.5rem;
     margin-top: 1.5rem;
@@ -236,7 +240,7 @@ body {
     margin-top: 1.5rem;
     margin-right: 10rem;
   }
-  
+
   .car-button {
     background: #7e08af;
     text-align: center;
