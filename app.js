@@ -73,17 +73,10 @@ wss.on('connection', function connection(ws, request) {
 
     if(messageJson['start'] == "ESP_on"){ // Indica que um novo esp entrou no servidor
 
-      var id = request.socket.remoteAddress.toString().slice(17);
-
-      if (messageJson['espType'] == "manual") {
-        global.esps.push(new Esp(ws, id, true, manual));
-      }
-
-      else if (message['espType'] == "sistema") {
-        global.esps.push(new Esp(ws, id, true, sistema));
-      }
+      var id = request.socket.remoteAddress.toString().slice(15);
       
-      global.esps.push(new Esp(ws, id, true));
+      global.esps.push(new Esp(ws, id, true, messageJson.espType));
+
       console.log(moment().format('MMMM Do YYYY, h:mm:ss a'), " || ESP ", global.esps[global.esps.length-1].type + 
                                                                       " id: " + global.esps[global.esps.length-1].id)
     };

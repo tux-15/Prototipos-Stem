@@ -4,12 +4,12 @@ function searchESPs() {
   const xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState === 4 && this.status === 200) {
-      // esp_list = JSON.parse(this.responseText);
-      esp_list = [
-        { id: "001", type: "manual" },
-        { id: "002", type: "manual" },
-        { id: "003", type: "sistema" },
-      ]; // this line
+      esp_list = JSON.parse(this.responseText);
+      // esp_list = [
+      //   { id: "001", type: "manual" },
+      //   { id: "002", type: "manual" },
+      //   { id: "003", type: "sistema" },
+      // ]; // this line
 
       const mainDiv = document.getElementById("esps_ativos");
       let htmlContainer = ``;
