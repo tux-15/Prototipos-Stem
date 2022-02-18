@@ -109,10 +109,13 @@ connection.onmessage = function (e) {
       break;
     case "atM2":
       handleAtM2State();
+      break;
     case "nearM2":
       handleNearM2State();
+      break;
     case undefined:
       handleCartSpeed();
+      break;
     default:
       throw new Error("Invalid State");
   }
