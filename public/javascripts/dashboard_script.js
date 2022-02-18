@@ -1,43 +1,134 @@
-const { json } = require("express/lib/response");
+/* 
+  {"from": "car", "state": "atM1"}; --> GIF1 -- M1 = ON / Esteira = OFF ;
+  {"from": "car", "state": "toM2"}; --> GIF2 -- M1 = OFF ;
+  {"from": "car", "state": "atM2"}; --> GIF3 -- M2 = ON ;
+  {"from": "s2", "state": "nearM2"}; --> GIF4 -- M2 = OFF / Esteira = ON
+
+  {"from":"car", "speed": 4}
+
+*/
+
+
+// const { json } = require("express/lib/response");
+
+
+function handleAtM1State() {
+  playAnimationGif("gif1")
+  renderStateOfArm1("on");
+  renderStateOfRunningMachine("off")
+}
+
+function handleToM2State() {
+  playAnimationGif("gif2")
+  renderStateOfArm1("off");
+}
+
+function handleAtM2State() {
+  playAnimationGif("gif3")
+  renderStateOfArm2("on");
+}
+
+function handleNearM2State() {
+  playAnimationGif("gif4")
+  renderStateOfRunningMachine("on")
+  renderStateOfArm2("off");
+}
+
+function handleCartSpeed() {
+  return;
+}
+
+function playAnimationGif(gifName) {
+  const prototypeGif = document.querySelector("#prototype-gif");
+  const path = "http://localhost:5000/images/dashboard/";
+  
+  prototypeGif.src = `${path}${gifName}.gif`;
+}
+
+function changePrototypeCardState(element, state) {
+  if (state === "on") {
+    element.innerText = "On";
+    element.parentElement.classList.add("on");
+  } else {
+    element.innerText = "Off";
+    element.parentElement.classList.remove("on");
+  }
+}
+
+function renderStateOfRunningMachine(state) {
+  const runningMachine = document.querySelector("#running-machine");
+  changePrototypeCardState(runningMachine, state);
+}
+
+function renderStateOfArm1(state) {
+  const arm1 = document.querySelector("#arm1");
+  changePrototypeCardState(arm1, state);
+}
+
+function renderStateOfArm2(state) {
+  const arm2 = document.querySelector("#arm2");
+  changePrototypeCardState(arm2, state);
+}
+
+function renderCartSpeed(state, speed) {
+  const cartSpeed = document.querySelector("#cart-speed");
+  cartSpeed.innerText = speed;
+
+  if (state === "on") {
+    cartSpeed.parentElement.classList.add("on");
+  } else {
+    cartSpeed.parentElement.classList.remove("on");
+  }
+}
+
 
 var connection = new WebSocket("ws://" + location.hostname + ":1801/", [
   "arduino",
 ]);
+
 connection.onopen = function () {
   connection.send(startPage());
 };
+
 connection.onerror = function (error) {
   console.log("WebSocket Error ", error);
 };
+
 connection.onmessage = function (e) {
   console.log("Server: ", e.data);
-  receiveData(e.data);
-  playAnimation(e.data);
+  const prototypeData = JSON.parse(e.data);
+  const state = prototypeData.state;
+  // States: atM1(Gif1), toM2(Gif2), atM2(Gif3), nearM2(Gif4), undefined(cartSpeed)
+
+  switch (state) {
+    case "atM1":
+      handleAtM1State();
+      break;
+    case "toM2":
+      handleToM2State();
+      break;
+    case "atM2":
+      handleAtM2State();
+    case "nearM2":
+      handleNearM2State();
+    case undefined:
+      handleCartSpeed();
+    default:
+      throw new Error("Invalid State");
+  }
 };
+
 connection.onclose = function () {
 
   console.log("WebSocket connection closed");
 };
 
-function playAnimation(data){
-  dado = JSON.parse(data);
+// -------------------------------------------------------- //
 
-  /* 
-  {"from": "car", "state": "atM1"}; --> GIF1 -- M1 = ON / Esteira = OFFF
-  {"from": "car", "state": "toM2"}; --> GIF2 -- M1 = OFF
-  {"from": "car", "state": "atM2"}; --> GIF3 -- M2 = ON
-  {"from": "s2", "state": "nearM2"}; --> GIF4 -- M2 = OFF / Esteira = ON
-
-  {"from":"car", "speed": 4}
-
-  */
-
-}
-
-function receiveData(data) {
-  dado = JSON.parse(data)
-  var complete_data = "Mensagem: " + data;
-}
+// function receiveData(data) {
+//   dado = JSON.parse(data)
+//   var complete_data = "Mensagem: " + data;
+// }
 
 function startPage() {
   let id = getCookie("esp_id");
@@ -67,61 +158,10 @@ function getCookie(cname) {
   return "";
 }
 
-async function findPrototypeData() {
-  const response = await fetch("javascripts/json.json");
-  const prototypeData = await response.json();
+handleAtM1State();
+  
+handleToM2State();
 
-  return prototypeData;
-}
+handleAtM2State();
 
-function renderPrototypeData(prototypeData) {
-  const {
-    runningMachineState,
-    arm1State,
-    arm2State,
-    cart: { cartState, cartSpeed },
-  } = prototypeData;
-
-  renderStateOfRunningMachine(runningMachineState);
-  renderStateOfArm1(arm1State);
-  renderStateOfArm2(arm2State);
-  renderVelocityOfCar(cartState, cartSpeed);
-}
-
-function changePrototypeCardState(element, state) {
-  if (state === "on") {
-    element.innerText = "On";
-    element.parentElement.classList.add("on");
-  } else {
-    element.innerText = "Off";
-    element.parentElement.classList.remove("on");
-  }
-}
-
-function renderStateOfRunningMachine(state) {
-  const runningMachine = document.querySelector("#running-machine");
-  changePrototypeCardState(runningMachine, state);
-}
-
-function renderStateOfArm1(state) {
-  const arm1 = document.querySelector("#arm1");
-  changePrototypeCardState(arm1, state);
-}
-
-function renderStateOfArm2(state) {
-  const arm2 = document.querySelector("#arm2");
-  changePrototypeCardState(arm2, state);
-}
-
-function renderVelocityOfCar(state, speed) {
-  const cartSpeed = document.querySelector("#cart-speed");
-  cartSpeed.innerText = speed;
-
-  if (state === "on") {
-    cartSpeed.parentElement.classList.add("on");
-  } else {
-    cartSpeed.parentElement.classList.remove("on");
-  }
-}
-
-findPrototypeData().then((prototypeData) => renderPrototypeData(prototypeData));
+handleNearM2State();
