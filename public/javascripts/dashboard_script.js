@@ -1,12 +1,3 @@
-/* 
-  {"from": "car", "state": "atM1"}; --> GIF1 -- M1 = ON / Esteira = OFF ;
-  {"from": "car", "state": "toM2"}; --> GIF2 -- M1 = OFF ;
-  {"from": "car", "state": "atM2"}; --> GIF3 -- M2 = ON ;
-  {"from": "s2", "state": "nearM2"}; --> GIF4 -- M2 = OFF / Esteira = ON
-
-  {"from":"car", "speed": 4}
-*/
-
 var connection = new WebSocket("ws://" + location.hostname + ":1801/", [
   "arduino",
 ]);
@@ -23,8 +14,8 @@ connection.onmessage = function (e) {
   console.log("Server: ", e.data);
   const prototypeData = JSON.parse(e.data);
 
-  if (prototypeData.speed) {
-    handleCartSpeed(prototypeData.speed);
+  if (prototypeData.from == "carSpeed") {
+    handleCartSpeed(prototypeData.state);
   } else {
     // States: atM1(Gif1), toM2(Gif2), atM2(Gif3), nearM2(Gif4), undefined(cartSpeed)
     try {
