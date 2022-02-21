@@ -29,21 +29,25 @@ connection.onmessage = function (e) {
     handleCartSpeed(prototypeData.speed);
   } else {
     // States: atM1(Gif1), toM2(Gif2), atM2(Gif3), nearM2(Gif4), undefined(cartSpeed)
-    switch (prototypeData.state) {
-      case "atM1":
-        handleAtM1State();
-        break;
-      case "toM2":
-        handleToM2State();
-        break;
-      case "atM2":
-        handleAtM2State();
-        break;
-      case "nearM2":
-        handleNearM2State();
-        break;
-      default:
-        console.log("Invalid State");
+    try {
+      switch (prototypeData.state) {
+        case "atM1":
+          handleAtM1State();
+          break;
+        case "toM2":
+          handleToM2State();
+          break;
+        case "atM2":
+          handleAtM2State();
+          break;
+        case "nearM2":
+          handleNearM2State();
+          break;
+        default:
+          throw new Error("Invalid State");
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
 };
