@@ -5,43 +5,83 @@
   {"from": "s2", "state": "nearM2"}; --> GIF4 -- M2 = OFF / Esteira = ON
 
   {"from":"car", "speed": 4}
-
 */
 
+const { json } = require("express/lib/response");
 
-// const { json } = require("express/lib/response");
+var connection = new WebSocket("ws://" + location.hostname + ":1801/", [
+  "arduino",
+]);
 
+connection.onopen = function () {
+  connection.send(startPage());
+};
+
+connection.onerror = function (error) {
+  console.log("WebSocket Error ", error);
+};
+
+connection.onmessage = function (e) {
+  console.log("Server: ", e.data);
+  const prototypeData = JSON.parse(e.data);
+
+  if (prototypeData.speed) {
+    handleCartSpeed(prototypeData.speed);
+  } else {
+    // States: atM1(Gif1), toM2(Gif2), atM2(Gif3), nearM2(Gif4), undefined(cartSpeed)
+    switch (prototypeData.state) {
+      case "atM1":
+        handleAtM1State();
+        break;
+      case "toM2":
+        handleToM2State();
+        break;
+      case "atM2":
+        handleAtM2State();
+        break;
+      case "nearM2":
+        handleNearM2State();
+        break;
+      default:
+        console.log("Invalid State");
+    }
+  }
+};
+
+connection.onclose = function () {
+  console.log("WebSocket connection closed");
+};
 
 function handleAtM1State() {
-  playAnimationGif("gif1")
+  playAnimationGif("gif1");
   renderStateOfArm1("on");
-  renderStateOfRunningMachine("off")
+  renderStateOfRunningMachine("off");
 }
 
 function handleToM2State() {
-  playAnimationGif("gif2")
+  playAnimationGif("gif2");
   renderStateOfArm1("off");
 }
 
 function handleAtM2State() {
-  playAnimationGif("gif3")
+  playAnimationGif("gif3");
   renderStateOfArm2("on");
 }
 
 function handleNearM2State() {
-  playAnimationGif("gif4")
-  renderStateOfRunningMachine("on")
+  playAnimationGif("gif4");
+  renderStateOfRunningMachine("on");
   renderStateOfArm2("off");
 }
 
-function handleCartSpeed() {
-  return;
+function handleCartSpeed(speed) {
+  renderCartSpeed("on", speed);
 }
 
 function playAnimationGif(gifName) {
   const prototypeGif = document.querySelector("#prototype-gif");
   const path = "http://localhost:5000/images/dashboard/";
-  
+
   prototypeGif.src = `${path}${gifName}.gif`;
 }
 
@@ -81,58 +121,6 @@ function renderCartSpeed(state, speed) {
   }
 }
 
-
-var connection = new WebSocket("ws://" + location.hostname + ":1801/", [
-  "arduino",
-]);
-
-connection.onopen = function () {
-  connection.send(startPage());
-};
-
-connection.onerror = function (error) {
-  console.log("WebSocket Error ", error);
-};
-
-connection.onmessage = function (e) {
-  console.log("Server: ", e.data);
-  const prototypeData = JSON.parse(e.data);
-  const state = prototypeData.state;
-  // States: atM1(Gif1), toM2(Gif2), atM2(Gif3), nearM2(Gif4), undefined(cartSpeed)
-
-  switch (state) {
-    case "atM1":
-      handleAtM1State();
-      break;
-    case "toM2":
-      handleToM2State();
-      break;
-    case "atM2":
-      handleAtM2State();
-      break;
-    case "nearM2":
-      handleNearM2State();
-      break;
-    case undefined:
-      handleCartSpeed();
-      break;
-    default:
-      throw new Error("Invalid State");
-  }
-};
-
-connection.onclose = function () {
-
-  console.log("WebSocket connection closed");
-};
-
-// -------------------------------------------------------- //
-
-// function receiveData(data) {
-//   dado = JSON.parse(data)
-//   var complete_data = "Mensagem: " + data;
-// }
-
 function startPage() {
   let id = getCookie("esp_id");
   let robot = getCookie("robot");
@@ -160,11 +148,3 @@ function getCookie(cname) {
   }
   return "";
 }
-
-handleAtM1State();
-  
-handleToM2State();
-
-handleAtM2State();
-
-handleNearM2State();
