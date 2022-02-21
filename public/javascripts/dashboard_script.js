@@ -7,8 +7,6 @@
   {"from":"car", "speed": 4}
 */
 
-const { json } = require("express/lib/response");
-
 var connection = new WebSocket("ws://" + location.hostname + ":1801/", [
   "arduino",
 ]);
