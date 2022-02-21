@@ -79,7 +79,7 @@ function handleNearM2State() {
 }
 
 function handleCartSpeed(speed) {
-  renderCartSpeed("on", speed);
+  renderCartSpeed(speed);
 }
 
 function playAnimationGif(gifName) {
@@ -114,11 +114,11 @@ function renderStateOfArm2(state) {
   changePrototypeCardState(arm2, state);
 }
 
-function renderCartSpeed(state, speed) {
+function renderCartSpeed(speed) {
   const cartSpeed = document.querySelector("#cart-speed");
   cartSpeed.innerText = speed;
 
-  if (state === "on") {
+  if (speed !== 0) {
     cartSpeed.parentElement.classList.add("on");
   } else {
     cartSpeed.parentElement.classList.remove("on");
