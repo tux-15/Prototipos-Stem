@@ -8,7 +8,7 @@ class Page {
 
     static heartbeatPage(wsObject) {
 
-      var current_id = wsObject['_socket']['_peername']['address'].toString().slice(15);
+      var current_id = wsObject['_socket']['_peername']['address'].toString().slice(7);
 
       global.pages.forEach(function each(page){
         if(current_id == page.id) {page.status = true;};
