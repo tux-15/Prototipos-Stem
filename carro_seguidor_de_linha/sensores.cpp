@@ -47,7 +47,7 @@ int Sensores::readSensors() {
     }
   }
 
-  if (this->sensor[0] == 1 && this->sensor[1] == 1 && this->sensor[3] == 1 && this->sensor[4] == 1) {
+  if (this->sensor[0] == 1 && this->sensor[1] == 1 && this->sensor[3] == 1){ //&& this->sensor[4] == 1) {
     this->estado = false;
     return 6;
   }

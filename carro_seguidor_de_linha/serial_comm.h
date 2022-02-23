@@ -1,5 +1,5 @@
-#ifndef UTILS_H
-#define UTILS_H
+#ifndef SERIAL_COMM_H_
+#define SERIAL_COMM_H_
 
 #include <Arduino.h>
 #include <ArduinoJson.h>
@@ -12,9 +12,12 @@ class Serial_comm{
     ~Serial_comm();
     
     StaticJsonDocument<100> docFromSerial;
+
+    String from;
+    String state;
     
     void getJson();
-    void sendJson(String meta, String passo, int estado);
+    void sendJson(String from, String state);
 };
 
 #endif

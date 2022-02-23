@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "serial_comm.h"
 #define SerialESP Serial2
 //#define SerialESP Serial
 
@@ -6,12 +6,12 @@ Serial_comm::Serial_comm() {};
 
 Serial_comm::~Serial_comm(){};
 
-void Serial_comm::sendJson(String meta, String passo, int estado){
+void Serial_comm::sendJson(String from, String state){
   SerialESP.println("sending message");
   DynamicJsonDocument doc(128);
-  doc["meta"] = meta;
-  doc["passo"] = passo;
-  doc["estado"] = estado;
+  
+  doc["from"] = from;
+  doc["state"] = state;
   serializeJson(doc, SerialESP);
   SerialESP.println();
 };
@@ -23,13 +23,13 @@ void Serial_comm::getJson() {
 
     if (err == DeserializationError::Ok){
       
-      this->docFromSerial["meta"] = doc["meta"].as<String>();
-      this->docFromSerial["passo"] = doc["passo"].as<String>();
-      this->docFromSerial["estado"] = doc["estado"].as<int>();
+      this->from = doc["from"].as<String>();
+      this->state = doc["state"].as<String>();
+
       
-      SerialESP.print(this->docFromSerial["meta"].as<String>()); SerialESP.print(" : ");
-      SerialESP.print(this->docFromSerial["passo"].as<String>());SerialESP.print(" : ");
-      SerialESP.println(this->docFromSerial["estado"].as<int>());
+      SerialESP.print(this->from); SerialESP.print(" : ");
+      SerialESP.print(this->state);
+
     }
     else {
 //      Serial.print("\ndeserializeJson() returned ");

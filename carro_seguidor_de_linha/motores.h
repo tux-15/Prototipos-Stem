@@ -14,5 +14,6 @@ class Motores
 
     void motorSpeedD(int pwm, int valor);
     void motorSpeedE(int pwm, int valor);
+
 };
 #endif
