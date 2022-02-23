@@ -13,12 +13,12 @@ class Sensores
 
     
     byte sensor[5] = {0, 0, 0, 0, 0};
-
-    //const int s1 = 22;
-    //const int s2 = 24;
-    //const int s3 = 26;
-    //const int s4 = 28;
-    //const int s5 = 30;
+//
+//    const int s1 = 22;
+//    const int s2 = 24;
+//    const int s3 = 26;
+//    const int s4 = 28;
+//    const int s5 = 30;
 
   public:
     Sensores();
