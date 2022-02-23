@@ -11,10 +11,14 @@ void startWebSocketClient(String ip, int port) { // Inicializa o webSocket
   webSocketClient.begin(ip, port, "/");
   webSocketClient.onEvent(webSocketClientEvent);  
   Serial.println("WebSocket client started.");
-  serial.sendJson("ws_client", "started", 1);
+  serial.sendJson("ws_client", "started");
 };
 
 void sendMessageWsClient(String payload){
+    webSocketClient.sendTXT(payload);
+};
+
+void sendMessageWsClient(uint8_t * payload){
     webSocketClient.sendTXT(payload);
 };
 
@@ -27,6 +31,7 @@ void webSocketClientEvent(WStype_t type, uint8_t * payload, size_t length) {
     
     case WStype_CONNECTED: 
       Serial.printf("\rConnected to Node Server on url: %s\n\r", payload);
+      Serial.println("{\"from\": \"Connected to\", \"state\": \"Node server\"}");
 
       // send message to server when Connected
       webSocketClient.sendTXT("{\"start\": \"ESP_on\", \"espType\": \"sistema\"}");
@@ -35,8 +40,8 @@ void webSocketClientEvent(WStype_t type, uint8_t * payload, size_t length) {
     case WStype_TEXT:
       Serial.printf("%s", payload);
       Serial.println();
-
       break;
+      
     case WStype_BIN:
       hexdump(payload, length);
       Serial.println();

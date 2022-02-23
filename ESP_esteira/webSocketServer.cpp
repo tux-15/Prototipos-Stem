@@ -8,7 +8,7 @@ void startWebSocketServer() { // Inicializa o webSocket
   webSocketServer.begin();
   webSocketServer.onEvent(webSocketServerEvent);          // função de callback para eventos que acontecerem no webSocket
   Serial.println("WebSocket server started.");
-  serial.sendJson("ws_server","started",1);
+  serial.sendJson("ws_server","started");
 };
 
 void updateWebSocketServer(){
@@ -35,6 +35,7 @@ void webSocketServerEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t 
     case WStype_TEXT:
       Serial.printf("%s\n\r", payload);
       webSocketServer.broadcastTXT(payload);
+      sendMessageWsClient(payload);
       //sendMessageWsServer(payload);
       //Serial.println();
       break;

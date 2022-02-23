@@ -7,7 +7,7 @@
 WifiManager wifi;
 Serial_comm serial;
 
-const String ip = "10.0.0.112"; //ip do servidor principal (Raspberry)
+const String ip = "10.0.0.119"; //ip do servidor principal (Raspberry)
 const int port = 1801; //porta do websocket no servidor principal 
 
 //O webSocketServer abre na porta 81  --> onde os outros ESPs se conectam
@@ -41,6 +41,7 @@ void loop() {
   updateWebSocketServer();
   
   char * messageFromSerial = getMessageFromSerial();
+//  Serial.print("messageFromSerial = "); Serial.println(messageFromSerial);
 
   if (messageFromSerial != "0"){
     sendMessageWsServer(messageFromSerial);
