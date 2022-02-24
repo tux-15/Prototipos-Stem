@@ -36,13 +36,11 @@ void webSocketServerEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t 
       Serial.printf("%s\n\r", payload);
       webSocketServer.broadcastTXT(payload);
       sendMessageWsClient(payload);
-      //sendMessageWsServer(payload);
       //Serial.println();
       break;
       
     case WStype_BIN:
       hexdump(payload, length);
-      //sendMessageWsServer(payload);
       webSocketServer.broadcastTXT(payload);
       Serial.println();
       break;

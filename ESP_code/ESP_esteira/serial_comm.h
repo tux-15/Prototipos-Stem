@@ -4,8 +4,6 @@
 #include <ArduinoJson.h>
 #include <Arduino.h>
 
-
-
 class Serial_comm{
   private:
 
