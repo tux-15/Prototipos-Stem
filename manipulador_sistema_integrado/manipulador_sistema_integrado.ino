@@ -5,8 +5,8 @@
 ServoControl servos;
 Serial_comm serial;
 
-//long previousMillis = 0; 
-//long interval = 1000;  // (em milissegundos) -> define o tempo de "delay"
+long previousMillis = 0; 
+long interval = 1000;  // (em milissegundos) -> define o tempo de "delay"
  
 //{"from":"s1","state":"nearM1"}
 

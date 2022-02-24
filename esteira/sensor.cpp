@@ -1,4 +1,4 @@
-#include "Sensor.h"
+#include "sensor.h"
 
 Sensor::Sensor(){
   pinMode(4, INPUT);
