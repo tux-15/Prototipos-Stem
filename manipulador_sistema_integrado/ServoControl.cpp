@@ -17,11 +17,11 @@ void ServoControl::setServoSpeed(int servoSpeed){
 
 void ServoControl::effector(String state){
   if(state == "open") {
-    this->servo5.write(30);
+    this->servo5.write(120);
     Serial.println("effector open");
   }
   else if (state == "close"){
-    this->servo5.write(75);
+    this->servo5.write(170);
     Serial.println("effector closed");
   }
 };
@@ -49,25 +49,29 @@ void ServoControl::goTo(const float trajetoria[4]){
   };
 };
 
-void ServoControl::moveServo(const char * servo, int angle){
-  
-  if (strcmp(servo, "value0") == 0){
-    this->servo1.write(angle);
+void ServoControl::moveServo(String servo, String angle){
+
+  int servoAngle = angle.toInt();
+
+  if(servo == "value0"){
+    this->servo1.write(servoAngle);
+  }
+
+  if(servo == "value1"){
+    this->servo2.write(servoAngle);
+  }
+
+  if(servo == "value2"){
+    this->servo3.write(servoAngle);
+  }
+
+  if(servo == "value3"){
+    this->servo4.write(servoAngle);
   }
   
-  if (strcmp(servo, "value1") == 0){
-    this->servo2.write(angle);
-  }
-  
-  if (strcmp(servo, "value2") == 0){
-    this->servo3.write(angle);
-  }
-  
-  if (strcmp(servo, "value3") == 0){
-    this->servo4.write(angle);
-  }
-  
-  if (strcmp(servo, "effector") == 0){
-    //this->switchEffector();
+  if(servo == "effector"){
+    if(this->effectorStatus == true) this->effector("close");
+    else if(this->effectorStatus == false) this->effector("open");
+    effectorStatus = !effectorStatus;
   }
 };

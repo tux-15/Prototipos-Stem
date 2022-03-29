@@ -35,12 +35,12 @@ void loop() {
   //access values by using serial.from and serial.state
 
   if (serial.from == "s1" && serial.state == "nearM1"){
-    Serial.println("Picking up object from conveyor belt");
-    servos.goTo(esteira); servos.effector("close"); delay(1000); 
-    servos.goTo(origin); servos.goTo(carrinhoAux); servos.goTo(carrinho); servos.effector("open"); delay(500);
-    servos.goTo(carrinhoAux); servos.goTo(origin);
-    Serial.println("Object placed on line-follower");
-    serial.sendJson("M1", "onCar");
+//    Serial.println("Picking up object from conveyor belt");
+//    servos.goTo(esteira); servos.effector("close"); delay(1000); 
+//    servos.goTo(origin); servos.goTo(carrinhoAux); servos.goTo(carrinho); servos.effector("open"); delay(500);
+//    servos.goTo(carrinhoAux); servos.goTo(origin);
+//    Serial.println("Object placed on line-follower");
+//    serial.sendJson("M1", "onCar");
     serial.from = "0"; serial.state = "0";
   }
 //
@@ -55,5 +55,6 @@ void loop() {
     serial.from = "0"; serial.state = "0";
   }
 
-  //servos.moveServo(meta2, estado);
+  servos.moveServo(serial.from, serial.state);
+  serial.from = "0"; serial.state = "0";
 };
