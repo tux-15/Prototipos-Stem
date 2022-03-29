@@ -71,9 +71,9 @@ wss.on('connection', function connection(ws, request) {
       console.log("Erro: ", err);
     }
 
-    if(messageJson['start'] == "ESP_on"){ // Indica que um novo esp entrou no servidor
+    if(messageJson['start'] == "ESP_on"  && messageJson.espType){ // Indica que um novo esp entrou no servidor
 
-      var id = request.socket.remoteAddress.toString().slice(15);
+      var id = request.socket.remoteAddress.toString().slice(14);
       
       global.esps.push(new Esp(ws, id, true, messageJson.espType));
 
@@ -120,7 +120,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

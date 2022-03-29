@@ -19,8 +19,8 @@ let last = +new Date();
 
 function sendAngle(sliderValueID) {
   var command = {
-    slider: sliderValueID,
-    angle: document.getElementById(sliderValueID).value,
+    from: sliderValueID,
+    state: document.getElementById(sliderValueID).value,
   };
 
   commandJson = JSON.stringify(command);
@@ -44,7 +44,7 @@ function switchEffector() {
     button.classList.remove("enabled");
   }
 
-  var command = { slider: "effector", valor: "0" };
+  var command = { from: "effector", state: "0" };
   commandJson = JSON.stringify(command);
   connection.send(commandJson);
 }

@@ -10,7 +10,7 @@ class Esp {
     };
 
     static heartbeat(wsObject) {
-      var current_id = wsObject['_socket']['_peername']['address'].toString().slice(15);
+      var current_id = wsObject['_socket']['_peername']['address'].toString().slice(14);
       global.esps.forEach(function each(esp){
         if(current_id == esp.id){
           esp.status = true;

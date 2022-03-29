@@ -20,13 +20,13 @@ connection.onmessage = function (e) {
     // States: atM1(Gif1), toM2(Gif2), atM2(Gif3), nearM2(Gif4), undefined(cartSpeed)
     try {
       switch (prototypeData.state) {
-        case "atM1":
+        case "atM2":
           handleAtM1State();
           break;
-        case "toM2":
+        case "onCar":
           handleToM2State();
           break;
-        case "atM2":
+        case "atM1":
           handleAtM2State();
           break;
         case "nearM2":
@@ -73,7 +73,7 @@ function handleCartSpeed(speed) {
 
 function playAnimationGif(gifName) {
   const prototypeGif = document.querySelector("#prototype-gif");
-  const path = "http://localhost:5000/images/dashboard/";
+  const path = "./images/dashboard/";
 
   prototypeGif.src = `${path}${gifName}.gif`;
 }
