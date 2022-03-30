@@ -1,7 +1,7 @@
 #include "sensores.h"
 
-#define SerialESP Serial2
-//#define SerialESP Serial
+//#define serialESP Serial2
+#define serialArduino Serial
 
 Sensores::Sensores() {
   pinMode(this->s1, INPUT);
@@ -23,11 +23,13 @@ int Sensores::readSensors() {
   if (this->estado == true) {
 
     if (this->sensor[0] == 0 && this->sensor[1] == 0 && this->sensor[2] == 0 && this->sensor[3] == 0 && this->sensor[4] == 0) {
-      return 7;
+      
+        return 7;
+     
     }
 
     if (this->sensor[0] == 0 && this->sensor[1] == 0 && this->sensor[2] == 0 && this->sensor[3] == 0 && this->sensor[4] == 1) {
-      return 1;
+        return 1;
     }
 
     if (this->sensor[0] == 0 && this->sensor[1] == 0 && this->sensor[2] == 0 && this->sensor[3] == 1 && this->sensor[4] == 0) {
@@ -43,24 +45,23 @@ int Sensores::readSensors() {
     }
 
     if (this->sensor[0] == 1 && this->sensor[1] == 0 && this->sensor[2] == 0 && this->sensor[3] == 0 && this->sensor[4] == 0) {
-      return 5;
+        return 5;
     }
   }
 
-  if (this->sensor[0] == 1 && this->sensor[1] == 1 && this->sensor[3] == 1){ //&& this->sensor[4] == 1) {
+  if (this->sensor[0] == 1 && this->sensor[1] == 1 && this->sensor[3] == 1 && this->sensor[4] == 1) {
     this->estado = false;
     return 6;
   }
 
   else return 0;
-
 };
 
 void Sensores::debug() {
-  SerialESP.println(sensor[0]);
-  SerialESP.println(sensor[1]);
-  SerialESP.println(sensor[2]);
-  SerialESP.println(sensor[3]);
-  SerialESP.println(sensor[4]);
+  serialArduino.println(sensor[0]);
+  serialArduino.println(sensor[1]);
+  serialArduino.println(sensor[2]);
+  serialArduino.println(sensor[3]);
+  serialArduino.println(sensor[4]);
   delay(500);
 };

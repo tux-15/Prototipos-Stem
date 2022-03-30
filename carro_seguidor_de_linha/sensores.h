@@ -10,7 +10,7 @@ class Sensores
     byte s3 = 38;
     byte s4 = 36;
     byte s5 = 34;
-
+    int cont =0;
     
     byte sensor[5] = {0, 0, 0, 0, 0};
 //

@@ -23,12 +23,12 @@ void Serial_comm::getJson() {
 
     if (err == DeserializationError::Ok){
       
-      this->from = doc["from"].as<String>();
-      this->state = doc["state"].as<String>();
+      this->speed = doc["speed"].as<int>();
+      this->angle = doc["angle"].as<int>();
 
       
-      SerialArduino.print(this->from); SerialArduino.print(" || ");
-      SerialArduino.println(this->state);
+//      SerialArduino.print(this->from); SerialArduino.print(" || ");
+//      SerialArduino.println(this->state);
 
     }
     else {
