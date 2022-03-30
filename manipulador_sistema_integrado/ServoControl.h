@@ -15,6 +15,8 @@ class ServoControl{
     VarSpeedServo servos[4] = {servo1, servo2, servo3, servo4};
     
     int servoSpeed = 0;
+
+    bool effectorStatus = true;
     
   public:
     ServoControl();
@@ -25,7 +27,7 @@ class ServoControl{
 
     void setServoSpeed(int servoSpeed);
     void goTo(const float trajetoria[4]);
-    void moveServo(const char * servo, int angle);
+    void moveServo(String servo, String angle);
 };
 
 #endif

@@ -1,4 +1,4 @@
-#include <Servo.h>
+     #include <Servo.h>
 #include <ArduinoJson.h>
 
 //long previousMillis = 0; 
@@ -103,8 +103,8 @@ void getJson(){
         
     if (err == DeserializationError::Ok) 
     {
-      const char* servo = doc["slider"].as<const char*>();
-      int angle = doc["angle"].as<int>();
+      const char* servo = doc["from"].as<const char*>();
+      int angle = doc["state"].as<int>();
       Serial.print("Servo: ");
       Serial.println(servo);
       Serial.print("Angulo: ");
