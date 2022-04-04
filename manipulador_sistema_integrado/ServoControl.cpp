@@ -17,11 +17,11 @@ void ServoControl::setServoSpeed(int servoSpeed){
 
 void ServoControl::effector(String state){
   if(state == "open") {
-    this->servo5.write(120);
+    this->servo5.write(60);
     Serial.println("effector open");
   }
   else if (state == "close"){
-    this->servo5.write(170);
+    this->servo5.write(120);
     Serial.println("effector closed");
   }
 };
