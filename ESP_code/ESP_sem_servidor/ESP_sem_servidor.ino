@@ -11,7 +11,7 @@ char receivedChars[numChars];
 boolean newData = false;
 
 const int port = 1801;
-const char * ip = "10.0.0.119";
+const char * ip = "10.0.0.149";
 
 // 10.0.0.151 - ip do raspberry
 // 10.0.0.119 - notebook
@@ -53,6 +53,7 @@ void startWiFi() {
   wifiMulti.addAP("Tux", "1234abcd");
   wifiMulti.addAP("STEMLABNET", "1n0v@c@02021");
   wifiMulti.addAP("STEM-UEA", "12345678");
+  wifiMulti.addAP("Tux", "mel12345");
 
   Serial.println("Connecting");
   while (wifiMulti.run() != WL_CONNECTED) {  // Esperar WiFi conectar
