@@ -4,6 +4,34 @@ Serial_comm::Serial_comm() {};
 
 Serial_comm::~Serial_comm(){};
 
+void Serial_comm::setHandshakeInterval(long interval){
+  this->interval = interval;
+}
+
+void Serial_comm::waitHandshake(){
+  Serial.println("Blocking code until response from serial is received");
+  
+  while(this->espResponse != "typeOK"){
+    unsigned long currentMillis = millis(); 
+    if(currentMillis - previousMillis > this->interval) {
+      this->previousMillis = currentMillis;
+      this->sendJson("ARD", arduinoType); 
+    };
+    this->getJson();
+    if(this->from == "ESP"){
+      this->espResponse = this->state;
+    }
+  } //end of while
+}
+
+void Serial_comm::setArduinoType(String type){
+  this->arduinoType = type;
+}
+
+String Serial_comm::getArduinoType(){
+  return this->arduinoType;
+}
+
 void Serial_comm::sendJson(String from, String state){
   DynamicJsonDocument doc(128);
   doc["from"] = from;
