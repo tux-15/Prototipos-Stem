@@ -29,8 +29,8 @@ function receiveData(received_data) {
 
 function send(x,y,speed,angle) {
   data = {
-    "speed": speed,
-    "angle": angle,
+    "from": speed,
+    "state": angle,
   };
   dataJson = JSON.stringify(data);
   console.log(dataJson);
