@@ -4,6 +4,7 @@ WifiManager::WifiManager(){ //Constructor
   wifiMulti.addAP("LUDUSKAM-2.4G", "ludusKAMt3ch");   // adicionar credenciais das redes
   wifiMulti.addAP("Charlie 2.4", "vox populi");
   wifiMulti.addAP("STEMLABNET", "1n0v@c@02021");
+  wifiMulti.addAP("carreta_stem01", "Cs2k21!!");
 };
 
 WifiManager::~WifiManager(){ /* ¯\_(ツ)_/¯ */}; //Destructor

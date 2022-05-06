@@ -9,7 +9,7 @@ Serial_comm serial;
 //const String ip = "ws://stem.local";
 //const int port = 81; //porta do websocket no Esp servidor
 
-const String ip = "10.0.0.149"; //ip do Esp servidor (PC)
+const String ip = "192.168.2.199"; //ip do Esp servidor (PC)
 const int port = 1801; //porta do websocket no servidor
 
 void setup() {
