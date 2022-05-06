@@ -44,13 +44,9 @@ void loop() {
 }
 
 void startWiFi() {
-
-  wifiMulti.addAP("LUDUSKAM-2.4G", "ludusKAMt3ch");   // adicionar credenciais das redes
+  // adicionar credenciais das redes
   wifiMulti.addAP("Charlie 2.4", "vox populi");
   wifiMulti.addAP("carreta_stem01", "Cs2k21!!");
-  wifiMulti.addAP("MUSTAFA_2.4G", "96143008");
-  wifiMulti.addAP("Seixas_Net", "Mayum647");
-  wifiMulti.addAP("Tux", "1234abcd");
   wifiMulti.addAP("STEMLABNET", "1n0v@c@02021");
   wifiMulti.addAP("STEM-UEA", "12345678");
   wifiMulti.addAP("Tux", "mel12345");

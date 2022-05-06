@@ -21,7 +21,7 @@ void setup() {
 
   serial.setHandshakeInterval(1000);
   serial.setArduinoType("manipulador");
-  serial.waitHandshake();
+  serial.waitHandshake("Ard", serial.getArduinoType(), "ESP", "OK");
   
   Serial.println("End of setup");
 };
