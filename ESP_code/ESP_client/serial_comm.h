@@ -11,6 +11,7 @@ class Serial_comm{
     long interval = 1000;  // (em milissegundos) -> define o tempo de "delay"
     String type = "0";
     String response = "0";
+    String receivedType = "";
 
   public:
     Serial_comm();
@@ -24,8 +25,6 @@ class Serial_comm{
     String serializedCurrentJson;
 
     bool jsonUpdated = false;
-
-    String receivedType = "";
     
     void getJson();
     void sendJson(String from, String state);
@@ -35,8 +34,10 @@ class Serial_comm{
     void setHandshakeInterval(long interval);
     void waitHandshake(String left, String hand, String right, String shake);
     void doHandshake(String origin, String hand, String destiny);
+    
     void setType(String type);
     String getType();
+    String getReceivedType();
 };
 
 #endif

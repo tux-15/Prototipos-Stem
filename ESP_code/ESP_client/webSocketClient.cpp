@@ -1,14 +1,13 @@
 #include "webSocketClient.h"
 
 WebSocketsClient webSocketClient;
+String typeToWs = "";
 
 void updateWebsocketClient(){
   webSocketClient.loop();
- 
 };
 
 void startWebSocketClient(String ip, int port) { // Inicializa o webSocket
-  
   webSocketClient.begin(ip, port, "/");
   webSocketClient.onEvent(webSocketClientEvent);  
   webSocketClient.enableHeartbeat(750, 1500, 2);
@@ -23,6 +22,13 @@ void sendMessageWsClient(char * payload){
     webSocketClient.sendTXT(payload);
 };
 
+void setTypeToWs(String type){
+  typeToWs = type;
+}
+
+String getTypeToWs(){
+  return typeToWs;
+}
 
 void webSocketClientEvent(WStype_t type, uint8_t * payload, size_t length) {
   
@@ -31,11 +37,17 @@ void webSocketClientEvent(WStype_t type, uint8_t * payload, size_t length) {
       Serial.printf("\rClient Disconnected!\n");
       break;
     
-    case WStype_CONNECTED: 
-      Serial.printf("\rConnected to ESP server on url: %s\n\r", payload);
-
-      // send message to server when Connected
-      webSocketClient.sendTXT("{\"start\": \"ESP_on\", \"espType\": \"manual\"}");
+    case WStype_CONNECTED:
+      {
+        Serial.printf("\rConnected to server on url: %s\n\r", payload);
+        String message = "";
+        StaticJsonDocument<64> doc;
+        doc["start"] = "ESP_on";
+        doc["espType"] = getTypeToWs();
+        serializeJson(doc, message);
+        // send message to server when Connected
+        webSocketClient.sendTXT(message);
+      }
       break;
       
     case WStype_TEXT:

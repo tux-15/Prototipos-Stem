@@ -13,10 +13,10 @@ const int port = 1801; //porta do websocket no servidor principal
 //O webSocketServer abre na porta 81  --> onde os outros ESPs se conectam
 
 void setup() {
-  
   Serial.begin(9600);
+  delay(250);
   Serial.println("\n\r Starting");
-  
+
   wifi.startWiFi();
   //wifi.startMDNS("stem");
 
@@ -31,7 +31,6 @@ void setup() {
   updateWebsocketClient();
   updateWebSocketServer();
   Serial.println("End of Setup");
-  
 };
 
 void loop() {
@@ -40,14 +39,11 @@ void loop() {
   updateWebsocketClient();
   updateWebSocketServer();
   
-  char * messageFromSerial = getMessageFromSerial();
-//  Serial.print("messageFromSerial = "); Serial.println(messageFromSerial);
-
-  if (messageFromSerial != "0"){
-    sendMessageWsServer(messageFromSerial);
-    sendMessageWsClient(messageFromSerial);
-    Serial.println(messageFromSerial);
+  serial.getJson();
+  if (serial.jsonUpdateCheck()){
+    serial.serializeCurrentJson();
+    sendMessageWsServer(serial.serializedCurrentJson);
+    sendMessageWsClient(serial.serializedCurrentJson);
   };
-
   //wifi.updateMDNS();
 };

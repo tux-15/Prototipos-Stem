@@ -18,10 +18,9 @@ void setup() {
   delay(250);
   Serial.println("\nStarting Esp");
 
-  //TO DO: enviar receivedType no websocket quando WS_CONNECT
-  
   serial.doHandshake("ESP", "OK", "ARD");
-  Serial.print("The type is: "); Serial.println(serial.receivedType);
+  Serial.print("The type is: "); Serial.println(serial.getReceivedType());
+  setTypeToWs(serial.getReceivedType());
   
   wifi.startWiFi();
   serial.sendJson("ESP_IP", wifi.ip);

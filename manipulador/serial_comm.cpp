@@ -52,6 +52,10 @@ String Serial_comm::getType(){
   return this->type;
 }
 
+String Serial_comm::getReceivedType(){
+  return this->receivedType;
+}
+
 void Serial_comm::sendJson(String from, String state){
   DynamicJsonDocument doc(128);
   doc["from"] = from;
