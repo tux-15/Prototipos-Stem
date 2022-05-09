@@ -14,19 +14,27 @@ void setup() {
   
   Serial.begin(9600);
   delay(250);
+  
+  serial.setHandshakeInterval(1000);
+  serial.setType("manipulador");
+  
+  serial.waitHandshake("ARD", serial.getType(), "ESP", "OK");
+
+  //=========================================================
+  
   servos.attachServos();
   servos.setServoSpeed(45);
   servos.startPosition();
   servos.effector("open");
-
-  serial.setHandshakeInterval(1000);
-  serial.setArduinoType("manipulador");
-  serial.waitHandshake("Ard", serial.getArduinoType(), "ESP", "OK");
   
   Serial.println("End of setup");
 };
 
-void loop() {
+void loop() {  
+  serial.getJson();
+  servos.moveServo(serial.from, serial.state);
+  serial.from = "0"; serial.state = "0";
+};
 
 //  unsigned long currentMillis = millis(); 
 //
@@ -34,8 +42,6 @@ void loop() {
 //      previousMillis = currentMillis;
 //      Serial.println("{\"from\": \"coming\", \"state\": \"from Arduino\"}");
 //  };
-  
-  serial.getJson();
 
   //access values by using serial.from and serial.state
 
@@ -59,7 +65,4 @@ void loop() {
 ////    Serial.println("Object placed on conveyor belt");
 //    serial.from = "0"; serial.state = "0";
 //  }
-
-  servos.moveServo(serial.from, serial.state);
-  serial.from = "0"; serial.state = "0";
-};
+//};

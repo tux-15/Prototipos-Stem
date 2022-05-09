@@ -8,22 +8,39 @@ void Serial_comm::setHandshakeInterval(long interval){
   this->interval = interval;
 }
 
-void Serial_comm::waitHandshake(String left, String hand, String right, String shake){
+void Serial_comm::doHandshake(String origin, String hand, String destiny){
+  Serial.println("Blocking code until type is received through serial");
+  
+  while(this->receivedType == ""){
+    
+    this->getJson();
+    //Serial.println("Got here before crash");
+    if(this->from == destiny){
+      this->receivedType = this->state;
+      this->sendJson(origin, hand);
+      return;
+    };
+    yield();
+  }; //end of while
+}
+
+void Serial_comm::waitHandshake(String origin, String hand, String destiny, String shake){
   Serial.println("Blocking code until response from serial is received");
   
-  while(this->response != "OK"){
+  while(this->response != shake){
     unsigned long currentMillis = millis(); 
     
-    if(currentMillis - previousMillis > this->interval){
+    if(currentMillis - this->previousMillis > this->interval){
       this->previousMillis = currentMillis;
-      this->sendJson(left, hand);
+      this->sendJson(origin, hand);
     };
     
     this->getJson();
     
-    if(this->from == right){
+    if(this->from == destiny){
       this->response = this->state;        
-    }
+    };
+    yield();
   } //end of while
 }
 
@@ -60,8 +77,9 @@ void Serial_comm::getJson() {
     else {
 //      Serial.print("\ndeserializeJson() returned ");
 //      Serial.println(err.c_str());
-      while (Serial.available() > 0)
+      while (Serial.available() > 0){
         Serial.read();
+      };
     }
   }
 };

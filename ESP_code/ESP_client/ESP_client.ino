@@ -9,14 +9,19 @@ Serial_comm serial;
 //const String ip = "ws://stem.local";
 //const int port = 81; //porta do websocket no Esp servidor
 
-const String ip = "192.168.2.199"; //ip do Esp servidor (PC)
+//const String ip = "192.168.2.199"; //ip do Esp servidor (PC)
+const String ip = "192.168.0.11"; //ip do Esp servidor (PC)
 const int port = 1801; //porta do websocket no servidor
 
 void setup() {
   Serial.begin(9600);
-  Serial.println("\n\nStarting Esp");
+  delay(250);
+  Serial.println("\nStarting Esp");
 
-  //TO DO: implementar o handshake
+  //TO DO: enviar receivedType no websocket quando WS_CONNECT
+  
+  serial.doHandshake("ESP", "OK", "ARD");
+  Serial.print("The type is: "); Serial.println(serial.receivedType);
   
   wifi.startWiFi();
   serial.sendJson("ESP_IP", wifi.ip);
