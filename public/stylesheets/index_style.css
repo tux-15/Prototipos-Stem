@@ -217,14 +217,14 @@ body {
   .robot-img {
     display: flex;
     height: 9rem;
-    margin-right: 13rem;
+    margin-right: 0rem;
     margin-top: 1rem;
   }
 
   .car-img {
     display: flex;
     height: 6rem;
-    margin-left: 13rem;
+    margin-left: 0rem;
     margin-top: 4rem;
   }
 
@@ -238,14 +238,14 @@ body {
     text-align: center;
     padding: 0 1.5rem;
     margin-top: 1.5rem;
-    margin-right: 10rem;
+    margin-right: 0rem;
   }
 
   .car-button {
     background: #7e08af;
     text-align: center;
     margin-top: 1.5rem;
-    margin-left: 10rem;
+    margin-left: 0rem;
     padding: 0 1.5rem;
   }
 }

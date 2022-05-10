@@ -5,11 +5,11 @@ function searchESPs() {
   xhttp.onreadystatechange = function () {
     if (this.readyState === 4 && this.status === 200) {
       esp_list = JSON.parse(this.responseText);
-      // esp_list = [
-      //   { id: "001", type: "manual" },
-      //   { id: "002", type: "manual" },
-      //   { id: "003", type: "sistema" },
-      // ]; // this line
+        // esp_list = [
+        //   { id: "001", type: "sistema" },
+        //   { id: "002", type: "manipulador" },
+        //   { id: "003", type: "carrinho" },
+        // ]; // this line
 
       const mainDiv = document.getElementById("esps_ativos");
       let htmlContainer = ``;
@@ -37,16 +37,15 @@ function searchESPs() {
               </a>
             </div>`;
           }
-        }
+        };
 
         esp_list.forEach((esp) => {
-          if (!esp.taken && esp.type === "manual") {
+          if(!esp.taken && esp.type === "manipulador"){
             htmlContainer += `
               <div class="container-img">
                 <img src="./images/index/robot-arm.png" class="robot-img">
-                <img src="./images/carrinho/Chassi_II.png" class="car-img">
               </div>
-              
+
               <div class="container-arm-car-button">
                 <a
                   class="arm-button"
@@ -57,6 +56,20 @@ function searchESPs() {
                 <img src="./images/index/robotic-arm.svg" />
                   <p>Braço robótico<span>ID: ${esp.id}</span></p>
                 </a>
+              </div>
+              
+            `;
+          }
+        });
+
+        esp_list.forEach((esp) => {
+          if (!esp.taken && esp.type === "carrinho") {
+            htmlContainer += `
+              <div class="container-img">
+                <img src="./images/carrinho/Chassi_II.png" class="car-img">
+              </div>
+              
+              <div class="container-arm-car-button">
                 <a
                   class="car-button"
                   onclick="
@@ -66,8 +79,7 @@ function searchESPs() {
                   <img src="./images/index/car.svg" />
                   <p>Carrinho<span>ID: ${esp.id}</span></p>
                 </a>
-              </div>
-              <div class="divisor-esps"></div>`;
+              </div>`;
           }
         });
 
