@@ -24,6 +24,7 @@ void setup() {
   
   servos.attachServos();
   servos.setServoSpeed(45);
+  servos.setEffectorAngles(80, 150);
   servos.startPosition();
   servos.effector("open");
   
@@ -32,8 +33,12 @@ void setup() {
 
 void loop() {  
   serial.getJson();
-  servos.moveServo(serial.from, serial.state);
-  serial.from = "0"; serial.state = "0";
+  if (serial.jsonUpdateCheck()){
+    serial.printCurrentJson();
+    serial.serializeCurrentJson();
+    servos.moveServo(serial.from, serial.state);
+  };
+  //serial.from = "0"; serial.state = "0";
 };
 
 //  unsigned long currentMillis = millis(); 

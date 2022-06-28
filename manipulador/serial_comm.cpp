@@ -74,9 +74,6 @@ void Serial_comm::getJson() {
       
       this->from = doc["from"].as<String>();
       this->state = doc["state"].as<String>();
-      
-      Serial.print(this->from); Serial.print(" || ");
-      Serial.println(this->state);
     }
     else {
 //      Serial.print("\ndeserializeJson() returned ");
@@ -87,6 +84,11 @@ void Serial_comm::getJson() {
     }
   }
 };
+
+void Serial_comm::printCurrentJson(){
+  Serial.print("from-> ");Serial.print(this->from);
+  Serial.print(" / state-> ");Serial.println(this->state);
+}
 
 bool Serial_comm::jsonUpdateCheck(){
   if(this->jsonUpdated == true){

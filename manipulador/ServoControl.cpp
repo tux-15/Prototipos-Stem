@@ -17,14 +17,19 @@ void ServoControl::setServoSpeed(int servoSpeed){
 
 void ServoControl::effector(String state){
   if(state == "open") {
-    this->servo5.write(60);
+    this->servo5.write(this->effectorOpen);
     Serial.println("effector open");
   }
   else if (state == "close"){
-    this->servo5.write(120);
+    this->servo5.write(this->effectorClosed);
     Serial.println("effector closed");
   }
 };
+
+void ServoControl::setEffectorAngles(int effectorOpen, int effectorClosed){
+  this->effectorOpen = effectorOpen;
+  this->effectorClosed = effectorClosed;
+}
 
 void ServoControl::attachServos(){
   Serial.println("Attaching servos");

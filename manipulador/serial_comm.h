@@ -38,6 +38,7 @@ class Serial_comm{
     void setType(String type);
     String getType();
     String getReceivedType();
+    void printCurrentJson();
 };
 
 #endif

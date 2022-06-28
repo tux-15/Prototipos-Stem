@@ -12,7 +12,6 @@ void Serial_comm::doHandshake(String origin, String hand, String destiny){
   Serial.println("Blocking code until type is received through serial");
   
   while(this->receivedType == ""){
-    
     this->getJson();
     //Serial.println("Got here before crash");
     if(this->from == destiny){
@@ -74,10 +73,7 @@ void Serial_comm::getJson() {
       
       this->from = doc["from"].as<String>();
       this->state = doc["state"].as<String>();
-      
-      Serial.print(this->from); Serial.print(" || ");
-      Serial.println(this->state);
-    }
+          }
     else {
 //      Serial.print("\ndeserializeJson() returned ");
 //      Serial.println(err.c_str());
@@ -87,6 +83,11 @@ void Serial_comm::getJson() {
     }
   }
 };
+
+void Serial_comm::printCurrentJson(){
+  Serial.print("from-> ");Serial.print(this->from);
+  Serial.print(" / state-> ");Serial.println(this->state);
+}
 
 bool Serial_comm::jsonUpdateCheck(){
   if(this->jsonUpdated == true){
