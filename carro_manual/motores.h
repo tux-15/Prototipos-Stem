@@ -15,9 +15,8 @@ class Motores
     void motorSpeedD(int pwm, int valor);
     void motorSpeedE(int pwm, int valor);
     void controle();
+    void setup_handShake();
 
-    int velocidade = 0;
-    int angulo = 0;
     int velocidadeD = 0;
     int velocidadeE = 0;
     int Xdif = 0;

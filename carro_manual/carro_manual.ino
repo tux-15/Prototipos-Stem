@@ -10,7 +10,7 @@ void setup() {
   // put your setup code here, to run once:
   serialESP.begin(9600);
   serialArduino.begin(9600);
-
+  motores.setup_handShake();
   serialArduino.println("start code...");
 }
 
