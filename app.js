@@ -73,7 +73,7 @@ wss.on('connection', function connection(ws, request) {
 
     if(messageJson['start'] == "ESP_on"  && messageJson.espType){ // Indica que um novo esp entrou no servidor
 
-      var id = request.socket.remoteAddress.toString().slice(-3);
+      var id = request.socket.remoteAddress.toString().slice(-2);
       
       global.esps.push(new Esp(ws, id, true, messageJson.espType));
 
@@ -83,7 +83,7 @@ wss.on('connection', function connection(ws, request) {
 
     if(messageJson['start'] == "page_on"){ // Indica que uma nova página entrou no servidor
 
-      var id = request.socket.remoteAddress.toString().slice(-3);
+      var id = request.socket.remoteAddress.toString().slice(-2);
 
       global.pages.push(new Page(ws, id, messageJson['to'], true));
 
