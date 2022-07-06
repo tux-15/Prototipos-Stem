@@ -22,7 +22,6 @@ function str2ab(str) {
   return buf;
 }
 
-
 // A comunicação dos protótipos se dá através de um websocket que é aberto na porta 1801
 var WebSocket = require('ws');
 
@@ -73,7 +72,7 @@ wss.on('connection', function connection(ws, request) {
 
     if(messageJson['start'] == "ESP_on"  && messageJson.espType){ // Indica que um novo esp entrou no servidor
 
-      var id = request.socket.remoteAddress.toString().slice(-2);
+      var id = request.socket.remoteAddress.toString().split(".")[3];
       
       global.esps.push(new Esp(ws, id, true, messageJson.espType));
 
@@ -83,7 +82,7 @@ wss.on('connection', function connection(ws, request) {
 
     if(messageJson['start'] == "page_on"){ // Indica que uma nova página entrou no servidor
 
-      var id = request.socket.remoteAddress.toString().slice(-2);
+      var id = request.socket.remoteAddress.toString().split(".")[3];
 
       global.pages.push(new Page(ws, id, messageJson['to'], true));
 
